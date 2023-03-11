@@ -46,6 +46,8 @@ import com.google.mediapipe.components.FrameProcessor;
 import com.google.mediapipe.components.PermissionHelper;
 import com.google.mediapipe.formats.proto.LandmarkProto.NormalizedLandmark;
 import com.google.mediapipe.formats.proto.LandmarkProto.NormalizedLandmarkList;
+import com.google.mediapipe.formats.proto.LandmarkProto.Landmark;
+import com.google.mediapipe.formats.proto.LandmarkProto.LandmarkList;
 import com.google.mediapipe.framework.AndroidAssetUtil;
 import com.google.mediapipe.framework.PacketGetter;
 import com.google.mediapipe.glutil.EglManager;
@@ -62,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String BINARY_GRAPH_NAME = "pose_tracking_gpu.binarypb";
     private static final String INPUT_VIDEO_STREAM_NAME = "input_video";
     private static final String OUTPUT_VIDEO_STREAM_NAME = "output_video";
-    private static final String OUTPUT_LANDMARKS_STREAM_NAME = "pose_landmarks";
+    private static final String OUTPUT_LANDMARKS_STREAM_NAME = "pose_world_landmarks";
     private static final int NUM_HANDS = 2;
     private static final CameraHelper.CameraFacing CAMERA_FACING = CameraHelper.CameraFacing.BACK;
     // Flips the camera-preview frames vertically before sending them into FrameProcessor to be
@@ -163,7 +165,7 @@ public class MainActivity extends AppCompatActivity {
                     try {
 //                        NormalizedLandmarkList poseLandmarks = PacketGetter.getProto(packet, NormalizedLandmarkList.class);
                         byte[] landmarksRaw = PacketGetter.getProtoBytes(packet);
-                        NormalizedLandmarkList poseLandmarks = NormalizedLandmarkList.parseFrom(landmarksRaw);
+                        LandmarkList poseLandmarks = LandmarkList.parseFrom(landmarksRaw);
                         Log.v(TAG, "[TS:" + packet.getTimestamp() + "] " + getPoseLandmarksDebugString(poseLandmarks));
                         SurfaceHolder srh = previewDisplayView.getHolder();
 //
@@ -313,30 +315,42 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private static String getPoseLandmarksDebugString(NormalizedLandmarkList poseLandmarks) {
+    private static String getPoseLandmarksDebugString(LandmarkList poseLandmarks) {
         String poseLandmarkStr = "Pose landmarks: " + poseLandmarks.getLandmarkCount() + "\n";
         ArrayList<PoseLandMark> poseMarkers= new ArrayList<PoseLandMark>();
         int landmarkIndex = 0;
-        for (NormalizedLandmark landmark : poseLandmarks.getLandmarkList()) {
-            PoseLandMark marker = new PoseLandMark(landmark.getX(),landmark.getY(),landmark.getVisibility());
+        for (Landmark landmark : poseLandmarks.getLandmarkList()) {
+            PoseLandMark marker = new PoseLandMark(landmark.getX(),landmark.getY(), landmark.getZ(), landmark.getVisibility());
 //          poseLandmarkStr += "\tLandmark ["+ landmarkIndex+ "]: ("+ (landmark.getX()*720)+ ", "+ (landmark.getY()*1280)+ ", "+ landmark.getVisibility()+ ")\n";
             ++landmarkIndex;
             poseMarkers.add(marker);
         }
         // Get Angle of Positions
-        double rightAngle = getAngle(poseMarkers.get(16),poseMarkers.get(14),poseMarkers.get(12));
-        double leftAngle = getAngle(poseMarkers.get(15),poseMarkers.get(13),poseMarkers.get(11));
-        double rightKnee = getAngle(poseMarkers.get(24),poseMarkers.get(26),poseMarkers.get(28));
-        double leftKnee = getAngle(poseMarkers.get(23),poseMarkers.get(25),poseMarkers.get(27));
-        double rightShoulder = getAngle(poseMarkers.get(14),poseMarkers.get(12),poseMarkers.get(24));
-        double leftShoulder = getAngle(poseMarkers.get(13),poseMarkers.get(11),poseMarkers.get(23));
-        Log.v(TAG,"======Degree Of Position]======\n"+
-                "rightAngle :"+rightAngle+"\n"+
-                "leftAngle :"+leftAngle+"\n"+
-                "rightHip :"+rightKnee+"\n"+
-                "leftHip :"+leftKnee+"\n"+
-                "rightShoulder :"+rightShoulder+"\n"+
-                "leftShoulder :"+leftShoulder+"\n");
+//        double rightAngle = getAngle(poseMarkers.get(16),poseMarkers.get(14),poseMarkers.get(12));
+//        double leftAngle = getAngle(poseMarkers.get(15),poseMarkers.get(13),poseMarkers.get(11));
+//        double rightKnee = getAngle(poseMarkers.get(24),poseMarkers.get(26),poseMarkers.get(28));
+//        double leftKnee = getAngle(poseMarkers.get(23),poseMarkers.get(25),poseMarkers.get(27));
+//        double rightShoulder = getAngle(poseMarkers.get(14),poseMarkers.get(12),poseMarkers.get(24));
+//        double leftShoulder = getAngle(poseMarkers.get(13),poseMarkers.get(11),poseMarkers.get(23));
+//        Log.v(TAG,"======Degree Of Position]======\n"+
+//                "rightAngle :"+rightAngle+"\n"+
+//                "leftAngle :"+leftAngle+"\n"+
+//                "rightHip :"+rightKnee+"\n"+
+//                "leftHip :"+leftKnee+"\n"+
+//                "rightShoulder :"+rightShoulder+"\n"+
+//                "leftShoulder :"+leftShoulder+"\n");
+        for (int i = 0; i < poseMarkers.size(); i++) {
+            float x = poseMarkers.get(i).getX();
+            float y = poseMarkers.get(i).getY();
+            float z = poseMarkers.get(i).getZ();
+
+            Log.v(TAG,"======Position coords]======\n"+
+                "test_pose["+i+"] = {\n"+
+                "\"x\" :"+x+",\n"+
+                "\"y\" :"+y+",\n"+
+                "\"z\" :"+z+"\n"+
+                "}\n");
+        }
         return poseLandmarkStr;
 
     }
