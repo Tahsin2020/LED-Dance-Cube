@@ -21,7 +21,7 @@
     <!--android:theme="@style/Theme.MyApplication"-->
 
     <activity
-        android:name=".HomePageActivity"
+        android:name=".StartActivity"
         android:exported="true"
         android:label="@string/Home">
         <intent-filter>
@@ -36,7 +36,7 @@
 
     </activity>
     <activity
-        android:name=".StartActivity"
+        android:name=".HomePageActivity"
         android:exported="true">
 
     </activity>
