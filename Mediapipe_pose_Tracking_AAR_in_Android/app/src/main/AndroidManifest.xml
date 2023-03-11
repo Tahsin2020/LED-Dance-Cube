@@ -16,28 +16,36 @@
         android:label="DanceBot"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/Theme.MyApplication">
-        <activity
-            android:name=".HomePageActivity"
-            android:exported="true"
-            android:label="@string/Home">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
+        android:theme="@style/AppTheme.NoActionBar"
+        >
+    <!--android:theme="@style/Theme.MyApplication"-->
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".MainActivity"
-            android:exported="true">
+    <activity
+        android:name=".HomePageActivity"
+        android:exported="true"
+        android:label="@string/Home">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
 
-        </activity>
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
+    <activity
+        android:name=".MainActivity"
+        android:exported="true">
 
-        <activity
-            android:name=".PatternActivity"
-            android:exported="true">
+    </activity>
+    <activity
+        android:name=".StartActivity"
+        android:exported="true">
 
-        </activity>
-    </application>
+    </activity>
+
+    <activity
+        android:name=".PatternActivity"
+        android:exported="true">
+
+    </activity>
+</application>
 
 </manifest>
