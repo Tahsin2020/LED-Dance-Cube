@@ -53,6 +53,14 @@ import com.google.protobuf.InvalidProtocolBufferException;
 
 import java.util.ArrayList;
 
+import com.google.mediapipe.formats.proto.LandmarkProto.Landmark;
+import com.google.mediapipe.formats.proto.LandmarkProto.LandmarkList;
+
+import com.google.mediapipe.formats.proto.LandmarkProto.NormalizedLandmark;
+import com.google.mediapipe.formats.proto.LandmarkProto.NormalizedLandmarkList;
+import com.google.mediapipe.framework.PacketGetter;
+import com.google.protobuf.InvalidProtocolBufferException;
+
 
 /**
  * Main activity of MediaPipe example apps.
@@ -97,6 +105,7 @@ public class MainActivity extends AppCompatActivity {
     private AppBarConfiguration appBarConfiguration;
     //private ActivityMainBinding binding;
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -109,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
         // Handle item selection
         switch (item.getItemId()) {
             case R.id.Home_page:
-                startActivity(new Intent(MainActivity.this, HomePageActivity.class));
+                startActivity(new Intent(this, HomePageActivity.class));
                 return true;
             case R.id.patterns:
                 //Open();
@@ -152,42 +161,58 @@ public class MainActivity extends AppCompatActivity {
                 .getVideoSurfaceOutput()
                 .setFlipY(FLIP_FRAMES_VERTICALLY);
 
+        //if (Log.isLoggable(TAG, Log.VERBOSE)) {
+            processor.addPacketCallback(
+                    OUTPUT_LANDMARKS_STREAM_NAME,
+                    (packet) -> {
+                        Log.v(TAG, "Received pose landmarks packet.");
+                        try {
+
+                            byte[] landmarksRaw = PacketGetter.getProtoBytes(packet);
+                            LandmarkList poseLandmarks = LandmarkList.parseFrom(landmarksRaw);
+                            Log.v(TAG, "[TS:" + packet.getTimestamp() + "] " + getPoseLandmarksDebugString(poseLandmarks));
+
+                        } catch (InvalidProtocolBufferException exception) {
+                            Log.e(TAG, "Failed to get proto.", exception);
+                        }
+                    });
+        //}
 
         // To show verbose logging, run:
         // adb shell setprop log.tag.MainActivity VERBOSE
 //        if (Log.isLoggable(TAG, Log.VERBOSE)) {
-        processor.addPacketCallback(
-                OUTPUT_LANDMARKS_STREAM_NAME,
-                (packet) -> {
-                    Log.v(TAG, "Received Pose landmarks packet.");
-                    try {
-//                        NormalizedLandmarkList poseLandmarks = PacketGetter.getProto(packet, NormalizedLandmarkList.class);
-                        byte[] landmarksRaw = PacketGetter.getProtoBytes(packet);
-                        NormalizedLandmarkList poseLandmarks = NormalizedLandmarkList.parseFrom(landmarksRaw);
-                        Log.v(TAG, "[TS:" + packet.getTimestamp() + "] " + getPoseLandmarksDebugString(poseLandmarks));
-                        SurfaceHolder srh = previewDisplayView.getHolder();
-//
-//                  -- this line cannot Running --
-//                    Canvas canvas = null;
+//Uncomment here         processor.addPacketCallback(
+//                OUTPUT_LANDMARKS_STREAM_NAME,
+//                (packet) -> {
+//                    Log.v(TAG, "Received Pose landmarks packet.");
 //                    try {
-//                        canvas= srh.lockCanvas();
-//                        synchronized(srh){
-//                            Paint paint = new Paint();
-//                            paint.setColor(Color.RED);
-//                            canvas.drawCircle(10.0f,10.0f,10.0f,paint);
-//                        }
-//                    }finally{
-//                        if(canvas != null){
-//                            srh.unlockCanvasAndPost(canvas);
-//                        }
+////                        NormalizedLandmarkList poseLandmarks = PacketGetter.getProto(packet, NormalizedLandmarkList.class);
+//                        byte[] landmarksRaw = PacketGetter.getProtoBytes(packet);
+//                        NormalizedLandmarkList poseLandmarks = NormalizedLandmarkList.parseFrom(landmarksRaw);
+//                        Log.v(TAG, "[TS:" + packet.getTimestamp() + "] " + getPoseLandmarksDebugString(poseLandmarks));
+//                        SurfaceHolder srh = previewDisplayView.getHolder();
+////
+////                  -- this line cannot Running --
+////                    Canvas canvas = null;
+////                    try {
+////                        canvas= srh.lockCanvas();
+////                        synchronized(srh){
+////                            Paint paint = new Paint();
+////                            paint.setColor(Color.RED);
+////                            canvas.drawCircle(10.0f,10.0f,10.0f,paint);
+////                        }
+////                    }finally{
+////                        if(canvas != null){
+////                            srh.unlockCanvasAndPost(canvas);
+////                        }
+////                    }
+//////                    processor.getVideoSurfaceOutput().setSurface(srh.getSurface());
+//                    } catch (InvalidProtocolBufferException exception) {
+//                        Log.e(TAG, "failed to get proto.", exception);
 //                    }
-////                    processor.getVideoSurfaceOutput().setSurface(srh.getSurface());
-                    } catch (InvalidProtocolBufferException exception) {
-                        Log.e(TAG, "failed to get proto.", exception);
-                    }
-
-                }
-        );
+//
+//                }
+//        );
         /*processor.addPacketCallback(
                 "throttled_input_video_cpu",
                 (packet) ->{
@@ -196,6 +221,8 @@ public class MainActivity extends AppCompatActivity {
                 }
         );*/
         PermissionHelper.checkAndRequestCameraPermissions(this);
+
+
     }
 
     // Used to obtain the content view for this application. If you are extending this class, and
@@ -313,33 +340,52 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    private static String getPoseLandmarksDebugString(NormalizedLandmarkList poseLandmarks) {
-        String poseLandmarkStr = "Pose landmarks: " + poseLandmarks.getLandmarkCount() + "\n";
-        ArrayList<PoseLandMark> poseMarkers= new ArrayList<PoseLandMark>();
-        int landmarkIndex = 0;
-        for (NormalizedLandmark landmark : poseLandmarks.getLandmarkList()) {
-            PoseLandMark marker = new PoseLandMark(landmark.getX(),landmark.getY(),landmark.getVisibility());
-//          poseLandmarkStr += "\tLandmark ["+ landmarkIndex+ "]: ("+ (landmark.getX()*720)+ ", "+ (landmark.getY()*1280)+ ", "+ landmark.getVisibility()+ ")\n";
-            ++landmarkIndex;
-            poseMarkers.add(marker);
-        }
-        // Get Angle of Positions
-        double rightAngle = getAngle(poseMarkers.get(16),poseMarkers.get(14),poseMarkers.get(12));
-        double leftAngle = getAngle(poseMarkers.get(15),poseMarkers.get(13),poseMarkers.get(11));
-        double rightKnee = getAngle(poseMarkers.get(24),poseMarkers.get(26),poseMarkers.get(28));
-        double leftKnee = getAngle(poseMarkers.get(23),poseMarkers.get(25),poseMarkers.get(27));
-        double rightShoulder = getAngle(poseMarkers.get(14),poseMarkers.get(12),poseMarkers.get(24));
-        double leftShoulder = getAngle(poseMarkers.get(13),poseMarkers.get(11),poseMarkers.get(23));
-        Log.v(TAG,"======Degree Of Position]======\n"+
-                "rightAngle :"+rightAngle+"\n"+
-                "leftAngle :"+leftAngle+"\n"+
-                "rightHip :"+rightKnee+"\n"+
-                "leftHip :"+leftKnee+"\n"+
-                "rightShoulder :"+rightShoulder+"\n"+
-                "leftShoulder :"+leftShoulder+"\n");
-        return poseLandmarkStr;
+//    private static String getPoseLandmarksDebugString(NormalizedLandmarkList poseLandmarks) {
+//        String poseLandmarkStr = "Pose landmarks: " + poseLandmarks.getLandmarkCount() + "\n";
+//        ArrayList<PoseLandMark> poseMarkers= new ArrayList<PoseLandMark>();
+//        int landmarkIndex = 0;
+//        for (NormalizedLandmark landmark : poseLandmarks.getLandmarkList()) {
+//            PoseLandMark marker = new PoseLandMark(landmark.getX(),landmark.getY(),landmark.getVisibility());
+////          poseLandmarkStr += "\tLandmark ["+ landmarkIndex+ "]: ("+ (landmark.getX()*720)+ ", "+ (landmark.getY()*1280)+ ", "+ landmark.getVisibility()+ ")\n";
+//            ++landmarkIndex;
+//            poseMarkers.add(marker);
+//        }
+//        // Get Angle of Positions
+//        double rightAngle = getAngle(poseMarkers.get(16),poseMarkers.get(14),poseMarkers.get(12));
+//        double leftAngle = getAngle(poseMarkers.get(15),poseMarkers.get(13),poseMarkers.get(11));
+//        double rightKnee = getAngle(poseMarkers.get(24),poseMarkers.get(26),poseMarkers.get(28));
+//        double leftKnee = getAngle(poseMarkers.get(23),poseMarkers.get(25),poseMarkers.get(27));
+//        double rightShoulder = getAngle(poseMarkers.get(14),poseMarkers.get(12),poseMarkers.get(24));
+//        double leftShoulder = getAngle(poseMarkers.get(13),poseMarkers.get(11),poseMarkers.get(23));
+//        Log.v(TAG,"======Degree Of Position]======\n"+
+//                "rightAngle :"+rightAngle+"\n"+
+//                "leftAngle :"+leftAngle+"\n"+
+//                "rightHip :"+rightKnee+"\n"+
+//                "leftHip :"+leftKnee+"\n"+
+//                "rightShoulder :"+rightShoulder+"\n"+
+//                "leftShoulder :"+leftShoulder+"\n");
+//        return poseLandmarkStr;
+//
+//    }
 
+    private static String getPoseLandmarksDebugString(LandmarkList poseLandmarks) {
+        String poseLandmarkStr = "Pose landmarks: " + poseLandmarks.getLandmarkCount() + "\n";
+        int landmarkIndex = 0;
+        for (Landmark landmark : poseLandmarks.getLandmarkList()) {
+            poseLandmarkStr += "\tLandmark ["
+                    + landmarkIndex
+                    + "]: ("
+                    + landmark.getX()
+                    + ", "
+                    + landmark.getY()
+                    + ", "
+                    + landmark.getZ()
+                    + ")\n";
+            ++landmarkIndex;
+        }
+        return poseLandmarkStr;
     }
+
     static double getAngle(PoseLandMark firstPoint, PoseLandMark midPoint, PoseLandMark lastPoint) {
         double result =
                 Math.toDegrees(

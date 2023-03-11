@@ -1,5 +1,11 @@
 package com.example.myapplication;
+import android.content.Intent;
+import android.graphics.drawable.AdaptiveIconDrawable;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
@@ -15,6 +21,7 @@ import java.util.ArrayList;
 
 public class StartActivity extends AppCompatActivity {
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -26,6 +33,12 @@ public class StartActivity extends AppCompatActivity {
         pagerAdapter.addFragmet(new LoginFragment());
         pagerAdapter.addFragmet(new RegisterFragment());
         viewPager.setAdapter(pagerAdapter);
+
+    }
+
+    public void LoginToHomeMainActivity(){
+        Intent intent = new Intent(this, HomePageActivity.class);
+        startActivity(intent);
     }
 
     class AuthenticationPagerAdapter extends FragmentPagerAdapter {

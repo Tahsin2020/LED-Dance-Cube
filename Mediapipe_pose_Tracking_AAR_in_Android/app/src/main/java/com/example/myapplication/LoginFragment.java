@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,18 +23,24 @@ public class LoginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
+
         View v = inflater.inflate(R.layout.fragment_login,container,false);
-        Button button = v.findViewById(R.id.btn_login);
-        Button button = (Button) login_btn;
+        final Button button = v.findViewById(R.id.btn_login);
+
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                backToMainActivity();
+                // do something when the corky is clicked
+
+                Intent redirect=new Intent(getActivity(),HomePageActivity.class);
+                startActivity(redirect);
             }
         });
 
-        return inflater.inflate(R.layout.fragment_login, container, false);
+        return button;
+       //return inflater.inflate(R.layout.fragment_login, container, false);
     }
+
 
 //    if(username.getText().toString().equals("admin") &&
 //            password.getText().toString().equals("admin")){
