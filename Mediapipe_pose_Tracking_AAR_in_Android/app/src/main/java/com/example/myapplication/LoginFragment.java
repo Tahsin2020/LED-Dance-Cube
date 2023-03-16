@@ -37,7 +37,7 @@ public class LoginFragment extends Fragment {
             }
         });
 
-        return button;
+        return v;
        //return inflater.inflate(R.layout.fragment_login, container, false);
     }
 

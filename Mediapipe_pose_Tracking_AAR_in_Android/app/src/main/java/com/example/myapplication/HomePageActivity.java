@@ -25,7 +25,7 @@ public class HomePageActivity extends AppCompatActivity {
                 startActivity(new Intent(this, HomePageActivity.class));
                 return true;
             case R.id.patterns:
-                //Open();
+                startActivity(new Intent(this, PatternActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

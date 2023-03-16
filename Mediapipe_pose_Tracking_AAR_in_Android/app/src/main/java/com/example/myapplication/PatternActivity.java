@@ -36,7 +36,7 @@ public class PatternActivity extends AppCompatActivity {
                 startActivity(new Intent(this, HomePageActivity.class));
                 return true;
             case R.id.patterns:
-                //Open();
+                startActivity(new Intent(this, PatternActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -47,7 +47,7 @@ public class PatternActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pattern);
 
-        Button button = (Button) findViewById(R.id.button_pattern1);
+        Button button = (Button) findViewById(R.id.button_pattern2);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

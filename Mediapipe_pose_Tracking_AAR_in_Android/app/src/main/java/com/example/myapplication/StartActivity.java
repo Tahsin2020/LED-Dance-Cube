@@ -34,6 +34,7 @@ public class StartActivity extends AppCompatActivity {
         pagerAdapter.addFragmet(new RegisterFragment());
         viewPager.setAdapter(pagerAdapter);
 
+
     }
 
     public void LoginToHomeMainActivity(){

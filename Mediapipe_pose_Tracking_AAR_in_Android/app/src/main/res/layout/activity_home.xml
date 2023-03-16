@@ -1,20 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:divider="@drawable/shape_divider_linear"
+    android:gravity="center"
+    android:orientation="vertical"
+    android:background="#000000">
 
+
+        <androidx.constraintlayout.utils.widget.ImageFilterView
+            android:layout_width="269dp"
+            android:layout_height="184dp"
+            android:gravity="top"
+            android:src="@drawable/background_with_led_img"/>
 
         <Button
             android:id="@+id/button_home1"
-            android:layout_width="wrap_content"
+            android:layout_width="136dp"
             android:layout_height="wrap_content"
             android:text="@string/live_streaming" />
 
         <Button
             android:id="@+id/button_home2"
-            android:layout_width="wrap_content"
+            android:layout_width="136dp"
             android:layout_height="wrap_content"
             android:text="@string/patterns" />
+
 
 
 </LinearLayout>
