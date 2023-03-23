@@ -148,4 +148,13 @@ public class Utils {
         }
         return true;
     }
+
+    public static void filterNoise(float thresh, ArrayList<Float> prev_xs, ArrayList<Float> prev_ys, ArrayList<Float> prev_zs, ArrayList<Float> xs, ArrayList<Float> ys, ArrayList<Float> zs) {
+        int size = prev_xs.size();
+        for (int i = 0; i < size; i++) {
+            if (Math.abs(prev_xs.get(i) - xs.get(i)) >= thresh) prev_xs.set(i, xs.get(i));
+            if (Math.abs(prev_ys.get(i) - ys.get(i)) >= thresh) prev_ys.set(i, ys.get(i));
+            if (Math.abs(prev_zs.get(i) - zs.get(i)) >= thresh) prev_zs.set(i, zs.get(i));
+        }
+    }
 }

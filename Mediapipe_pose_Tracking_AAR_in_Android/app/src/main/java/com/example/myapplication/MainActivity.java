@@ -70,8 +70,10 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
     //networking variables
     private static final String NTAG = "Networking";
-    private static final String SERVER_IP = "128.189.246.47";
+    private static final String SERVER_IP = "128.189.240.168";
     private static final int SERVER_PORT = 12345;
+    private static final long fps = 30;
+    private static long ms_per_frame = 1000/fps;
     private PrintWriter output;
     private DataOutputStream data_output;
     private BufferedReader input;
@@ -182,7 +184,8 @@ public class MainActivity extends AppCompatActivity {
         processor.addPacketCallback(
                 OUTPUT_LANDMARKS_STREAM_NAME,
                 (packet) -> {
-                    Log.v(TAG, "Received Pose landmarks packet.");
+//                    Log.v(TAG, "Received Pose landmarks packet.");
+                    long startTime = System.currentTimeMillis();
                     try {
 //                        NormalizedLandmarkList poseLandmarks = PacketGetter.getProto(packet, NormalizedLandmarkList.class);
                         byte[] landmarksRaw = PacketGetter.getProtoBytes(packet);
@@ -191,9 +194,14 @@ public class MainActivity extends AppCompatActivity {
                         Map<String, Map<String, Float>> model_points = formatLandmarks(poseLandmarks);
                         if (Utils.checkLandmarksFormat(model_points)) {
                             byte[] dataToSend = ProcessData.process(model_points);
-                            Log.v(TAG, "dataToSend created, sending over wifi...");
+//                            Log.v(TAG, "dataToSend created, sending over wifi...");
+                            long endTime = System.currentTimeMillis();
+                            if (endTime - startTime < ms_per_frame) {
+                                Thread.sleep(ms_per_frame - (endTime - startTime));
+                            }
                             new Thread(new Thread3(dataToSend)).start();
                         }
+
 
                         SurfaceHolder srh = previewDisplayView.getHolder();
 //
@@ -214,8 +222,9 @@ public class MainActivity extends AppCompatActivity {
 ////                    processor.getVideoSurfaceOutput().setSurface(srh.getSurface());
                     } catch (InvalidProtocolBufferException exception) {
                         Log.e(TAG, "failed to get proto.", exception);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
                     }
-
                 }
         );
         /*processor.addPacketCallback(
@@ -392,7 +401,6 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void run() {
             Socket socket;
-            System.out.println("HERA");
             try {
                 socket = new Socket(SERVER_IP, SERVER_PORT);
 //                output = new PrintWriter(socket.getOutputStream());
@@ -410,7 +418,7 @@ public class MainActivity extends AppCompatActivity {
         private byte[] dataToSend;
         Thread3(byte[] dataToSend) {
             this.dataToSend = dataToSend;
-            System.out.println("Bytes sent: " + Arrays.toString(dataToSend));
+//            System.out.println("Bytes sent: " + Arrays.toString(dataToSend));
         }
         Thread3() {}
         @Override
@@ -418,6 +426,7 @@ public class MainActivity extends AppCompatActivity {
             try {
                 data_output.write(dataToSend);
                 data_output.flush();
+
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
