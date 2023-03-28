@@ -7,6 +7,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -109,7 +110,8 @@ public class HomePageActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                text.append("server: " + message + "\n");
+                                ImageView img= (ImageView) findViewById(R.id.image);
+                                img.setImageResource(R.drawable.signal_black);
                             }
                         });
                     } else {

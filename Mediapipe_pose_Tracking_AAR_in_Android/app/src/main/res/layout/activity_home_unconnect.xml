@@ -21,13 +21,12 @@
             android:gravity="top"
             android:src="@drawable/controller" />
 
-        <TextView
-            android:id="@+id/no_camera_access_view"
-            android:layout_width="127dp"
-            android:layout_height="68dp"
-            android:gravity="center_vertical"
-            android:text="wait for connection"
-            android:textColor="@color/white" />
+        <pl.droidsonroids.gif.GifImageView
+            android:id="@+id/img_no_connection"
+            android:layout_width="78dp"
+            android:layout_height="76dp"
+            android:gravity="top"
+            android:src="@drawable/wait_c"/>
 
         <androidx.constraintlayout.utils.widget.ImageFilterView
             android:layout_width="76dp"
