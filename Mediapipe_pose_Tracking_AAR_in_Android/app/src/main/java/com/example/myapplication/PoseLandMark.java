@@ -17,10 +17,11 @@
 package com.example.myapplication;
 
 public class PoseLandMark {
-    float x,y, visible;
-    PoseLandMark(float x, float y, float visible) {
+    float x,y,z,visible;
+    PoseLandMark(float x, float y, float z, float visible) {
         this.x = x;
         this.y = y;
+        this.z = z;
         this.visible = visible;
     }
 
@@ -30,6 +31,10 @@ public class PoseLandMark {
 
     public void setY(float y) {
         this.y = y;
+    }
+
+    public void setZ(float z) {
+        this.z = z;
     }
 
     public void setVisible(float visible) {
@@ -43,6 +48,8 @@ public class PoseLandMark {
     public float getY() {
         return y;
     }
+    public float getZ() { return z; }
+
 
     public float getVisible() {
         return visible;

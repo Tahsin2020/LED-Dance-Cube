@@ -32,7 +32,7 @@ public class LoginFragment extends Fragment {
             public void onClick(View v) {
                 // do something when the corky is clicked
 
-                Intent redirect=new Intent(getActivity(),HomePageActivity.class);
+                Intent redirect = new Intent(getActivity(),HomePageActivity.class);
                 startActivity(redirect);
             }
         });
