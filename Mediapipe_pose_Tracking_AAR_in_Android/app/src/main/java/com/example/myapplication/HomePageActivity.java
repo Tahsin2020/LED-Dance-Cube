@@ -20,8 +20,8 @@ import java.net.Socket;
 
 public class HomePageActivity extends AppCompatActivity {
     private static final String TAG = "HomePageActivity";
-    private static final String SERVER_IP = "128.189.241.216";
-    private static final int SERVER_PORT = 12345;
+    private static final String SERVER_IP = "192.168.4.1";
+    private static final int SERVER_PORT = 80;
     public static DataOutputStream data_output;
     private InputStream input;
     Thread Thread1 = null;
@@ -111,7 +111,7 @@ public class HomePageActivity extends AppCompatActivity {
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                ImageView img= (ImageView) findViewById(R.id.image);
+                                ImageView img= (ImageView) findViewById(R.img_no_connection);
                                 img.setImageResource(R.drawable.signal_black);
                             }
                         });

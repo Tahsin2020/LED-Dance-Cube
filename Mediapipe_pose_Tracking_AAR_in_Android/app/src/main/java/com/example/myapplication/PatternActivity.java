@@ -48,7 +48,7 @@ public class PatternActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pattern);
-        new Thread(new Thread3((byte) 2)).start();
+        new Thread(new Thread3((byte) 0x02)).start();
         Button button2 = (Button) findViewById(R.id.button_pattern2);
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
