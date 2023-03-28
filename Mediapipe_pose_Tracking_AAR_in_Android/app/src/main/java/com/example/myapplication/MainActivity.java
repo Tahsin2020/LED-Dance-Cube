@@ -145,8 +145,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -441,7 +439,6 @@ public class MainActivity extends AppCompatActivity {
             Socket socket;
             try {
                 socket = new Socket(SERVER_IP, SERVER_PORT);
-//                output = new PrintWriter(socket.getOutputStream());
                 data_output = new DataOutputStream(socket.getOutputStream());
                 input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
                 Log.v(TAG, "Connected to server");
