@@ -49,11 +49,27 @@ public class PatternActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pattern);
         new Thread(new Thread3((byte) 2)).start();
-        Button button = (Button) findViewById(R.id.button_pattern2);
-        button.setOnClickListener(new View.OnClickListener() {
+        Button button2 = (Button) findViewById(R.id.button_pattern2);
+        button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 backToMainActivity();
+            }
+        });
+
+        Button button3 = (Button) findViewById(R.id.button_pattern3);
+        button3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pattern3Activity();
+            }
+        });
+
+        Button button4 = (Button) findViewById(R.id.button_pattern4);
+        button4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pattern4Activity();
             }
         });
 
@@ -62,6 +78,14 @@ public class PatternActivity extends AppCompatActivity {
     public void backToMainActivity(){
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+    }
+
+    public void pattern3Activity(){ // When button_pattern3 clicked
+        new Thread(new Thread3((byte) 0x30)).start();
+    }
+
+    public void pattern4Activity(){ // When button_pattern4 clicked
+        new Thread(new Thread3((byte) 0x40)).start();
     }
 
     class Thread3 implements Runnable {
