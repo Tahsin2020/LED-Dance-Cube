@@ -53,7 +53,7 @@ public class PatternActivity extends AppCompatActivity {
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                backToMainActivity();
+                pattern2Activity();
             }
         });
 
@@ -80,10 +80,12 @@ public class PatternActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void pattern2Activity(){ // When button_pattern3 clicked
+        new Thread(new Thread3((byte) 0x20)).start();
+    }
     public void pattern3Activity(){ // When button_pattern3 clicked
         new Thread(new Thread3((byte) 0x30)).start();
     }
-
     public void pattern4Activity(){ // When button_pattern4 clicked
         new Thread(new Thread3((byte) 0x40)).start();
     }
