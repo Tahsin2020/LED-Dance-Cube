@@ -74,8 +74,6 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
     //networking variables
     private static final String NTAG = "Networking";
-//    private static final String SERVER_IP = "128.189.241.216";
-//    private static final int SERVER_PORT = 12345;
     private static final long fps = 30;
     private static long ms_per_frame = 1000/fps;
     Thread Thread1 = null;
