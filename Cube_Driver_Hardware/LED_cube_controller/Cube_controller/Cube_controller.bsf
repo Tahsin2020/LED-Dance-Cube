@@ -1,0 +1,105 @@
+/*
+WARNING: Do NOT edit the input and output ports in this file in a text
+editor if you plan to continue editing the block that represents it in
+the Block Editor! File corruption is VERY likely to occur.
+*/
+/*
+Copyright (C) 2018  Intel Corporation. All rights reserved.
+Your use of Intel Corporation's design tools, logic functions 
+and other software and tools, and its AMPP partner logic 
+functions, and any output files from any of the foregoing 
+(including device programming or simulation files), and any 
+associated documentation or information are expressly subject 
+to the terms and conditions of the Intel Program License 
+Subscription Agreement, the Intel Quartus Prime License Agreement,
+the Intel FPGA IP License Agreement, or other applicable license
+agreement, including, without limitation, that your use is for
+the sole purpose of programming logic devices manufactured by
+Intel and sold by Intel or its authorized distributors.  Please
+refer to the applicable agreement for further details.
+*/
+(header "symbol" (version "1.1"))
+(symbol
+	(rect 0 0 512 272)
+	(text "Cube_controller" (rect 210 -1 272 11)(font "Arial" (font_size 10)))
+	(text "inst" (rect 8 256 20 268)(font "Arial" ))
+	(port
+		(pt 0 72)
+		(input)
+		(text "clk_clk" (rect 0 0 27 12)(font "Arial" (font_size 8)))
+		(text "clk_clk" (rect 4 61 46 72)(font "Arial" (font_size 8)))
+		(line (pt 0 72)(pt 224 72)(line_width 1))
+	)
+	(port
+		(pt 0 128)
+		(input)
+		(text "led_cube_uart_0_conduit_end_sw[9..0]" (rect 0 0 156 12)(font "Arial" (font_size 8)))
+		(text "led_cube_uart_0_conduit_end_sw[9..0]" (rect 4 117 220 128)(font "Arial" (font_size 8)))
+		(line (pt 0 128)(pt 224 128)(line_width 3))
+	)
+	(port
+		(pt 0 184)
+		(input)
+		(text "reset_reset_n" (rect 0 0 56 12)(font "Arial" (font_size 8)))
+		(text "reset_reset_n" (rect 4 173 82 184)(font "Arial" (font_size 8)))
+		(line (pt 0 184)(pt 224 184)(line_width 1))
+	)
+	(port
+		(pt 0 224)
+		(input)
+		(text "uart_0_external_connection_rxd" (rect 0 0 128 12)(font "Arial" (font_size 8)))
+		(text "uart_0_external_connection_rxd" (rect 4 213 184 224)(font "Arial" (font_size 8)))
+		(line (pt 0 224)(pt 224 224)(line_width 1))
+	)
+	(port
+		(pt 0 112)
+		(output)
+		(text "led_cube_uart_0_conduit_end_ledr[7..0]" (rect 0 0 160 12)(font "Arial" (font_size 8)))
+		(text "led_cube_uart_0_conduit_end_ledr[7..0]" (rect 4 101 232 112)(font "Arial" (font_size 8)))
+		(line (pt 0 112)(pt 224 112)(line_width 3))
+	)
+	(port
+		(pt 0 144)
+		(output)
+		(text "led_cube_uart_0_conduit_end_gpio[35..0]" (rect 0 0 166 12)(font "Arial" (font_size 8)))
+		(text "led_cube_uart_0_conduit_end_gpio[35..0]" (rect 4 133 238 144)(font "Arial" (font_size 8)))
+		(line (pt 0 144)(pt 224 144)(line_width 3))
+	)
+	(port
+		(pt 0 240)
+		(output)
+		(text "uart_0_external_connection_txd" (rect 0 0 127 12)(font "Arial" (font_size 8)))
+		(text "uart_0_external_connection_txd" (rect 4 229 184 240)(font "Arial" (font_size 8)))
+		(line (pt 0 240)(pt 224 240)(line_width 1))
+	)
+	(drawing
+		(text "clk" (rect 209 43 436 99)(font "Arial" (color 128 0 0)(font_size 9)))
+		(text "clk" (rect 229 67 476 144)(font "Arial" (color 0 0 0)))
+		(text "led_cube_uart_0_conduit_end" (rect 49 83 260 179)(font "Arial" (color 128 0 0)(font_size 9)))
+		(text "ledr" (rect 229 107 482 224)(font "Arial" (color 0 0 0)))
+		(text "sw" (rect 229 123 470 256)(font "Arial" (color 0 0 0)))
+		(text "gpio" (rect 229 139 482 288)(font "Arial" (color 0 0 0)))
+		(text "reset" (rect 195 155 420 323)(font "Arial" (color 128 0 0)(font_size 9)))
+		(text "reset_n" (rect 229 179 500 368)(font "Arial" (color 0 0 0)))
+		(text "uart_0_external_connection" (rect 64 195 284 403)(font "Arial" (color 128 0 0)(font_size 9)))
+		(text "rxd" (rect 229 219 476 448)(font "Arial" (color 0 0 0)))
+		(text "txd" (rect 229 235 476 480)(font "Arial" (color 0 0 0)))
+		(text " Cube_controller " (rect 441 256 984 522)(font "Arial" ))
+		(line (pt 224 32)(pt 288 32)(line_width 1))
+		(line (pt 288 32)(pt 288 256)(line_width 1))
+		(line (pt 224 256)(pt 288 256)(line_width 1))
+		(line (pt 224 32)(pt 224 256)(line_width 1))
+		(line (pt 225 52)(pt 225 76)(line_width 1))
+		(line (pt 226 52)(pt 226 76)(line_width 1))
+		(line (pt 225 92)(pt 225 148)(line_width 1))
+		(line (pt 226 92)(pt 226 148)(line_width 1))
+		(line (pt 225 164)(pt 225 188)(line_width 1))
+		(line (pt 226 164)(pt 226 188)(line_width 1))
+		(line (pt 225 204)(pt 225 244)(line_width 1))
+		(line (pt 226 204)(pt 226 244)(line_width 1))
+		(line (pt 0 0)(pt 512 0)(line_width 1))
+		(line (pt 512 0)(pt 512 272)(line_width 1))
+		(line (pt 0 272)(pt 512 272)(line_width 1))
+		(line (pt 0 0)(pt 0 272)(line_width 1))
+	)
+)
