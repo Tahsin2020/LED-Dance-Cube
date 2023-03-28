@@ -2,6 +2,7 @@ package com.example.myapplication;
 
 import android.util.Log;
 
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -91,7 +92,10 @@ public class Utils {
         }
     }
 
-    public static double translate(ArrayList<Float> xs, ArrayList<Float> ys, ArrayList<Float> zs) {
+    public static float translate(ArrayList<Float> xs, ArrayList<Float> ys, ArrayList<Float> zs) {
+        /*
+        get max dimen, divide by two, add to each val
+         */
         float xmin = Collections.min(xs);
         float ymin = Collections.min(ys);
         float zmin = Collections.min(zs);
@@ -99,19 +103,20 @@ public class Utils {
         float y_length = Math.abs(Collections.max(ys) - ymin);
         float z_length = Math.abs(Collections.max(zs) - zmin);
         float max_dimension = Collections.max(Arrays.asList(x_length, y_length, z_length));
-        float middle_translation = 0;
-        if (max_dimension == x_length) {
-            middle_translation = Math.abs(xmin);
-        } else if (max_dimension == y_length) {
-            middle_translation = Math.abs(ymin);
-        } else if (max_dimension == z_length) {
-            middle_translation = Math.abs(zmin);
-        }
-
+//        float middle_translation = 0;
+//        if (max_dimension == x_length) {
+//            middle_translation = Math.abs(xmin);
+//        } else if (max_dimension == y_length) {
+//            middle_translation = Math.abs(ymin);
+//        } else if (max_dimension == z_length) {
+//            middle_translation = Math.abs(zmin);
+//        }
         for (int i = 0; i < xs.size(); i++) {
-            xs.set(i, xs.get(i) + middle_translation);
-            ys.set(i, ys.get(i) + middle_translation);
-            zs.set(i, zs.get(i) + middle_translation);
+            if (max_dimension == x_length) xs.set(i, xs.get(i) + Math.abs(xmin));
+            else xs.set(i, xs.get(i) + (max_dimension / 2));
+            ys.set(i, ys.get(i) + Math.abs(ymin));
+            if (max_dimension == z_length) zs.set(i, zs.get(i) + Math.abs(zmin));
+            else zs.set(i, zs.get(i) + (max_dimension / 2));
         }
         return max_dimension;
     }
