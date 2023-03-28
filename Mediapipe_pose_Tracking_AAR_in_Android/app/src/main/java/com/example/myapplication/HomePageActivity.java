@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -49,7 +50,10 @@ public class HomePageActivity extends AppCompatActivity {
         button_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ToPatternActivity();
+
+                //ToPatternActivity();
+                ImageView img= (ImageView) findViewById(R.id.img_no_connection);
+                img.setImageResource(R.drawable.signal_black);
             }
         });
 
