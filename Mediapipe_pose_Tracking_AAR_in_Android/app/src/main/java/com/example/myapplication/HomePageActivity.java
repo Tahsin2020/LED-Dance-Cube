@@ -22,7 +22,7 @@ public class HomePageActivity extends AppCompatActivity {
     private static final String TAG = "HomePageActivity";
     private static final String SERVER_IP = "128.189.241.216";
     private static final int SERVER_PORT = 12345;
-    private DataOutputStream data_output;
+    public static DataOutputStream data_output;
     private InputStream input;
     Thread Thread1 = null;
     @Override
@@ -40,7 +40,8 @@ public class HomePageActivity extends AppCompatActivity {
                 startActivity(new Intent(this, HomePageActivity.class));
                 return true;
             case R.id.patterns:
-                startActivity(new Intent(this, PatternActivity.class));
+                Intent intent = new Intent(this, PatternActivity.class);
+                startActivity(intent);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);

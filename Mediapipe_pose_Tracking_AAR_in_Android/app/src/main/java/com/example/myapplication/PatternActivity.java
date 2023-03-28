@@ -19,8 +19,10 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.myapplication.databinding.ActivityPatternBinding;
 
-public class PatternActivity extends AppCompatActivity {
+import java.io.DataOutputStream;
+import java.io.IOException;
 
+public class PatternActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -46,7 +48,7 @@ public class PatternActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pattern);
-
+        new Thread(new Thread3((byte) 2)).start();
         Button button = (Button) findViewById(R.id.button_pattern2);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -55,7 +57,6 @@ public class PatternActivity extends AppCompatActivity {
             }
         });
 
-
     }
 
     public void backToMainActivity(){
@@ -63,5 +64,20 @@ public class PatternActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-
+    class Thread3 implements Runnable {
+        private byte dataToSend;
+        Thread3(byte b) {
+            dataToSend = b;
+        }
+        Thread3() {}
+        @Override
+        public void run() {
+            try {
+                HomePageActivity.data_output.write(dataToSend);
+                HomePageActivity.data_output.flush();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
 }
