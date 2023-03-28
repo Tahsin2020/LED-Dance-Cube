@@ -23,9 +23,10 @@
 
         <pl.droidsonroids.gif.GifImageView
             android:id="@+id/img_no_connection"
-            android:layout_width="78dp"
-            android:layout_height="76dp"
-            android:gravity="top"
+            android:layout_width="82dp"
+            android:layout_height="68dp"
+            android:rotation="90"
+            android:rotationX="0"
             android:src="@drawable/wait_c"/>
 
         <androidx.constraintlayout.utils.widget.ImageFilterView
