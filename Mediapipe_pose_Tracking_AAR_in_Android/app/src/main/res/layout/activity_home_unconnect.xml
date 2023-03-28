@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:gravity="center"
+    android:background="#000000">
+
+    <LinearLayout
+        android:layout_width="445dp"
+        android:layout_height="258dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="horizontal">
+
+        <androidx.constraintlayout.utils.widget.ImageFilterView
+            android:layout_width="78dp"
+            android:layout_height="76dp"
+            android:gravity="top"
+            android:src="@drawable/controller" />
+
+        <TextView
+            android:id="@+id/no_camera_access_view"
+            android:layout_width="127dp"
+            android:layout_height="68dp"
+            android:gravity="center_vertical"
+            android:text="wait for connection"
+            android:textColor="@color/white" />
+
+        <androidx.constraintlayout.utils.widget.ImageFilterView
+            android:layout_width="76dp"
+            android:layout_height="69dp"
+            android:gravity="top"
+            android:src="@drawable/background_with_led_img" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <Button
+            android:id="@+id/button_home1"
+            android:layout_width="136dp"
+            android:layout_height="wrap_content"
+            android:text="@string/live_streaming" />
+
+        <Button
+            android:id="@+id/button_home2"
+            android:layout_width="136dp"
+            android:layout_height="wrap_content"
+            android:text="@string/patterns" />
+
+    </LinearLayout>
+
+</LinearLayout>

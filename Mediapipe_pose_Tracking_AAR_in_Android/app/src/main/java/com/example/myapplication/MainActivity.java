@@ -30,6 +30,9 @@ import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.ToggleButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.navigation.NavController;
@@ -135,6 +138,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(getContentViewLayoutResId());
 
+        /*Add in Oncreate() funtion after setContentView()*/
+        ToggleButton simpleToggleButton = (ToggleButton) findViewById(R.id.draw_Toggle); // initiate a toggle button
+        Boolean ToggleButtonState = simpleToggleButton.isChecked(); // check current state of a toggle button (true or false).
+
 
         previewDisplayView = new SurfaceView(this);
         setupPreviewDisplayView();
@@ -146,22 +153,26 @@ public class MainActivity extends AppCompatActivity {
         } catch (NameNotFoundException e) {
             Log.e(TAG, "Cannot find application info: " + e);
         }
-        // Initialize asset manager so that MediaPipe native libraries can access the app assets, e.g.,
-        // binary graphs.
-        AndroidAssetUtil.initializeNativeAssetManager(this);
-        eglManager = new EglManager(null);
-        processor =
-                new FrameProcessor(
-                        this,
-                        eglManager.getNativeContext(),
-                        BINARY_GRAPH_NAME,
-                        INPUT_VIDEO_STREAM_NAME,
-                        OUTPUT_VIDEO_STREAM_NAME);
-        processor
-                .getVideoSurfaceOutput()
-                .setFlipY(FLIP_FRAMES_VERTICALLY);
 
-        //if (Log.isLoggable(TAG, Log.VERBOSE)) {
+
+            // Initialize asset manager so that MediaPipe native libraries can access the app assets, e.g.,
+            // binary graphs.
+            AndroidAssetUtil.initializeNativeAssetManager(this);
+            eglManager = new EglManager(null);
+            processor =
+                    new FrameProcessor(
+                            this,
+                            eglManager.getNativeContext(),
+                            BINARY_GRAPH_NAME,
+                            INPUT_VIDEO_STREAM_NAME,
+                            OUTPUT_VIDEO_STREAM_NAME);
+
+            processor
+                    .getVideoSurfaceOutput()
+                    .setFlipY(FLIP_FRAMES_VERTICALLY);
+
+
+            //if (Log.isLoggable(TAG, Log.VERBOSE)) {
             processor.addPacketCallback(
                     OUTPUT_LANDMARKS_STREAM_NAME,
                     (packet) -> {
@@ -176,6 +187,7 @@ public class MainActivity extends AppCompatActivity {
                             Log.e(TAG, "Failed to get proto.", exception);
                         }
                     });
+        
         //}
 
         // To show verbose logging, run:
@@ -311,6 +323,7 @@ public class MainActivity extends AppCompatActivity {
         previewDisplayView.setVisibility(View.GONE);
         ViewGroup viewGroup = findViewById(R.id.preview_display_layout);
         viewGroup.addView(previewDisplayView);
+        ///Draw toggle
 
         previewDisplayView
                 .getHolder()

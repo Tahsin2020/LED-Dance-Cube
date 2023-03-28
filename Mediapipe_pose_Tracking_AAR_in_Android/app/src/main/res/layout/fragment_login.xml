@@ -6,6 +6,12 @@
     tools:context=".LoginFragment"
     android:background="@color/black">
 
+    <pl.droidsonroids.gif.GifImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/cube"
+        />
+
     <TextView
         android:id="@+id/tv_title"
         android:layout_width="wrap_content"

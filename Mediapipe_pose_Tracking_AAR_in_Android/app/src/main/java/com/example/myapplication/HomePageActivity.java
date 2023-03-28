@@ -34,7 +34,8 @@ public class HomePageActivity extends AppCompatActivity {
 
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_home);
+        setContentView(R.layout.activity_home_unconnect);
+
 
         Button button = (Button) findViewById(R.id.button_home1);
         button.setOnClickListener(new View.OnClickListener() {
