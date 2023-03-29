@@ -106,4 +106,6 @@ public class PatternActivity extends AppCompatActivity {
             }
         }
     }
+
+
 }
