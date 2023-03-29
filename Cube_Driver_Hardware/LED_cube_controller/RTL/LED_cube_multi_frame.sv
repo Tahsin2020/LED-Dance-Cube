@@ -1,8 +1,10 @@
 //`define TB
 
+`define frames_per_animation 8'd149
+`define loops_per_animation 4'd5
+
 `ifdef TB
 	`define frame_time 21'hff
-	`define frames_per_animation 8'd149
 `else 
 	`define frame_time 21'b101101110001101100000
 `endif
@@ -19,10 +21,10 @@ module LED_cube_multi_frame(
 	input logic [3:0] mode,
 	input logic [3:0] brightness,
 	input logic [3:0] animation_sel,
+	input logic loop_mode,
 
 	// in_data
 	input logic [7:0] data_in,
-	input logic [9:0] SW,
 
 	// outputs
 	output logic [7:0] Layers,
@@ -82,10 +84,10 @@ module LED_cube_multi_frame(
 	
 	always_comb begin : next_state_logic
 		next_state = state;
-		if(mode == 4'b0) next_state = WAIT;
+		if(animate_stop) next_state = WAIT;
 		else begin
 			case(state)
-			WAIT: if(mode[0] ^ mode[1]) next_state = DRIVE_FRAME;
+			WAIT: if(animate_start) next_state = DRIVE_FRAME;
 				DRIVE_FRAME: if(timer_done) next_state = NEXT_FRAME;
 				NEXT_FRAME: next_state = DRIVE_FRAME;
 			endcase
@@ -113,17 +115,25 @@ module LED_cube_multi_frame(
 	logic [13:0] addr;
 	assign addr = {offset, frame_addr};
 	
-	logic [2:0] animation_loop;
+	logic [3:0] animation_loop;
 
 	always_ff @( posedge clk ) begin
-		if( ~rst_n ) animation_loop <= 3'b0;
-		else if(offset == `frames_per_animation && mode == 4'b1) begin
+		if( ~rst_n | ~loop_mode) animation_loop <= 4'b0;
+		else if(offset == `frames_per_animation) begin
 			animation_loop <= animation_loop + 1'b1;
 		end
 	end
 
+	logic [2:0] animation_sel_loop;
+
+	always_ff @( posedge clk ) begin : animation_sel_loop_seq_blk
+		if( ~rst_n ) animation_sel_loop <= 0;
+		else if( animation_loop == `loops_per_animation)
+			animation_sel_loop <= animation_sel_loop + 1'b1;
+	end
+
 	always_comb begin : pick_animation_block
-		case(animation_sel[2:0] + animation_loop)
+		case(animation_sel[2:0] + animation_sel_loop)
 			3'b000: data_to_latch = data1[addr];
 			3'b001: data_to_latch = data2[addr];
 			3'b010: data_to_latch = data3[addr];
@@ -148,7 +158,7 @@ module LED_cube_multi_frame(
 		.start(frame_start),
 		.stop(frame_stop),
 		.done(frame_done),
-		.addr(frame_addr),
+		.addr( ),
 		.data_to_latch(data_to_latch),
 		.Layers(Layers),
 		.Latches(Latches),
