@@ -51,9 +51,18 @@ public class HomePageActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                ToPatternActivity();
                 ImageView img= (ImageView) findViewById(R.id.img_no_connection);
                 img.setImageResource(R.drawable.signal_black);
+                ToPatternActivity();
+            }
+        });
+
+        Button button_3 = (Button) findViewById(R.id.button_home3);
+        button_2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                ToGalleryActivity();
             }
         });
 
@@ -65,6 +74,11 @@ public class HomePageActivity extends AppCompatActivity {
     }
 
     public void ToPatternActivity(){
+        Intent intent = new Intent(this, PatternActivity.class);
+        startActivity(intent);
+    }
+
+    public void ToGalleryActivity(){
         Intent intent = new Intent(this, GalleryActivity.class);
         startActivity(intent);
     }
