@@ -12,7 +12,7 @@ public class ProcessData {
     static ArrayList<Float> prev_xs = new ArrayList<>(Collections.nCopies(16, 0F));
     static ArrayList<Float> prev_ys = new ArrayList<>(Collections.nCopies(16, 0F));
     static ArrayList<Float> prev_zs = new ArrayList<>(Collections.nCopies(16, 0F));
-    static final float ZSCALE = 0.5F;
+    static final float ZSCALE = 0.25F;
     static final float THRESH = 0.05F;
     public static byte[] process(Map<String, Map<String, Float>> model_points){
         HashSet<String> whitelist = new HashSet<>(Arrays.asList("11", "12", "13", "14", "15", "16", "23", "24", "25", "26", "27", "28"));
