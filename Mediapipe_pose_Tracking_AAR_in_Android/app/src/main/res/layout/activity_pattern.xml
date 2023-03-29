@@ -23,19 +23,20 @@
         android:id="@+id/button_pattern2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/pattern_1" />
+        android:text="pattern-2" />
 
     <Button
         android:id="@+id/button_pattern3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/pattern_1" />
+        android:text="pattern-3" />
 
     <Button
         android:id="@+id/button_pattern4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/pattern_1" />
+        android:text="pattern-4" />
+
 
 
 </LinearLayout>

@@ -3,7 +3,8 @@
     package="com.example.myapplication">
     <!-- For using the Camera -->
     <uses-permission android:name="android.permission.CAMERA" />
-
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" /> <!-- For mediapipe -->
     <uses-feature
@@ -37,6 +38,12 @@
     </activity>
     <activity
         android:name=".HomePageActivity"
+        android:exported="true">
+
+    </activity>
+
+    <activity
+        android:name=".GalleryActivity"
         android:exported="true">
 
     </activity>

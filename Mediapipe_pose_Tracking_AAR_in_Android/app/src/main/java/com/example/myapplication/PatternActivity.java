@@ -19,8 +19,10 @@ import androidx.navigation.ui.NavigationUI;
 
 import com.example.myapplication.databinding.ActivityPatternBinding;
 
-public class PatternActivity extends AppCompatActivity {
+import java.io.DataOutputStream;
+import java.io.IOException;
 
+public class PatternActivity extends AppCompatActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -46,21 +48,63 @@ public class PatternActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pattern);
-
-        Button button = (Button) findViewById(R.id.button_pattern2);
-        button.setOnClickListener(new View.OnClickListener() {
+        new Thread(new Thread3((byte) 0x02)).start();
+        Button button2 = (Button) findViewById(R.id.button_pattern2);
+        button2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                backToMainActivity();
+                pattern2Activity();
             }
         });
 
+        Button button3 = (Button) findViewById(R.id.button_pattern3);
+        button3.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pattern3Activity();
+            }
+        });
+
+        Button button4 = (Button) findViewById(R.id.button_pattern4);
+        button4.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pattern4Activity();
+            }
+        });
 
     }
 
     public void backToMainActivity(){
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+    }
+
+    public void pattern2Activity(){ // When button_pattern3 clicked
+        new Thread(new Thread3((byte) 0x20)).start();
+    }
+    public void pattern3Activity(){ // When button_pattern3 clicked
+        new Thread(new Thread3((byte) 0x30)).start();
+    }
+    public void pattern4Activity(){ // When button_pattern4 clicked
+        new Thread(new Thread3((byte) 0x40)).start();
+    }
+
+    class Thread3 implements Runnable {
+        private byte dataToSend;
+        Thread3(byte b) {
+            dataToSend = b;
+        }
+        Thread3() {}
+        @Override
+        public void run() {
+            try {
+                HomePageActivity.data_output.write(dataToSend);
+                HomePageActivity.data_output.flush();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 
 

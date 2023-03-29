@@ -1,19 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 
+
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:divider="@drawable/shape_divider_linear"
-    android:gravity="center"
     android:orientation="vertical"
+    android:gravity="center"
     android:background="#000000">
 
+    <LinearLayout
+        android:layout_width="445dp"
+        android:layout_height="258dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <androidx.constraintlayout.utils.widget.ImageFilterView
-            android:layout_width="269dp"
-            android:layout_height="184dp"
+            android:layout_width="98dp"
+            android:layout_height="76dp"
             android:gravity="top"
-            android:src="@drawable/background_with_led_img"/>
+            android:src="@drawable/controller" />
+
+        <pl.droidsonroids.gif.GifImageView
+            android:layout_width="82dp"
+            android:layout_height="68dp"
+            android:rotation="90"
+            android:rotationX="0"
+            android:src="@drawable/signal_black" />
+
+        <androidx.constraintlayout.utils.widget.ImageFilterView
+            android:layout_width="103dp"
+            android:layout_height="69dp"
+            android:gravity="top"
+            android:src="@drawable/background_with_led_img" />
+
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="40dp"
+        android:layout_weight="2"
+        android:gravity="center"
+        android:orientation="vertical">
 
         <Button
             android:id="@+id/button_home1"
@@ -27,6 +56,6 @@
             android:layout_height="wrap_content"
             android:text="@string/patterns" />
 
-
+    </LinearLayout>
 
 </LinearLayout>
