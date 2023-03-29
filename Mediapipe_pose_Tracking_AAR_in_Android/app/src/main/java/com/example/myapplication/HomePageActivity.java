@@ -68,7 +68,10 @@ public class HomePageActivity extends AppCompatActivity {
         button_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 ToPatternActivity();
+                ImageView img= (ImageView) findViewById(R.id.img_no_connection);
+                img.setImageResource(R.drawable.signal_black);
             }
         });
 
@@ -88,7 +91,7 @@ public class HomePageActivity extends AppCompatActivity {
     }
 
     public void ToPatternActivity(){
-        Intent intent = new Intent(this, PatternActivity.class);
+        Intent intent = new Intent(this, GalleryActivity.class);
         startActivity(intent);
     }
 
