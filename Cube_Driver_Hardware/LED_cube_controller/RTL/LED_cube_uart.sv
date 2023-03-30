@@ -14,7 +14,7 @@ module LED_cube_uart (
 		output wire [7:0] LEDR,                         //   conduit_end.new_signal
         input logic [9:0] SW,
         output logic [35:0] GPIO_0,
-        input logic [3:0] KEY
+        input logic KEY1
 );
 
     logic clk, rst_n;
@@ -77,7 +77,7 @@ module LED_cube_uart (
     `ifdef Test
         always_ff @(posedge clk) begin : ireg_logic
             if( ~rst_n ) uart_reg <= 0;
-            else if(~KEY[1]) uart_reg <= SW[7:0];
+            else if(~KEY1) uart_reg <= SW[7:0];
         end
     `elsif 
         always_ff @(posedge clk) begin : ireg_logic

@@ -55,13 +55,13 @@ module LED_cube_driver(
 
     always_ff @( posedge clk )  begin : Layers_Latches_Data_comb_logic
         case(state)
-            ANIM_LOOP: {Layers_out, Latches_out, Data_out} = {multi_frame_layers, multi_frame_latches, multi_frame_data};
-            ANIM_SEL:  {Layers_out, Latches_out, Data_out} = {multi_frame_layers, multi_frame_latches, multi_frame_data};
-            STREAM:    {Layers_out, Latches_out, Data_out} = {stream_layers, stream_latches, stream_data};
-            PLANE_MSG: {Layers_out, Latches_out, Data_out} = {plane_msg_layers, plane_msg_latches, plane_msg_data};
-            ALL_ON:    {Layers_out, Latches_out, Data_out} = {all_on_layers, all_on_latches, all_on_data};
-            ANIM_DB:   {Layers_out, Latches_out, Data_out} = {anim_db_layers, anim_db_latches, anim_db_data};
-            default:   {Layers_out, Latches_out, Data_out} = {multi_frame_layers, multi_frame_latches, multi_frame_data};
+            ANIM_LOOP: {Layers_out, Latches_out, Data_out} <= {multi_frame_layers, multi_frame_latches, multi_frame_data};
+            ANIM_SEL:  {Layers_out, Latches_out, Data_out} <= {multi_frame_layers, multi_frame_latches, multi_frame_data};
+            STREAM:    {Layers_out, Latches_out, Data_out} <= {stream_layers, stream_latches, stream_data};
+            PLANE_MSG: {Layers_out, Latches_out, Data_out} <= {plane_msg_layers, plane_msg_latches, plane_msg_data};
+            ALL_ON:    {Layers_out, Latches_out, Data_out} <= {all_on_layers, all_on_latches, all_on_data};
+            ANIM_DB:   {Layers_out, Latches_out, Data_out} <= {anim_db_layers, anim_db_latches, anim_db_data};
+            default:   {Layers_out, Latches_out, Data_out} <= {multi_frame_layers, multi_frame_latches, multi_frame_data};
         endcase
     end
 
@@ -87,7 +87,7 @@ module LED_cube_driver(
         .animate_start(multi_frame_animate_start),
         .animate_stop(multi_frame_animate_stop),
 
-        .animation_sel(multi_frame_animate_sel),
+        .animation_sel(animation_sel),
         .loop_mode(loop_mode),
         .brightness(brightness),
 

@@ -22,17 +22,19 @@ module Config_Space(
     // 0x0F - ANIM_DB
     always_ff @(posedge clk) begin : mode_register
         if( ~rst_n ) mode <= 0;
-        else if(conf_i == 4'd0) mode <= conf_d[3:0];
+        else if(conf_i == 4'd0) mode <= conf_d;
     end
     
     always_ff @(posedge clk) begin : brightness_register
         if( ~rst_n ) brightness <= 4'hf;
-        else if(conf_i == 4'd1) brightness <= conf_d[3:0];
+        else if(conf_i == 4'd1) brightness <= conf_d;
     end
+
+
     
     always_ff @(posedge clk) begin : animation_sel_register
         if( ~rst_n ) animation_sel <= 0;
-        else if(mode == 4'h2) animation_sel <= conf_d[3:0];
+        else if(mode == 4'h2) animation_sel <= conf_i[2:0];
     end
 
 endmodule : Config_Space

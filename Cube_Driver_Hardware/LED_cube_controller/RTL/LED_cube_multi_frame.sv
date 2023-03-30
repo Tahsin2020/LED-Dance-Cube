@@ -115,21 +115,42 @@ module LED_cube_multi_frame(
 	logic [13:0] addr;
 	assign addr = {offset, frame_addr};
 	
-	logic [3:0] animation_loop;
+	logic [3:0] animation_loop_d, animation_loop_q;
+
+	always_comb begin 
+		animation_loop_d = animation_loop_q;
+		if(offset == `frames_per_animation && timer_done == 1'b1) begin
+			if(animation_loop_q == 4'd5)
+				animation_loop_d <= 4'b0;
+			else
+				animation_loop_d <= animation_loop_q + 1'b1;
+		end
+	end
 
 	always_ff @( posedge clk ) begin
-		if( ~rst_n | ~loop_mode) animation_loop <= 4'b0;
-		else if(offset == `frames_per_animation) begin
-			animation_loop <= animation_loop + 1'b1;
+		if( ~rst_n | ~loop_mode) animation_loop_q <= 4'b0;
+		else begin
+			animation_loop_q <= animation_loop_d;
 		end
 	end
 
 	logic [2:0] animation_sel_loop;
+	logic inc_animation_cond;
+	assign inc_animation_cond = ((animation_loop_q == `loops_per_animation) && (animation_loop_d != animation_loop_q)) ? 1'b1 : 1'b0;
+
+	ConditionalPulse inc_animation_pulse(
+				.clk(clk), 
+				.rst_n(rst_n), 
+				.cond(inc_animation_cond), 
+				.pulse(inc_animation)
+	);
 
 	always_ff @( posedge clk ) begin : animation_sel_loop_seq_blk
-		if( ~rst_n ) animation_sel_loop <= 0;
-		else if( animation_loop == `loops_per_animation)
-			animation_sel_loop <= animation_sel_loop + 1'b1;
+		if( ~rst_n || mode == 4'h2 ) animation_sel_loop <= 0;
+		else begin
+			if( inc_animation == 1'b1 )
+				animation_sel_loop <= animation_sel_loop + 1'b1; 
+		end
 	end
 
 	always_comb begin : pick_animation_block
@@ -158,7 +179,7 @@ module LED_cube_multi_frame(
 		.start(frame_start),
 		.stop(frame_stop),
 		.done(frame_done),
-		.addr( ),
+		.addr(frame_addr),
 		.data_to_latch(data_to_latch),
 		.Layers(Layers),
 		.Latches(Latches),

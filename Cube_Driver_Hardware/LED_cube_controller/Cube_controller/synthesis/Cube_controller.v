@@ -10,7 +10,8 @@ module Cube_controller (
 		output wire [35:0] led_cube_uart_0_conduit_end_gpio, //                            .gpio
 		input  wire        reset_reset_n,                    //                       reset.reset_n
 		input  wire        uart_0_external_connection_rxd,   //  uart_0_external_connection.rxd
-		output wire        uart_0_external_connection_txd    //                            .txd
+		output wire        uart_0_external_connection_txd,    //                            .txd
+		input wire KEY1
 	);
 
 	wire  [15:0] led_cube_uart_0_avalon_master_readdata;      // mm_interconnect_0:LED_cube_uart_0_avalon_master_readdata -> LED_cube_uart_0:avalon_master_readdata
@@ -30,6 +31,7 @@ module Cube_controller (
 	wire         rst_controller_reset_out_reset;              // rst_controller:reset_out -> [LED_cube_uart_0:reset_sink_reset, mm_interconnect_0:LED_cube_uart_0_reset_sink_reset_bridge_in_reset_reset, uart_0:reset_n]
 
 	LED_cube_uart led_cube_uart_0 (
+		.KEY1(KEY1),
 		.clock_sink_clk              (clk_clk),                                     //    clock_sink.clk
 		.reset_sink_reset            (~rst_controller_reset_out_reset),             //    reset_sink.reset_n
 		.LEDR                        (led_cube_uart_0_conduit_end_ledr),            //   conduit_end.ledr
