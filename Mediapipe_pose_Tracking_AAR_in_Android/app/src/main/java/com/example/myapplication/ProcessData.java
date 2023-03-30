@@ -9,16 +9,14 @@ import java.util.HashSet;
 import java.util.Map;
 
 public class ProcessData {
-    static ArrayList<Float> prev_xs = new ArrayList<>(Collections.nCopies(16, 0F));
-    static ArrayList<Float> prev_ys = new ArrayList<>(Collections.nCopies(16, 0F));
-    static ArrayList<Float> prev_zs = new ArrayList<>(Collections.nCopies(16, 0F));
+    static int num_points = 22;
+    static ArrayList<Float> prev_xs = new ArrayList<>(Collections.nCopies(num_points, -100F));
+    static ArrayList<Float> prev_ys = new ArrayList<>(Collections.nCopies(num_points, -100F));
+    static ArrayList<Float> prev_zs = new ArrayList<>(Collections.nCopies(num_points, -100F));
 
-    static int[] new_xs = new int[xs.size()];
-    int[] new_ys = new int[xs.size()];
-    int[] new_zs = new int[xs.size()];
-
-    static final float ZSCALE = 0.5F;
-    static final float THRESH = 0.05F;
+    static final float ZSCALE = 0.2F;
+    static final float YSCALE = 1.4F;
+    static final float THRESH = 0.1F;
     public static byte[] process(Map<String, Map<String, Float>> model_points){
         HashSet<String> whitelist = new HashSet<>(Arrays.asList("11", "12", "13", "14", "15", "16", "23", "24", "25", "26", "27", "28"));
         ArrayList<Float> xs = new ArrayList<>();
@@ -56,6 +54,7 @@ public class ProcessData {
         xs.replaceAll(aFloat -> aFloat - xhips);
         ys.replaceAll(aFloat -> aFloat - yhips);
         ys.replaceAll(aFloat -> aFloat * -1);
+        ys.replaceAll(aFloat -> aFloat * YSCALE);
 
         float minz = Collections.min(zs);
         float zrange = Math.abs(Collections.max(zs) - minz);
