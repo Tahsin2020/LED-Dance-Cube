@@ -7,8 +7,11 @@ from matplotlib.animation import FuncAnimation, PillowWriter
 from rotating_wall_frames import create_rotating_wall_animation
 from wave_animation import create_wave_animation
 from cone_animation import create_cone_animation
-from hourglass_animation import create_hourglass_animation
 from rolling_ball_animation import create_rolling_ball_animation
+from rotating_diamond_animation import create_rotating_diamond_animation
+from pulsating_wave_sphere import create_pulsating_wave_sphere_animation
+from helix_animations import create_helix_animation
+
 
 # Example input 8x8 plane
 # input_plane = np.array([
@@ -35,9 +38,11 @@ input_plane = np.array([
 
 # Generate the animation frames
 # animation_frames = create_animation(input_plane, move_every_n_frames=5)
-animation_frames = create_rotating_wall_animation()
+# animation_frames = create_rotating_wall_animation()
 # animation_frames = create_wave_animation()
-
+# animation_frames = create_rotating_diamond_animation()
+# animation_frames = create_pulsating_wave_sphere_animation()
+animation_frames = create_helix_animation()
 # animation_frames = create_cone_animation()
 # animation_frames = create_hourglass_animation()
 # animation_frames = create_rolling_ball_animation()

@@ -6,8 +6,11 @@ from create_moving_8x8 import create_animation
 from rotating_wall_frames import create_rotating_wall_animation
 from wave_animation import create_wave_animation
 from cone_animation import create_cone_animation
-from hourglass_animation import create_hourglass_animation
 from rolling_ball_animation import create_rolling_ball_animation
+from rotating_diamond_animation import create_rotating_diamond_animation
+from pulsating_wave_sphere import create_pulsating_wave_sphere_animation
+from helix_animations import create_helix_animation
+
 
 input_plane = np.array([
     [1, 0, 0, 1, 0, 1, 1, 1],
@@ -24,7 +27,10 @@ input_plane = np.array([
 # input_frames_list = create_animation(input_plane)
 # input_frames = np.array(input_frames_list)
 
-input_frames_list = create_rotating_wall_animation()
+# input_frames_list = create_rotating_wall_animation()
+# input_frames_list = create_rotating_diamond_animation()
+input_frames_list = create_pulsating_wave_sphere_animation()
+# input_frames_list = create_helix_animation()
 # input_frames = np.array(input_frames_list)
 
 # input_frames_list = create_wave_animation()
@@ -75,6 +81,6 @@ fig.patch.set_facecolor('black')
 
 animation = FuncAnimation(fig, update_graph, init_func=init, frames=num_frames, interval=5, blit=False)
 
-animation.save('l2c-l2c-41/Cube_Driver_Hardware/LED_cube_controller/Animations/Python Animations/rotating_3d_plots.gif', writer=PillowWriter(fps=20), dpi=80)
+animation.save('l2c-l2c-41/Cube_Driver_Hardware/LED_cube_controller/Animations/GIFs/pulsating_wave_sphere.gif', writer=PillowWriter(fps=20), dpi=80)
 
 plt.show()

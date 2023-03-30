@@ -1,30 +1,35 @@
 import numpy as np
+import math
 
-def rotate_point(point, angle):
-    x, y, z = point
-    s, c = np.sin(np.radians(angle)), np.cos(np.radians(angle))
-    x_rot = x * c - y * s
-    y_rot = x * s + y * c
-    return x_rot, y_rot, z
+# Define the number of rotations during the animation
+num_rotations = 3
+# Define the width and height of the wall
+wall_width = 1
+wall_height = 8
+# Define the starting position of the wall
+start_x = 2
+start_y = 0
 
-def generate_rotating_wall_frame(rotation_angle, center_x=3.5, center_y=3.5):
+def generate_rotating_wall_frame(angle):
     frame = np.zeros((8, 8, 8))
-    wall_points = [(x, y, z) for x in range(8) for y in range(8) for z in range(8) if  x == 4]
+    for x in range(8):
+        for y in range(8):
+            # Rotate the pixel position around the center of the display
+            x_rot = (x - 3.5) * math.cos(angle) - (y - 3.5) * math.sin(angle) + 3.5
+            y_rot = (x - 3.5) * math.sin(angle) + (y - 3.5) * math.cos(angle) + 3.5
 
-    for point in wall_points:
-        x, y, z = point
-        x_shifted, y_shifted = x - center_x, y - center_y
-        rotated_point = rotate_point((x_shifted, y_shifted, z), rotation_angle)
-        x_rotated, y_rotated, z_rotated = rotated_point
-        x_rotated_shifted, y_rotated_shifted = int(x_rotated + center_x), int(y_rotated + center_y)
-
-        if 0 <= x_rotated_shifted < 8 and 0 <= y_rotated_shifted < 8 and 0 <= z_rotated < 8:
-            frame[x_rotated_shifted, y_rotated_shifted, z_rotated] = 1
-
+            # Check if the pixel is within the wall area
+            if start_x <= x_rot < start_x + wall_width and start_y <= y_rot < start_y + wall_height:
+                frame[x, 0:8, y] = 1  # Turn on the pixel if it's within the wall area
+            else:
+                frame[x, 0:8, y] = 0  # Turn off the pixel if it's outside the wall area
     return frame
 
 def create_rotating_wall_animation():
-    num_frames = 150
-    rotation_angle_step = 360 / num_frames
-    rotating_wall_frames = [generate_rotating_wall_frame(rotation_angle_step * i) for i in range(num_frames)]
-    return rotating_wall_frames
+    # Generate a list of 150 frames of 8x8x8 arrays
+    frames = []
+    for frame in range(150):
+        # Calculate the rotation angle for this frame
+        angle = frame / 150 * num_rotations * 2 * math.pi
+        frames.append(generate_rotating_wall_frame(angle))
+    return frames
