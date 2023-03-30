@@ -12,6 +12,11 @@ public class ProcessData {
     static ArrayList<Float> prev_xs = new ArrayList<>(Collections.nCopies(16, 0F));
     static ArrayList<Float> prev_ys = new ArrayList<>(Collections.nCopies(16, 0F));
     static ArrayList<Float> prev_zs = new ArrayList<>(Collections.nCopies(16, 0F));
+
+    static int[] new_xs = new int[xs.size()];
+    int[] new_ys = new int[xs.size()];
+    int[] new_zs = new int[xs.size()];
+
     static final float ZSCALE = 0.5F;
     static final float THRESH = 0.05F;
     public static byte[] process(Map<String, Map<String, Float>> model_points){
@@ -96,13 +101,24 @@ public class ProcessData {
             new_ys[i] = y;
             new_zs[i] = z;
         }
+        /*
+        1. create prev1 prev2 lists to store past two frames of points
+            for edge cases at the start check if size is 0 or not
+        2. loop through new xyz points and compare with prev1 and prev2
+            if new xyz == prev2 and new xyz != prev1:
+                set prev1 point to be equal to new xyz point
+            else: do nothing
+        3. use Util.formatData on prev2 data points
+        4. set prev2 = prev1, prev1 = new xyz points
+         */
+
+
         System.out.println("\nAFTER DATA POINTS\n");
         System.out.println("Xs: " + Arrays.toString(new_xs));
         System.out.println("Ys: " + Arrays.toString(new_ys));
         System.out.println("Zs: " + Arrays.toString(new_zs));
         byte[] data = Utils.formatData(new_xs, new_ys, new_zs);
 
-        return data;
-        //Send "data" to DE1-SOC board
+        return data; //Send "data" to DE1-SOC
     }
 }
