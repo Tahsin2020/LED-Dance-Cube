@@ -18,7 +18,6 @@ module LED_cube_multi_frame(
 	input logic animate_stop,
 	
 	// config signals
-	input logic [3:0] mode,
 	input logic [3:0] brightness,
 	input logic [3:0] animation_sel,
 	input logic loop_mode,
@@ -63,13 +62,17 @@ module LED_cube_multi_frame(
 	logic [7:0] data3 [9599:0];
 	logic [7:0] data4 [9599:0];
 	logic [7:0] data5 [9599:0];
+	logic [7:0] data6 [9599:0];
+	logic [7:0] data7 [9599:0];
 	
 	initial begin
-	$readmemh("../Animations/animation_rotating_wall.hex", data1);
-	$readmemh("../Animations/animation_rotation.hex", data2);
-	$readmemh("../Animations/Animation_squares.hex", data3);
-	$readmemh("../Animations/animation_moving_cube.hex", data4);
-	$readmemh("../Animations/animation_hi.hex", data5);
+	$readmemh("../Animations/hexes/diamond.hex", data1);
+	$readmemh("../Animations/hexes/hexecone.hex", data2);
+	$readmemh("../Animations/hexes/pulsating_sphere.hex", data3);
+	$readmemh("../Animations/hexes/rolling_ball.hex", data4);
+	$readmemh("../Animations/hexes/rotating_wall.hex", data5);
+	$readmemh("../Animations/hexes/waves.hex", data6);
+	$readmemh("../Animations/hexes/helix.hex", data7);
 	end
 
 	logic timer_done;
@@ -146,9 +149,10 @@ module LED_cube_multi_frame(
 	);
 
 	always_ff @( posedge clk ) begin : animation_sel_loop_seq_blk
-		if( ~rst_n || mode == 4'h2 ) animation_sel_loop <= 0;
+		if( ~rst_n | ~loop_mode) animation_sel_loop <= 0;
 		else begin
-			if( inc_animation == 1'b1 )
+			if(animation_sel_loop == 4'h6) animation_sel_loop <= 4'h0;
+			else if( inc_animation == 1'b1 )
 				animation_sel_loop <= animation_sel_loop + 1'b1; 
 		end
 	end
@@ -160,6 +164,8 @@ module LED_cube_multi_frame(
 			3'b010: data_to_latch = data3[addr];
 			3'b011: data_to_latch = data4[addr];
 			3'b100: data_to_latch = data5[addr];
+			3'b101: data_to_latch = data6[addr];
+			3'b110: data_to_latch = data7[addr];
 			default: data_to_latch = 0;
 		endcase
 	end

@@ -1,6 +1,3 @@
-`define Test 1
-// `define Test 0
-
 module LED_cube_uart (
 		output wire       avalon_master_read,          // avalon_master.read
 		input  wire [15:0] avalon_master_readdata,      //              .readdata
@@ -13,8 +10,7 @@ module LED_cube_uart (
 		input  wire       reset_sink_reset,            //    reset_sink.reset
 		output wire [7:0] LEDR,                         //   conduit_end.new_signal
         input logic [9:0] SW,
-        output logic [35:0] GPIO_0,
-        input logic KEY1
+        output logic [35:0] GPIO_0
 );
 
     logic clk, rst_n;
@@ -74,17 +70,10 @@ module LED_cube_uart (
 
     assign avalon_master_read = (state == READ) ? 1'b1 : 1'b0;
 
-    `ifdef Test
-        always_ff @(posedge clk) begin : ireg_logic
-            if( ~rst_n ) uart_reg <= 0;
-            else if(~KEY1) uart_reg <= SW[7:0];
-        end
-    `elsif 
-        always_ff @(posedge clk) begin : ireg_logic
-            if( ~rst_n ) uart_reg <= 0;
-            else if(state == READ) uart_reg <= avalon_master_readdata[7:0];
-        end
-    `endif 
+    always_ff @(posedge clk) begin : ireg_logic
+        if( ~rst_n ) uart_reg <= 0;
+        else if(state == READ) uart_reg <= avalon_master_readdata[7:0];
+    end
 
 	assign avalon_master_writedata = {8'b0, uart_reg};
 

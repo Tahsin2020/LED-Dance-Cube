@@ -15,7 +15,6 @@ module LED_cube_controller (
 		.reset_reset_n(KEY[0]),                                             //                             reset.reset_n
 		.uart_0_external_connection_rxd(GPIO_1[35]),                        //        uart_0_external_connection.rxd
 		.uart_0_external_connection_txd(GPIO_1[34]),
-		.KEY1(KEY[1])// 
-   );
+);
 
 endmodule : LED_cube_controller
