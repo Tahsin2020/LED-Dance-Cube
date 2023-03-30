@@ -23,16 +23,6 @@ module LED_cube_uart (
 	assign {GPIO_0[25], GPIO_0[7], GPIO_0[9], GPIO_0[13], GPIO_0[15], GPIO_0[19], GPIO_0[21], GPIO_0[23]} = Latches_out;
 	assign {GPIO_0[2], GPIO_0[4], GPIO_0[6], GPIO_0[10], GPIO_0[12], GPIO_0[16], GPIO_0[18], GPIO_0[20]} = Data_out;
 
-
-    always_comb begin : LEDR_Debug_block
-		case( SW[9:8] )
-			2'b00: LEDR = Data_out;
-			2'b01: LEDR = Latches_out;
-			2'b10: LEDR = Layers_out;
-			2'b11: LEDR = uart_reg;
-		endcase
-	end
-
 // UART regs:
 // 0 - rxdata
 // 1 - txdata
@@ -51,7 +41,7 @@ module LED_cube_uart (
     enum {WAIT, READWAIT, READ} state, next_state; 
 
     logic [7:0] uart_reg;
-
+ 
     always_ff @(posedge clk) begin : ireg_logic_based_on 
         if( ~ rst_n ) state <= WAIT;
         else state <= next_state;
@@ -78,7 +68,7 @@ module LED_cube_uart (
 
     // assign avalon_master_write = (state == TRANSMIT) ? 1'b1 : 1'b0;
 
-    assign avalon_master_read = 1'b1;
+    assign avalon_master_read = (state == READ) ? 1'b1 : 1'b0;
 
     always_ff @(posedge clk) begin : ireg_logic
         if( ~rst_n ) uart_reg <= 0;
@@ -91,6 +81,9 @@ module LED_cube_uart (
         .clk(clk),
         .rst_n(rst_n),
         .uart_in(uart_reg),
+        .SW(SW),
+        .LEDR(LEDR),
+        .uart_reg(uart_reg),
 
         .Layers_out(Layers_out), 
         .Latches_out(Latches_out), 

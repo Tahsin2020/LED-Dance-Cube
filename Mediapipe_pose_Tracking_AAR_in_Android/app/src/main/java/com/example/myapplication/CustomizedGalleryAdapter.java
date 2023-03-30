@@ -42,7 +42,7 @@ public class CustomizedGalleryAdapter extends BaseAdapter {
         imageView.setImageResource(images[position]);
 
         // set ImageView param
-        imageView.setLayoutParams(new Gallery.LayoutParams(200, 200));
+        imageView.setLayoutParams(new Gallery.LayoutParams(400, 400));
         return imageView;
     }
 }

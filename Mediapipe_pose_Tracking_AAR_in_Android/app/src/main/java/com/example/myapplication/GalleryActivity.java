@@ -23,15 +23,9 @@ public class GalleryActivity extends AppCompatActivity {
     // array of images, here taken 10 different kind of
     // most popular programming languages
     int[] images = {
-            R.drawable.controller,
-            R.drawable.cube,
-            R.drawable.led,
-            R.drawable.controller,
-            R.drawable.cube,
-            R.drawable.led,
-            R.drawable.controller,
-            R.drawable.cube,
-            R.drawable.led,
+            R.drawable.rotating_3d_plots,
+            R.drawable.waving_3d_plots,
+            R.drawable.shifting_3d_plots
     };
 
     @Override

@@ -1,5 +1,5 @@
 Info: Starting: Create block symbol file (.bsf)
-Info: qsys-generate C:\CPEN391\CubeDriver\LED_cube_controller\Cube_controller.qsys --block-symbol-file --output-directory=C:\CPEN391\CubeDriver\LED_cube_controller\Cube_controller --family="Cyclone V" --part=5CSEMA5F31C6
+Info: qsys-generate C:\CPEN391\project_repo\l2c-l2c-41\Cube_Driver_Hardware\LED_cube_controller\Cube_controller.qsys --block-symbol-file --output-directory=C:\CPEN391\project_repo\l2c-l2c-41\Cube_Driver_Hardware\LED_cube_controller\Cube_controller --family="Cyclone V" --part=5CSEMA5F31C6
 Progress: Loading LED_cube_controller/Cube_controller.qsys
 Progress: Reading input file
 Progress: Adding LED_cube_uart_0 [LED_cube_uart 1.0]
@@ -17,7 +17,7 @@ Info: qsys-generate succeeded.
 Info: Finished: Create block symbol file (.bsf)
 Info: 
 Info: Starting: Create HDL design files for synthesis
-Info: qsys-generate C:\CPEN391\CubeDriver\LED_cube_controller\Cube_controller.qsys --synthesis=VERILOG --output-directory=C:\CPEN391\CubeDriver\LED_cube_controller\Cube_controller\synthesis --family="Cyclone V" --part=5CSEMA5F31C6
+Info: qsys-generate C:\CPEN391\project_repo\l2c-l2c-41\Cube_Driver_Hardware\LED_cube_controller\Cube_controller.qsys --synthesis=VERILOG --output-directory=C:\CPEN391\project_repo\l2c-l2c-41\Cube_Driver_Hardware\LED_cube_controller\Cube_controller\synthesis --family="Cyclone V" --part=5CSEMA5F31C6
 Progress: Loading LED_cube_controller/Cube_controller.qsys
 Progress: Reading input file
 Progress: Adding LED_cube_uart_0 [LED_cube_uart 1.0]
@@ -37,7 +37,7 @@ Info: Interconnect is inserted between master LED_cube_uart_0.avalon_master and 
 Info: Interconnect is inserted between master LED_cube_uart_0.avalon_master and slave uart_0.s1 because the master has waitrequest signal 1 bit wide, but the slave is 0 bit wide.
 Info: LED_cube_uart_0: "Cube_controller" instantiated LED_cube_uart "LED_cube_uart_0"
 Info: uart_0: Starting RTL generation for module 'Cube_controller_uart_0'
-Info: uart_0:   Generation command is [exec C:/intelfpga/18.1/quartus/bin64/perl/bin/perl.exe -I C:/intelfpga/18.1/quartus/bin64/perl/lib -I C:/intelfpga/18.1/quartus/sopc_builder/bin/europa -I C:/intelfpga/18.1/quartus/sopc_builder/bin/perl_lib -I C:/intelfpga/18.1/quartus/sopc_builder/bin -I C:/intelfpga/18.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/intelfpga/18.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_uart -- C:/intelfpga/18.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_uart/generate_rtl.pl --name=Cube_controller_uart_0 --dir=C:/Users/ADINSS~1/AppData/Local/Temp/alt9440_907305108187947321.dir/0049_uart_0_gen/ --quartus_dir=C:/intelfpga/18.1/quartus --verilog --config=C:/Users/ADINSS~1/AppData/Local/Temp/alt9440_907305108187947321.dir/0049_uart_0_gen//Cube_controller_uart_0_component_configuration.pl  --do_build_sim=0  ]
+Info: uart_0:   Generation command is [exec C:/intelfpga/18.1/quartus/bin64/perl/bin/perl.exe -I C:/intelfpga/18.1/quartus/bin64/perl/lib -I C:/intelfpga/18.1/quartus/sopc_builder/bin/europa -I C:/intelfpga/18.1/quartus/sopc_builder/bin/perl_lib -I C:/intelfpga/18.1/quartus/sopc_builder/bin -I C:/intelfpga/18.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/intelfpga/18.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_uart -- C:/intelfpga/18.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_uart/generate_rtl.pl --name=Cube_controller_uart_0 --dir=C:/Users/ADINSS~1/AppData/Local/Temp/alt9445_5663879444370657282.dir/0037_uart_0_gen/ --quartus_dir=C:/intelfpga/18.1/quartus --verilog --config=C:/Users/ADINSS~1/AppData/Local/Temp/alt9445_5663879444370657282.dir/0037_uart_0_gen//Cube_controller_uart_0_component_configuration.pl  --do_build_sim=0  ]
 Info: uart_0: Done RTL generation for module 'Cube_controller_uart_0'
 Info: uart_0: "Cube_controller" instantiated altera_avalon_uart "uart_0"
 Info: avalon_st_adapter: Inserting error_adapter: error_adapter_0
@@ -53,9 +53,9 @@ Info: router_001: "mm_interconnect_0" instantiated altera_merlin_router "router_
 Info: cmd_demux: "mm_interconnect_0" instantiated altera_merlin_demultiplexer "cmd_demux"
 Info: cmd_mux: "mm_interconnect_0" instantiated altera_merlin_multiplexer "cmd_mux"
 Info: rsp_mux: "mm_interconnect_0" instantiated altera_merlin_multiplexer "rsp_mux"
-Info: Reusing file C:/CPEN391/CubeDriver/LED_cube_controller/Cube_controller/synthesis/submodules/altera_merlin_arbitrator.sv
+Info: Reusing file C:/CPEN391/project_repo/l2c-l2c-41/Cube_Driver_Hardware/LED_cube_controller/Cube_controller/synthesis/submodules/altera_merlin_arbitrator.sv
 Info: uart_0_s1_cmd_width_adapter: "mm_interconnect_0" instantiated altera_merlin_width_adapter "uart_0_s1_cmd_width_adapter"
-Info: Reusing file C:/CPEN391/CubeDriver/LED_cube_controller/Cube_controller/synthesis/submodules/altera_merlin_burst_uncompressor.sv
+Info: Reusing file C:/CPEN391/project_repo/l2c-l2c-41/Cube_Driver_Hardware/LED_cube_controller/Cube_controller/synthesis/submodules/altera_merlin_burst_uncompressor.sv
 Info: avalon_st_adapter: "mm_interconnect_0" instantiated altera_avalon_st_adapter "avalon_st_adapter"
 Info: error_adapter_0: "avalon_st_adapter" instantiated error_adapter "error_adapter_0"
 Info: Cube_controller: Done "Cube_controller" with 18 modules, 23 files

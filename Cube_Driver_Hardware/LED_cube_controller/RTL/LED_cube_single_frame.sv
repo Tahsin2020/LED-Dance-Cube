@@ -101,9 +101,5 @@ module LED_cube_single_frame(
 		.done(layer_driver_done),
 		.layer_out(Layers)
 	);
-	
-	
-
-
 
 endmodule : LED_cube_single_frame

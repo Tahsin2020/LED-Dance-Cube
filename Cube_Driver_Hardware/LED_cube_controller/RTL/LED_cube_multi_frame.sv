@@ -1,8 +1,10 @@
 //`define TB
 
+`define frames_per_animation 8'd149
+`define loops_per_animation 4'd5
+
 `ifdef TB
 	`define frame_time 21'hff
-	`define frames_per_animation 8'd149
 `else 
 	`define frame_time 21'b101101110001101100000
 `endif
@@ -16,13 +18,12 @@ module LED_cube_multi_frame(
 	input logic animate_stop,
 	
 	// config signals
-	input logic [3:0] mode,
 	input logic [3:0] brightness,
 	input logic [3:0] animation_sel,
+	input logic loop_mode,
 
 	// in_data
 	input logic [7:0] data_in,
-	input logic [9:0] SW,
 
 	// outputs
 	output logic [7:0] Layers,
@@ -61,13 +62,17 @@ module LED_cube_multi_frame(
 	logic [7:0] data3 [9599:0];
 	logic [7:0] data4 [9599:0];
 	logic [7:0] data5 [9599:0];
+	logic [7:0] data6 [9599:0];
+	logic [7:0] data7 [9599:0];
 	
 	initial begin
-	$readmemh("../Animations/animation_rotating_wall.hex", data1);
-	$readmemh("../Animations/animation_rotation.hex", data2);
-	$readmemh("../Animations/Animation_squares.hex", data3);
-	$readmemh("../Animations/animation_moving_cube.hex", data4);
-	$readmemh("../Animations/animation_hi.hex", data5);
+	$readmemh("../Animations/hexes/diamond.hex", data1);
+	$readmemh("../Animations/hexes/hexecone.hex", data2);
+	$readmemh("../Animations/hexes/pulsating_sphere.hex", data3);
+	$readmemh("../Animations/hexes/rolling_ball.hex", data4);
+	$readmemh("../Animations/hexes/rotating_wall.hex", data5);
+	$readmemh("../Animations/hexes/waves.hex", data6);
+	$readmemh("../Animations/hexes/helix.hex", data7);
 	end
 
 	logic timer_done;
@@ -82,10 +87,10 @@ module LED_cube_multi_frame(
 	
 	always_comb begin : next_state_logic
 		next_state = state;
-		if(mode == 4'b0) next_state = WAIT;
+		if(animate_stop) next_state = WAIT;
 		else begin
 			case(state)
-			WAIT: if(mode[0] ^ mode[1]) next_state = DRIVE_FRAME;
+			WAIT: if(animate_start) next_state = DRIVE_FRAME;
 				DRIVE_FRAME: if(timer_done) next_state = NEXT_FRAME;
 				NEXT_FRAME: next_state = DRIVE_FRAME;
 			endcase
@@ -113,22 +118,54 @@ module LED_cube_multi_frame(
 	logic [13:0] addr;
 	assign addr = {offset, frame_addr};
 	
-	logic [2:0] animation_loop;
+	logic [3:0] animation_loop_d, animation_loop_q;
+
+	always_comb begin 
+		animation_loop_d = animation_loop_q;
+		if(offset == `frames_per_animation && timer_done == 1'b1) begin
+			if(animation_loop_q == 4'd5)
+				animation_loop_d <= 4'b0;
+			else
+				animation_loop_d <= animation_loop_q + 1'b1;
+		end
+	end
 
 	always_ff @( posedge clk ) begin
-		if( ~rst_n ) animation_loop <= 3'b0;
-		else if(offset == `frames_per_animation && mode == 4'b1) begin
-			animation_loop <= animation_loop + 1'b1;
+		if( ~rst_n | ~loop_mode) animation_loop_q <= 4'b0;
+		else begin
+			animation_loop_q <= animation_loop_d;
+		end
+	end
+
+	logic [2:0] animation_sel_loop;
+	logic inc_animation_cond;
+	assign inc_animation_cond = ((animation_loop_q == `loops_per_animation) && (animation_loop_d != animation_loop_q)) ? 1'b1 : 1'b0;
+
+	ConditionalPulse inc_animation_pulse(
+				.clk(clk), 
+				.rst_n(rst_n), 
+				.cond(inc_animation_cond), 
+				.pulse(inc_animation)
+	);
+
+	always_ff @( posedge clk ) begin : animation_sel_loop_seq_blk
+		if( ~rst_n | ~loop_mode) animation_sel_loop <= 0;
+		else begin
+			if(animation_sel_loop == 4'h6) animation_sel_loop <= 4'h0;
+			else if( inc_animation == 1'b1 )
+				animation_sel_loop <= animation_sel_loop + 1'b1; 
 		end
 	end
 
 	always_comb begin : pick_animation_block
-		case(animation_sel[2:0] + animation_loop)
+		case(animation_sel[2:0] + animation_sel_loop)
 			3'b000: data_to_latch = data1[addr];
 			3'b001: data_to_latch = data2[addr];
 			3'b010: data_to_latch = data3[addr];
 			3'b011: data_to_latch = data4[addr];
 			3'b100: data_to_latch = data5[addr];
+			3'b101: data_to_latch = data6[addr];
+			3'b110: data_to_latch = data7[addr];
 			default: data_to_latch = 0;
 		endcase
 	end

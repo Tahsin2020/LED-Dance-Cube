@@ -9,6 +9,7 @@ import java.util.HashSet;
 import java.util.Map;
 
 public class ProcessData {
+
     static int num_points = 22;
     static ArrayList<Float> prev_xs = new ArrayList<>(Collections.nCopies(num_points, -100F));
     static ArrayList<Float> prev_ys = new ArrayList<>(Collections.nCopies(num_points, -100F));

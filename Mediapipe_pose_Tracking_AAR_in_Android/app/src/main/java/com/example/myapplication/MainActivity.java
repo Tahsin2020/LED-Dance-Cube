@@ -74,13 +74,8 @@ import java.util.Map;
 public class MainActivity extends AppCompatActivity {
     //networking variables
     private static final String NTAG = "Networking";
-    private static final String SERVER_IP = "128.189.241.216";
-    private static final int SERVER_PORT = 12345;
     private static final long fps = 30;
     private static long ms_per_frame = 1000/fps;
-    private PrintWriter output;
-    private DataOutputStream data_output;
-    private BufferedReader input;
     Thread Thread1 = null;
 
     private static final String TAG = "MainActivity";
@@ -145,8 +140,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -171,9 +164,6 @@ public class MainActivity extends AppCompatActivity {
         // Initialize asset manager so that MediaPipe native libraries can access the app assets, e.g.,
         // binary graphs.
         AndroidAssetUtil.initializeNativeAssetManager(this);
-
-        Thread1 = new Thread(new Thread1());
-        Thread1.start();
 
         eglManager = new EglManager(null);
         processor =
@@ -435,21 +425,19 @@ public class MainActivity extends AppCompatActivity {
         return result;
     }
 
-    class Thread1 implements Runnable {
-        @Override
-        public void run() {
-            Socket socket;
-            try {
-                socket = new Socket(SERVER_IP, SERVER_PORT);
-//                output = new PrintWriter(socket.getOutputStream());
-                data_output = new DataOutputStream(socket.getOutputStream());
-                input = new BufferedReader(new InputStreamReader(socket.getInputStream()));
-                Log.v(TAG, "Connected to server");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
+//    class Thread1 implements Runnable {
+//        @Override
+//        public void run() {
+//            Socket socket;
+//            try {
+//                socket = new Socket(SERVER_IP, SERVER_PORT);
+//                HomePageActivity.data_output = new DataOutputStream(socket.getOutputStream());
+//                Log.v(TAG, "Connected to server");
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
 
     class Thread3 implements Runnable {
         private byte[] b = {1, 2, 3, 4};
@@ -462,9 +450,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void run() {
             try {
-                data_output.write(dataToSend);
-                data_output.flush();
-
+                HomePageActivity.data_output.write(dataToSend);
+                HomePageActivity.data_output.flush();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

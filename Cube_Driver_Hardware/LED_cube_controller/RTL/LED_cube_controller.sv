@@ -14,7 +14,7 @@ module LED_cube_controller (
         .led_cube_uart_0_conduit_end_gpio(GPIO_0),                             //                                  .readdata
 		.reset_reset_n(KEY[0]),                                             //                             reset.reset_n
 		.uart_0_external_connection_rxd(GPIO_1[35]),                        //        uart_0_external_connection.rxd
-		.uart_0_external_connection_txd(GPIO_1[34])                         // 
-   );
+		.uart_0_external_connection_txd(GPIO_1[34]),
+);
 
 endmodule : LED_cube_controller
