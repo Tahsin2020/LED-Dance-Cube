@@ -107,6 +107,23 @@ public class Utils {
         left_ab.put("y", y2);
         left_ab.put("z", z2);
         extra_points.put("left_ab", left_ab);
+
+        x1 = (float) ((2.0/3.0) * m.get(Landmarks.LEFT_SHOULDER.getLabel()).get("x") + (1.0/3.0) * m.get(Landmarks.RIGHT_SHOULDER.getLabel()).get("x"));
+        y1 = (float) ((2.0/3.0) * m.get(Landmarks.LEFT_SHOULDER.getLabel()).get("y") + (1.0/3.0) * m.get(Landmarks.RIGHT_SHOULDER.getLabel()).get("y"));
+        z1 = (float) ((2.0/3.0) * m.get(Landmarks.LEFT_SHOULDER.getLabel()).get("z") + (1.0/3.0) * m.get(Landmarks.RIGHT_SHOULDER.getLabel()).get("z"));
+        x2 = (float) ((1.0/3.0) * m.get(Landmarks.LEFT_SHOULDER.getLabel()).get("x") + (2.0/3.0) * m.get(Landmarks.RIGHT_SHOULDER.getLabel()).get("x"));
+        y2 = (float) ((1.0/3.0) * m.get(Landmarks.LEFT_SHOULDER.getLabel()).get("y") + (2.0/3.0) * m.get(Landmarks.RIGHT_SHOULDER.getLabel()).get("y"));
+        z2 = (float) ((1.0/3.0) * m.get(Landmarks.LEFT_SHOULDER.getLabel()).get("z") + (2.0/3.0) * m.get(Landmarks.RIGHT_SHOULDER.getLabel()).get("z"));
+        HashMap<String, Float> left_collar = new HashMap<>();
+        left_collar.put("x", x1);
+        left_collar.put("y", y1);
+        left_collar.put("z", z1);
+        extra_points.put("left_collar", left_collar);
+        HashMap<String, Float> right_collar = new HashMap<>();
+        right_collar.put("x", x2);
+        right_collar.put("y", y2);
+        right_collar.put("z", z2);
+        extra_points.put("right_collar", right_collar);
         return extra_points;
     }
 
@@ -157,10 +174,10 @@ public class Utils {
         float max_dimension = Collections.max(Arrays.asList(x_length, y_length, z_length));
         for (int i = 0; i < xs.size(); i++) {
             if (max_dimension == x_length) xs.set(i, xs.get(i) + Math.abs(xmin));
-            else xs.set(i, xs.get(i) + (max_dimension / 2));
+            else xs.set(i, (float) (xs.get(i) + (max_dimension / 2.0)));
             ys.set(i, ys.get(i) + Math.abs(ymin));
             if (max_dimension == z_length) zs.set(i, zs.get(i) + Math.abs(zmin));
-            else zs.set(i, zs.get(i) + (max_dimension / 2));
+            else zs.set(i, (float) (zs.get(i) + (max_dimension / 2.0) + (max_dimension / 16.0)));
         }
         return max_dimension;
     }

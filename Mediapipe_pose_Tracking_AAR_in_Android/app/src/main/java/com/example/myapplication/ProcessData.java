@@ -10,7 +10,7 @@ import java.util.Map;
 
 public class ProcessData {
 
-    static int num_points = 22;
+    static int num_points = 24;
     static ArrayList<Float> prev_xs = new ArrayList<>(Collections.nCopies(num_points, -100F));
     static ArrayList<Float> prev_ys = new ArrayList<>(Collections.nCopies(num_points, -100F));
     static ArrayList<Float> prev_zs = new ArrayList<>(Collections.nCopies(num_points, -100F));
@@ -135,6 +135,7 @@ public class ProcessData {
 //        System.out.println("Xs: " + Arrays.toString(rounded_prev2_xs));
 //        System.out.println("Ys: " + Arrays.toString(rounded_prev2_ys));
 //        System.out.println("Zs: " + Arrays.toString(rounded_prev2_zs));
+//        byte[] data = Utils.formatData(new_xs, new_ys, new_zs);
         byte[] data = Utils.formatData(rounded_prev2_xs, rounded_prev2_ys, rounded_prev2_zs);
         rounded_prev2_xs = rounded_prev1_xs;
         rounded_prev2_ys = rounded_prev1_ys;

@@ -20,7 +20,7 @@ import java.net.Socket;
 
 public class HomePageActivity extends AppCompatActivity {
     private static final String TAG = "HomePageActivity";
-    private static final String SERVER_IP = "128.189.247.228";
+    private static final String SERVER_IP = "128.189.244.150";
     private static final int SERVER_PORT = 12345;
 //    private static final String SERVER_IP = "192.168.4.1";
 //    private static final int SERVER_PORT = 80;
