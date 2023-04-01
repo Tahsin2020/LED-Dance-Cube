@@ -15,11 +15,19 @@ public class ProcessData {
     static ArrayList<Float> prev_ys = new ArrayList<>(Collections.nCopies(num_points, -100F));
     static ArrayList<Float> prev_zs = new ArrayList<>(Collections.nCopies(num_points, -100F));
 
+    static int[] rounded_prev1_xs = new int[num_points];
+    static int[] rounded_prev1_ys = new int[num_points];
+    static int[] rounded_prev1_zs = new int[num_points];
+    static int[] rounded_prev2_xs = new int[num_points];
+    static int[] rounded_prev2_ys = new int[num_points];
+    static int[] rounded_prev2_zs = new int[num_points];
+
     static final float ZSCALE = 0.2F;
     static final float YSCALE = 1.4F;
     static final float THRESH = 0.1F;
+    static final double THETA = Math.PI/20;
     public static byte[] process(Map<String, Map<String, Float>> model_points){
-        HashSet<String> whitelist = new HashSet<>(Arrays.asList("11", "12", "13", "14", "15", "16", "23", "24", "25", "26", "27", "28"));
+        HashSet<String> whitelist = new HashSet<>(Arrays.asList("11", "12", "13", "14", "15", "16", "23", "24", "25", "26", "30", "31"));
         ArrayList<Float> xs = new ArrayList<>();
         ArrayList<Float> ys = new ArrayList<>();
         ArrayList<Float> zs = new ArrayList<>();
@@ -64,8 +72,8 @@ public class ProcessData {
         zs.replaceAll(aFloat -> (aFloat - zhip_normalized) * ZSCALE);
 
         //Rotate coords about the X axis
-        double theta = Math.PI/8;
-        Utils.rotate(xs, ys, zs, theta);
+
+        Utils.rotate(xs, ys, zs, THETA);
 
         Utils.filterNoise(THRESH, prev_xs, prev_ys, prev_zs, xs, ys, zs);
 
@@ -77,9 +85,9 @@ public class ProcessData {
 //        System.out.println("Ys: " + prev_ys);
 //        System.out.println("Zs: " + prev_zs);
 
-        int[] new_xs = new int[xs.size()];
-        int[] new_ys = new int[xs.size()];
-        int[] new_zs = new int[xs.size()];
+        int[] new_xs = new int[num_points];
+        int[] new_ys = new int[num_points];
+        int[] new_zs = new int[num_points];
         //scale down to 8x8x8
         double scale_factor = max_dimension/7.0;
         for (int i = 0; i < xs.size(); i++) {
@@ -111,14 +119,29 @@ public class ProcessData {
         3. use Util.formatData on prev2 data points
         4. set prev2 = prev1, prev1 = new xyz points
          */
+        for (int i = 0; i < num_points; i++) {
+            if (new_xs[i] == rounded_prev2_xs[i] && new_xs[i] != rounded_prev1_xs[i]) {
+                rounded_prev1_xs[i] = new_xs[i];
+            }
+            if (new_ys[i] == rounded_prev2_ys[i] && new_ys[i] != rounded_prev1_ys[i]) {
+                rounded_prev1_ys[i] = new_ys[i];
+            }
+            if (new_zs[i] == rounded_prev2_zs[i] && new_zs[i] != rounded_prev1_zs[i]) {
+                rounded_prev1_zs[i] = new_zs[i];
+            }
+        }
 
-
-        System.out.println("\nAFTER DATA POINTS\n");
-        System.out.println("Xs: " + Arrays.toString(new_xs));
-        System.out.println("Ys: " + Arrays.toString(new_ys));
-        System.out.println("Zs: " + Arrays.toString(new_zs));
-        byte[] data = Utils.formatData(new_xs, new_ys, new_zs);
-
+//        System.out.println("\nAFTER DATA POINTS\n");
+//        System.out.println("Xs: " + Arrays.toString(rounded_prev2_xs));
+//        System.out.println("Ys: " + Arrays.toString(rounded_prev2_ys));
+//        System.out.println("Zs: " + Arrays.toString(rounded_prev2_zs));
+        byte[] data = Utils.formatData(rounded_prev2_xs, rounded_prev2_ys, rounded_prev2_zs);
+        rounded_prev2_xs = rounded_prev1_xs;
+        rounded_prev2_ys = rounded_prev1_ys;
+        rounded_prev2_zs = rounded_prev1_zs;
+        rounded_prev1_xs = new_xs;
+        rounded_prev1_ys = new_ys;
+        rounded_prev1_zs = new_zs;
         return data; //Send "data" to DE1-SOC
     }
 }

@@ -155,14 +155,6 @@ public class Utils {
         float y_length = Math.abs(Collections.max(ys) - ymin);
         float z_length = Math.abs(Collections.max(zs) - zmin);
         float max_dimension = Collections.max(Arrays.asList(x_length, y_length, z_length));
-//        float middle_translation = 0;
-//        if (max_dimension == x_length) {
-//            middle_translation = Math.abs(xmin);
-//        } else if (max_dimension == y_length) {
-//            middle_translation = Math.abs(ymin);
-//        } else if (max_dimension == z_length) {
-//            middle_translation = Math.abs(zmin);
-//        }
         for (int i = 0; i < xs.size(); i++) {
             if (max_dimension == x_length) xs.set(i, xs.get(i) + Math.abs(xmin));
             else xs.set(i, xs.get(i) + (max_dimension / 2));
