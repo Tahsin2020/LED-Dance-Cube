@@ -16,6 +16,8 @@
 
 package com.example.myapplication;
 
+import static com.example.myapplication.HomePageActivity.data_output;
+
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -289,6 +291,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    protected void onStart() {
+        super.onStart();
+        if (data_output != null) {
+            new Thread(new Thread4((byte) 0x03)).start();
+        }
+    }
+
     // Used to obtain the content view for this application. If you are extending this class, and
     // have a custom layout, override this method and return the custom layout.
     protected int getContentViewLayoutResId() {
@@ -450,8 +459,28 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void run() {
             try {
-                HomePageActivity.data_output.write(dataToSend);
-                HomePageActivity.data_output.flush();
+                data_output.write((byte) 0x20);
+                data_output.flush();
+                data_output.write(dataToSend);
+                data_output.flush();
+                data_output.write((byte) 0x30);
+                data_output.flush();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    class Thread4 implements Runnable {
+        private byte dataToSend;
+        Thread4(byte dataToSend) {
+            this.dataToSend = dataToSend;
+        }
+        @Override
+        public void run() {
+            try {
+                data_output.write(dataToSend);
+                data_output.flush();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
