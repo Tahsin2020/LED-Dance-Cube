@@ -34,7 +34,7 @@ module LED_cube_multi_frame(
 );
 	
 	logic frame_start, frame_stop, frame_done;
-	logic [7:0] data_to_latch;
+	logic [7:0] data_to_latch, stream_data_to_latch;
 	logic [5:0] frame_addr;
 	logic [7:0] offset, stream_offset;
 	logic [20:0] frame_timer;
@@ -129,8 +129,7 @@ module LED_cube_multi_frame(
 		end
 	end
 
-	logic [13:0] addr, stream_addr;
-	assign stream_addr = {stream_offset, frame_addr};
+	logic [13:0] addr;
 	assign addr = {offset, frame_addr};
 
 	logic [2:0] animation_offset;
@@ -158,16 +157,7 @@ module LED_cube_multi_frame(
 					3'b110: data_to_latch = data7[addr];
 					default: data_to_latch = 0;
 				endcase
-			4'h3: case(stream_offset)
-					3'b000: data_to_latch = stream_data1[stream_addr];
-					3'b001: data_to_latch = stream_data2[stream_addr];
-					3'b010: data_to_latch = stream_data3[stream_addr];
-					3'b011: data_to_latch = stream_data4[stream_addr];
-					3'b100: data_to_latch = stream_data5[stream_addr];
-					3'b101: data_to_latch = stream_data6[stream_addr];
-					3'b110: data_to_latch = stream_data7[stream_addr];
-					3'b111: data_to_latch = stream_data8[stream_addr];
-				endcase
+			4'h3: data_to_latch = stream_data_to_latch;
 			// 4'h4: MODE PLANE MESSAGE to implement 
 			// 4'h5: MODE DB ANIMATION to implement
 			4'hf: data_to_latch = 8'hff;
