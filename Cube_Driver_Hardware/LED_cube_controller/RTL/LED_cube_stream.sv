@@ -3,7 +3,7 @@ module LED_cube_stream(
     input logic rst_n,
     input logic [3:0] mode,
     input logic new_data,
-    input logic [7:0] uart_reg,
+    input logic [7:0] data_in,
     input logic [5:0] frame_addr,
 
     output logic [7:0] data_to_latch
@@ -55,13 +55,13 @@ module LED_cube_stream(
         else begin
             if(new_data) begin
                 case(offset_in)
-                    3'b000: stream_data1[addr_in] <= uart_reg;
-                    3'b001: stream_data2[addr_in] <= uart_reg;
-                    3'b010: stream_data3[addr_in] <= uart_reg;
-                    3'b011: stream_data4[addr_in] <= uart_reg;
-                    3'b100: stream_data5[addr_in] <= uart_reg;
-                    3'b101: stream_data6[addr_in] <= uart_reg;
-                    3'b110: stream_data7[addr_in] <= uart_reg;
+                    3'b000: stream_data1[addr_in] <= data_in;
+                    3'b001: stream_data2[addr_in] <= data_in;
+                    3'b010: stream_data3[addr_in] <= data_in;
+                    3'b011: stream_data4[addr_in] <= data_in;
+                    3'b100: stream_data5[addr_in] <= data_in;
+                    3'b101: stream_data6[addr_in] <= data_in;
+                    3'b110: stream_data7[addr_in] <= data_in;
                 endcase
             end
         end

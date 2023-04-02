@@ -231,4 +231,14 @@ module LED_cube_multi_frame(
 		.Data(Data)
 	);
 
+	LED_cube_stream stream_data (
+		.clk(clk),
+		.rst_n(rst_n),
+		.mode(mode),
+		.new_data(new_data),
+		.data_in(data_in),
+		.frame_addr(frame_addr),
+		.data_to_latch(stream_data_to_latch)
+	);
+
 endmodule : LED_cube_multi_frame
