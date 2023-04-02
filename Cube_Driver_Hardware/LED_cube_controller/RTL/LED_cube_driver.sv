@@ -3,31 +3,18 @@ module LED_cube_driver(
     input logic clk,
     input logic rst_n,
     input logic [7:0] uart_in,
-    input logic [9:0] SW,
-    input logic [7:0] uart_reg,
+    input logic read,
 
     //output signals
     output logic [7:0] Layers_out, 
     output logic [7:0] Latches_out, 
-    output logic [7:0] Data_out,
-
-    output logic [9:0] LEDR
+    output logic [7:0] Data_out
 );
-
-    always_comb begin : LEDR_Debug_block
-		case( SW[9:8] )
-			2'b00: LEDR = mode;
-			2'b01: LEDR = animation_sel;
-			2'b10: LEDR = brightness;
-			2'b11: LEDR = uart_reg;
-		endcase
-	end
-
 
     enum bit[2:0] {OFF, ANIM_LOOP, ANIM_SEL, STREAM, PLANE_MSG, ALL_ON, ANIM_DB} state, next_state;
 
-    // config registers
-    logic [3:0] mode, brightness, animation_sel;
+    // logic [3:0] mode, brightness, animation_sel;
+    logic [3:0] brightness, animation_sel;
 
     always_ff @( posedge clk ) begin : state_seq_logic_blk
         if( ~rst_n ) state <= OFF;
@@ -46,6 +33,9 @@ module LED_cube_driver(
             4'hF: next_state = ANIM_DB;
         endcase
     end
+
+    logic stream_read;
+    assign stream_read = (mode == 4'h3) ? read : 1'b0;
 
     logic [7:0] multi_frame_layers, multi_frame_latches, multi_frame_data;
     logic [7:0] stream_layers, stream_latches, stream_data;
@@ -74,12 +64,15 @@ module LED_cube_driver(
         multi_frame_animate_start = 1'b0;
         multi_frame_animate_stop  = 1'b0;
         if(state != next_state) begin
-            if(next_state == ANIM_LOOP || next_state == ANIM_SEL)
+            if(next_state == ANIM_LOOP || next_state == ANIM_SEL 
+            || next_state == STREAM || next_state == ALL_ON)
                 multi_frame_animate_start = 1'b1;
-            else if(state == ANIM_LOOP || state == ANIM_SEL)
+            if(next_state == PLANE_MSG || next_state == ANIM_DB 
+            || next_state ==  OFF)
                 multi_frame_animate_stop = 1'b1;
         end
     end
+
 
     LED_cube_multi_frame frames_driver(
         .clk(clk),
@@ -87,9 +80,13 @@ module LED_cube_driver(
         .animate_start(multi_frame_animate_start),
         .animate_stop(multi_frame_animate_stop),
 
-        .animation_sel(animation_sel),
+        .animation_sel(animation_sel[2:0]),
         .loop_mode(loop_mode),
+        .mode(mode),
         .brightness(brightness),
+        .data_in(uart_in),
+        .stream_read(stream_read),
+
 
         .Layers(multi_frame_layers),
         .Latches(multi_frame_latches),

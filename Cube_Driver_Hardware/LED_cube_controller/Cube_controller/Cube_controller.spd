@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<simPackage>
+ <file path="simulation/Cube_controller.v" type="VERILOG" />
+ <topLevel name="Cube_controller" />
+ <deviceFamily name="cyclonev" />
+</simPackage>
