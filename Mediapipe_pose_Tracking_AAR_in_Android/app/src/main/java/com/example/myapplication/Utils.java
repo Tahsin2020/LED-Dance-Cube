@@ -55,6 +55,75 @@ public class Utils {
         right_thigh.put("y", y/2);
         right_thigh.put("z", z/2);
         extra_points.put("right_thigh", right_thigh);
+
+        HashMap<String, Float> right_bicep = new HashMap<>();
+        x = m.get(Landmarks.RIGHT_ELBOW.getLabel()).get("x") + m.get(Landmarks.RIGHT_SHOULDER.getLabel()).get("x");
+        y = m.get(Landmarks.RIGHT_ELBOW.getLabel()).get("y") + m.get(Landmarks.RIGHT_SHOULDER.getLabel()).get("y");
+        z = m.get(Landmarks.RIGHT_ELBOW.getLabel()).get("z") + m.get(Landmarks.RIGHT_SHOULDER.getLabel()).get("z");
+        right_bicep.put("x", x/2);
+        right_bicep.put("y", y/2);
+        right_bicep.put("z", z/2);
+        extra_points.put("right_bicep", right_bicep);
+
+        HashMap<String, Float> left_bicep = new HashMap<>();
+        x = m.get(Landmarks.LEFT_ELBOW.getLabel()).get("x") + m.get(Landmarks.LEFT_SHOULDER.getLabel()).get("x");
+        y = m.get(Landmarks.LEFT_ELBOW.getLabel()).get("y") + m.get(Landmarks.LEFT_SHOULDER.getLabel()).get("y");
+        z = m.get(Landmarks.LEFT_ELBOW.getLabel()).get("z") + m.get(Landmarks.LEFT_SHOULDER.getLabel()).get("z");
+        left_bicep.put("x", x/2);
+        left_bicep.put("y", y/2);
+        left_bicep.put("z", z/2);
+        extra_points.put("left_bicep", left_bicep);
+
+        float x1 = (float) ((2.0/3.0) * m.get(Landmarks.RIGHT_SHOULDER.getLabel()).get("x") + (1.0/3.0) * m.get(Landmarks.RIGHT_HIP.getLabel()).get("x"));
+        float y1 = (float) ((2.0/3.0) * m.get(Landmarks.RIGHT_SHOULDER.getLabel()).get("y") + (1.0/3.0) * m.get(Landmarks.RIGHT_HIP.getLabel()).get("y"));
+        float z1 = (float) ((2.0/3.0) * m.get(Landmarks.RIGHT_SHOULDER.getLabel()).get("z") + (1.0/3.0) * m.get(Landmarks.RIGHT_HIP.getLabel()).get("z"));
+        float x2 = (float) ((1.0/3.0) * m.get(Landmarks.RIGHT_SHOULDER.getLabel()).get("x") + (2.0/3.0) * m.get(Landmarks.RIGHT_HIP.getLabel()).get("x"));
+        float y2 = (float) ((1.0/3.0) * m.get(Landmarks.RIGHT_SHOULDER.getLabel()).get("y") + (2.0/3.0) * m.get(Landmarks.RIGHT_HIP.getLabel()).get("y"));
+        float z2 = (float) ((1.0/3.0) * m.get(Landmarks.RIGHT_SHOULDER.getLabel()).get("z") + (2.0/3.0) * m.get(Landmarks.RIGHT_HIP.getLabel()).get("z"));
+        HashMap<String, Float> right_chest = new HashMap<>();
+        right_chest.put("x", x1);
+        right_chest.put("y", y1);
+        right_chest.put("z", z1);
+        extra_points.put("right_chest", right_chest);
+        HashMap<String, Float> right_ab = new HashMap<>();
+        right_ab.put("x", x2);
+        right_ab.put("y", y2);
+        right_ab.put("z", z2);
+        extra_points.put("right_ab", right_ab);
+
+        x1 = (float) ((2.0/3.0) * m.get(Landmarks.LEFT_SHOULDER.getLabel()).get("x") + (1.0/3.0) * m.get(Landmarks.LEFT_HIP.getLabel()).get("x"));
+        y1 = (float) ((2.0/3.0) * m.get(Landmarks.LEFT_SHOULDER.getLabel()).get("y") + (1.0/3.0) * m.get(Landmarks.LEFT_HIP.getLabel()).get("y"));
+        z1 = (float) ((2.0/3.0) * m.get(Landmarks.LEFT_SHOULDER.getLabel()).get("z") + (1.0/3.0) * m.get(Landmarks.LEFT_HIP.getLabel()).get("z"));
+        x2 = (float) ((1.0/3.0) * m.get(Landmarks.LEFT_SHOULDER.getLabel()).get("x") + (2.0/3.0) * m.get(Landmarks.LEFT_HIP.getLabel()).get("x"));
+        y2 = (float) ((1.0/3.0) * m.get(Landmarks.LEFT_SHOULDER.getLabel()).get("y") + (2.0/3.0) * m.get(Landmarks.LEFT_HIP.getLabel()).get("y"));
+        z2 = (float) ((1.0/3.0) * m.get(Landmarks.LEFT_SHOULDER.getLabel()).get("z") + (2.0/3.0) * m.get(Landmarks.LEFT_HIP.getLabel()).get("z"));
+        HashMap<String, Float> left_chest = new HashMap<>();
+        left_chest.put("x", x1);
+        left_chest.put("y", y1);
+        left_chest.put("z", z1);
+        extra_points.put("left_chest", left_chest);
+        HashMap<String, Float> left_ab = new HashMap<>();
+        left_ab.put("x", x2);
+        left_ab.put("y", y2);
+        left_ab.put("z", z2);
+        extra_points.put("left_ab", left_ab);
+
+        x1 = (float) ((2.0/3.0) * m.get(Landmarks.LEFT_SHOULDER.getLabel()).get("x") + (1.0/3.0) * m.get(Landmarks.RIGHT_SHOULDER.getLabel()).get("x"));
+        y1 = (float) ((2.0/3.0) * m.get(Landmarks.LEFT_SHOULDER.getLabel()).get("y") + (1.0/3.0) * m.get(Landmarks.RIGHT_SHOULDER.getLabel()).get("y"));
+        z1 = (float) ((2.0/3.0) * m.get(Landmarks.LEFT_SHOULDER.getLabel()).get("z") + (1.0/3.0) * m.get(Landmarks.RIGHT_SHOULDER.getLabel()).get("z"));
+        x2 = (float) ((1.0/3.0) * m.get(Landmarks.LEFT_SHOULDER.getLabel()).get("x") + (2.0/3.0) * m.get(Landmarks.RIGHT_SHOULDER.getLabel()).get("x"));
+        y2 = (float) ((1.0/3.0) * m.get(Landmarks.LEFT_SHOULDER.getLabel()).get("y") + (2.0/3.0) * m.get(Landmarks.RIGHT_SHOULDER.getLabel()).get("y"));
+        z2 = (float) ((1.0/3.0) * m.get(Landmarks.LEFT_SHOULDER.getLabel()).get("z") + (2.0/3.0) * m.get(Landmarks.RIGHT_SHOULDER.getLabel()).get("z"));
+        HashMap<String, Float> left_collar = new HashMap<>();
+        left_collar.put("x", x1);
+        left_collar.put("y", y1);
+        left_collar.put("z", z1);
+        extra_points.put("left_collar", left_collar);
+        HashMap<String, Float> right_collar = new HashMap<>();
+        right_collar.put("x", x2);
+        right_collar.put("y", y2);
+        right_collar.put("z", z2);
+        extra_points.put("right_collar", right_collar);
         return extra_points;
     }
 
@@ -103,20 +172,12 @@ public class Utils {
         float y_length = Math.abs(Collections.max(ys) - ymin);
         float z_length = Math.abs(Collections.max(zs) - zmin);
         float max_dimension = Collections.max(Arrays.asList(x_length, y_length, z_length));
-//        float middle_translation = 0;
-//        if (max_dimension == x_length) {
-//            middle_translation = Math.abs(xmin);
-//        } else if (max_dimension == y_length) {
-//            middle_translation = Math.abs(ymin);
-//        } else if (max_dimension == z_length) {
-//            middle_translation = Math.abs(zmin);
-//        }
         for (int i = 0; i < xs.size(); i++) {
             if (max_dimension == x_length) xs.set(i, xs.get(i) + Math.abs(xmin));
-            else xs.set(i, xs.get(i) + (max_dimension / 2));
+            else xs.set(i, (float) (xs.get(i) + (max_dimension / 2.0)));
             ys.set(i, ys.get(i) + Math.abs(ymin));
             if (max_dimension == z_length) zs.set(i, zs.get(i) + Math.abs(zmin));
-            else zs.set(i, zs.get(i) + (max_dimension / 2));
+            else zs.set(i, (float) (zs.get(i) + (max_dimension / 2.0) + (max_dimension / 16.0)));
         }
         return max_dimension;
     }
