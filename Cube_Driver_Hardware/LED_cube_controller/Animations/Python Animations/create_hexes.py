@@ -16,7 +16,7 @@ def write_animation_to_file(frames, filename):
                     hex_string = ''
                     byte = 0
                     for k in range(8):
-                        if frame[i][j][k] == 1:
+                        if frame[k][j][7 - i] == 1:
                             byte += 1 << (7 - k)
                     hex_string = "{:02X}".format(byte)
                     f.write(hex_string + "\n")

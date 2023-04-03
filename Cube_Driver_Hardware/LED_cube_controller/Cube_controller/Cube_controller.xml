@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <deploy
- date="2023.03.29.21:33:42"
+ date="2023.04.02.18:38:31"
  outputDirectory="C:/CPEN391/project_repo/l2c-l2c-41/Cube_Driver_Hardware/LED_cube_controller/Cube_controller/">
  <perimeter>
   <parameter
@@ -98,13 +98,13 @@
  </perimeter>
  <entity
    path=""
-   parameterizationKey="Cube_controller:1.0:AUTO_CLK_CLOCK_DOMAIN=-1,AUTO_CLK_CLOCK_RATE=-1,AUTO_CLK_RESET_DOMAIN=-1,AUTO_DEVICE=5CSEMA5F31C6,AUTO_DEVICE_FAMILY=Cyclone V,AUTO_DEVICE_SPEEDGRADE=6,AUTO_GENERATION_ID=1680150816,AUTO_UNIQUE_ID=(LED_cube_uart:1.0:)(clock_source:18.1:clockFrequency=50000000,clockFrequencyKnown=true,inputClockFrequency=0,resetSynchronousEdges=NONE)(altera_avalon_uart:18.1:baud=115200,baudError=0.01,clockRate=50000000,dataBits=8,fixedBaud=true,parity=NONE,parityFisrtChar=N,simCharStream=,simInteractiveInputEnable=false,simInteractiveOutputEnable=false,simTrueBaud=false,stopBits=1,syncRegDepth=2,useCtsRts=false,useEopRegister=false,useRelativePathForSimFile=false)(avalon:18.1:arbitrationPriority=1,baseAddress=0x0000,defaultConnection=false)(clock:18.1:)(clock:18.1:)(reset:18.1:)(reset:18.1:)"
+   parameterizationKey="Cube_controller:1.0:AUTO_CLK_CLOCK_DOMAIN=-1,AUTO_CLK_CLOCK_RATE=-1,AUTO_CLK_RESET_DOMAIN=-1,AUTO_DEVICE=5CSEMA5F31C6,AUTO_DEVICE_FAMILY=Cyclone V,AUTO_DEVICE_SPEEDGRADE=6,AUTO_GENERATION_ID=1680485905,AUTO_UNIQUE_ID=(LED_cube_uart:1.0:)(clock_source:18.1:clockFrequency=50000000,clockFrequencyKnown=true,inputClockFrequency=0,resetSynchronousEdges=NONE)(altera_avalon_uart:18.1:baud=115200,baudError=0.01,clockRate=50000000,dataBits=8,fixedBaud=true,parity=NONE,parityFisrtChar=N,simCharStream=,simInteractiveInputEnable=false,simInteractiveOutputEnable=false,simTrueBaud=false,stopBits=1,syncRegDepth=2,useCtsRts=false,useEopRegister=false,useRelativePathForSimFile=false)(avalon:18.1:arbitrationPriority=1,baseAddress=0x0000,defaultConnection=false)(clock:18.1:)(clock:18.1:)(reset:18.1:)(reset:18.1:)"
    instancePathKey="Cube_controller"
    kind="Cube_controller"
    version="1.0"
    name="Cube_controller">
   <parameter name="AUTO_CLK_CLOCK_RATE" value="-1" />
-  <parameter name="AUTO_GENERATION_ID" value="1680150816" />
+  <parameter name="AUTO_GENERATION_ID" value="1680485905" />
   <parameter name="AUTO_DEVICE" value="5CSEMA5F31C6" />
   <parameter name="AUTO_DEVICE_FAMILY" value="Cyclone V" />
   <parameter name="AUTO_CLK_RESET_DOMAIN" value="-1" />
@@ -367,7 +367,7 @@
    <message level="Info" culprit="LED_cube_uart_0"><![CDATA["<b>Cube_controller</b>" instantiated <b>LED_cube_uart</b> "<b>LED_cube_uart_0</b>"]]></message>
    <message level="Debug" culprit="Cube_controller">queue size: 2 starting:altera_avalon_uart "submodules/Cube_controller_uart_0"</message>
    <message level="Info" culprit="uart_0">Starting RTL generation for module 'Cube_controller_uart_0'</message>
-   <message level="Info" culprit="uart_0">  Generation command is [exec C:/intelfpga/18.1/quartus/bin64/perl/bin/perl.exe -I C:/intelfpga/18.1/quartus/bin64/perl/lib -I C:/intelfpga/18.1/quartus/sopc_builder/bin/europa -I C:/intelfpga/18.1/quartus/sopc_builder/bin/perl_lib -I C:/intelfpga/18.1/quartus/sopc_builder/bin -I C:/intelfpga/18.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/intelfpga/18.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_uart -- C:/intelfpga/18.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_uart/generate_rtl.pl --name=Cube_controller_uart_0 --dir=C:/Users/ADINSS~1/AppData/Local/Temp/alt9445_5663879444370657282.dir/0055_uart_0_gen/ --quartus_dir=C:/intelfpga/18.1/quartus --verilog --config=C:/Users/ADINSS~1/AppData/Local/Temp/alt9445_5663879444370657282.dir/0055_uart_0_gen//Cube_controller_uart_0_component_configuration.pl  --do_build_sim=0  ]</message>
+   <message level="Info" culprit="uart_0">  Generation command is [exec C:/intelfpga/18.1/quartus/bin64/perl/bin/perl.exe -I C:/intelfpga/18.1/quartus/bin64/perl/lib -I C:/intelfpga/18.1/quartus/sopc_builder/bin/europa -I C:/intelfpga/18.1/quartus/sopc_builder/bin/perl_lib -I C:/intelfpga/18.1/quartus/sopc_builder/bin -I C:/intelfpga/18.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/intelfpga/18.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_uart -- C:/intelfpga/18.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_uart/generate_rtl.pl --name=Cube_controller_uart_0 --dir=C:/Users/ADINSS~1/AppData/Local/Temp/alt9449_3915525579222824104.dir/0054_uart_0_gen/ --quartus_dir=C:/intelfpga/18.1/quartus --verilog --config=C:/Users/ADINSS~1/AppData/Local/Temp/alt9449_3915525579222824104.dir/0054_uart_0_gen//Cube_controller_uart_0_component_configuration.pl  --do_build_sim=0  ]</message>
    <message level="Info" culprit="uart_0">Done RTL generation for module 'Cube_controller_uart_0'</message>
    <message level="Info" culprit="uart_0"><![CDATA["<b>Cube_controller</b>" instantiated <b>altera_avalon_uart</b> "<b>uart_0</b>"]]></message>
    <message level="Debug" culprit="Cube_controller">queue size: 1 starting:altera_mm_interconnect "submodules/Cube_controller_mm_interconnect_0"</message>
@@ -436,10 +436,10 @@
    <message level="Progress" culprit="max"></message>
    <message level="Progress" culprit="current"></message>
    <message level="Info" culprit="avalon_st_adapter">Inserting error_adapter: error_adapter_0</message>
-   <message level="Debug" culprit="avalon_st_adapter.clk_bridge_0">Timing: ELA:1/0.001s</message>
-   <message level="Debug" culprit="avalon_st_adapter.rst_bridge_0">Timing: ELA:2/0.001s/0.001s</message>
-   <message level="Debug" culprit="avalon_st_adapter.error_adapter_0">Timing: ELA:1/0.008s</message>
-   <message level="Debug" culprit="avalon_st_adapter">Timing: COM:3/0.041s/0.057s</message>
+   <message level="Debug" culprit="avalon_st_adapter.clk_bridge_0">Timing: ELA:1/0.000s</message>
+   <message level="Debug" culprit="avalon_st_adapter.rst_bridge_0">Timing: ELA:2/0.000s/0.001s</message>
+   <message level="Debug" culprit="avalon_st_adapter.error_adapter_0">Timing: ELA:1/0.009s</message>
+   <message level="Debug" culprit="avalon_st_adapter">Timing: COM:3/0.028s/0.042s</message>
    <message
        level="Debug"
        culprit="com_altera_sopcmodel_transforms_avalonst_AvalonStreamingTransform"><![CDATA[After transform: <b>16</b> modules, <b>45</b> connections]]></message>
@@ -568,7 +568,7 @@
   <messages>
    <message level="Debug" culprit="Cube_controller">queue size: 2 starting:altera_avalon_uart "submodules/Cube_controller_uart_0"</message>
    <message level="Info" culprit="uart_0">Starting RTL generation for module 'Cube_controller_uart_0'</message>
-   <message level="Info" culprit="uart_0">  Generation command is [exec C:/intelfpga/18.1/quartus/bin64/perl/bin/perl.exe -I C:/intelfpga/18.1/quartus/bin64/perl/lib -I C:/intelfpga/18.1/quartus/sopc_builder/bin/europa -I C:/intelfpga/18.1/quartus/sopc_builder/bin/perl_lib -I C:/intelfpga/18.1/quartus/sopc_builder/bin -I C:/intelfpga/18.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/intelfpga/18.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_uart -- C:/intelfpga/18.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_uart/generate_rtl.pl --name=Cube_controller_uart_0 --dir=C:/Users/ADINSS~1/AppData/Local/Temp/alt9445_5663879444370657282.dir/0055_uart_0_gen/ --quartus_dir=C:/intelfpga/18.1/quartus --verilog --config=C:/Users/ADINSS~1/AppData/Local/Temp/alt9445_5663879444370657282.dir/0055_uart_0_gen//Cube_controller_uart_0_component_configuration.pl  --do_build_sim=0  ]</message>
+   <message level="Info" culprit="uart_0">  Generation command is [exec C:/intelfpga/18.1/quartus/bin64/perl/bin/perl.exe -I C:/intelfpga/18.1/quartus/bin64/perl/lib -I C:/intelfpga/18.1/quartus/sopc_builder/bin/europa -I C:/intelfpga/18.1/quartus/sopc_builder/bin/perl_lib -I C:/intelfpga/18.1/quartus/sopc_builder/bin -I C:/intelfpga/18.1/quartus/../ip/altera/sopc_builder_ip/common -I C:/intelfpga/18.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_uart -- C:/intelfpga/18.1/quartus/../ip/altera/sopc_builder_ip/altera_avalon_uart/generate_rtl.pl --name=Cube_controller_uart_0 --dir=C:/Users/ADINSS~1/AppData/Local/Temp/alt9449_3915525579222824104.dir/0054_uart_0_gen/ --quartus_dir=C:/intelfpga/18.1/quartus --verilog --config=C:/Users/ADINSS~1/AppData/Local/Temp/alt9449_3915525579222824104.dir/0054_uart_0_gen//Cube_controller_uart_0_component_configuration.pl  --do_build_sim=0  ]</message>
    <message level="Info" culprit="uart_0">Done RTL generation for module 'Cube_controller_uart_0'</message>
    <message level="Info" culprit="uart_0"><![CDATA["<b>Cube_controller</b>" instantiated <b>altera_avalon_uart</b> "<b>uart_0</b>"]]></message>
   </messages>
@@ -796,10 +796,10 @@
    <message level="Progress" culprit="max"></message>
    <message level="Progress" culprit="current"></message>
    <message level="Info" culprit="avalon_st_adapter">Inserting error_adapter: error_adapter_0</message>
-   <message level="Debug" culprit="avalon_st_adapter.clk_bridge_0">Timing: ELA:1/0.001s</message>
-   <message level="Debug" culprit="avalon_st_adapter.rst_bridge_0">Timing: ELA:2/0.001s/0.001s</message>
-   <message level="Debug" culprit="avalon_st_adapter.error_adapter_0">Timing: ELA:1/0.008s</message>
-   <message level="Debug" culprit="avalon_st_adapter">Timing: COM:3/0.041s/0.057s</message>
+   <message level="Debug" culprit="avalon_st_adapter.clk_bridge_0">Timing: ELA:1/0.000s</message>
+   <message level="Debug" culprit="avalon_st_adapter.rst_bridge_0">Timing: ELA:2/0.000s/0.001s</message>
+   <message level="Debug" culprit="avalon_st_adapter.error_adapter_0">Timing: ELA:1/0.009s</message>
+   <message level="Debug" culprit="avalon_st_adapter">Timing: COM:3/0.028s/0.042s</message>
    <message
        level="Debug"
        culprit="com_altera_sopcmodel_transforms_avalonst_AvalonStreamingTransform"><![CDATA[After transform: <b>16</b> modules, <b>45</b> connections]]></message>

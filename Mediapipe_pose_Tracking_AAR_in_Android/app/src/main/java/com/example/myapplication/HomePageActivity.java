@@ -20,7 +20,7 @@ import java.net.Socket;
 
 public class HomePageActivity extends AppCompatActivity {
     private static final String TAG = "HomePageActivity";
-    private static final String SERVER_IP = "128.189.246.238";
+    private static final String SERVER_IP = "128.189.244.150";
     private static final int SERVER_PORT = 12345;
 //    private static final String SERVER_IP = "192.168.4.1";
 //    private static final int SERVER_PORT = 80;
@@ -91,7 +91,9 @@ public class HomePageActivity extends AppCompatActivity {
         System.out.println("A");
         System.out.println("WE ARE IN ON START");
         System.out.println("A");
-        //new Thread(new Thread3((byte) 0x01)).start();
+        if (data_output != null) {
+            new Thread(new Thread3((byte) 0x01)).start();
+        }
     }
 
     public void backToMainActivity(){
@@ -119,6 +121,7 @@ public class HomePageActivity extends AppCompatActivity {
                 input = socket.getInputStream();
                 Log.v(TAG, "Connected to server");
                 new Thread(new Thread2()).start();
+                new Thread(new Thread3((byte) 0x01)).start();
             } catch (IOException e) {
                 e.printStackTrace();
             }
@@ -130,7 +133,7 @@ public class HomePageActivity extends AppCompatActivity {
         public void run() {
             while (true) {
                 try {
-                    byte[] buffer = new byte[1024];
+                    byte[] buffer = new byte[2048];
                     int bytesRead = input.read(buffer);
                     String message = new String(buffer, 0, bytesRead);
                     Log.v(TAG, message);

@@ -29,13 +29,13 @@ input_plane = np.array([
 
 # input_frames_list = create_rotating_wall_animation()
 # input_frames_list = create_rotating_diamond_animation()
-input_frames_list = create_pulsating_wave_sphere_animation()
+# input_frames_list = create_pulsating_wave_sphere_animation()
 # input_frames_list = create_helix_animation()
 # input_frames = np.array(input_frames_list)
 
 # input_frames_list = create_wave_animation()
 # input_frames_list = create_cone_animation()
-# input_frames_list = create_rolling_ball_animation()
+input_frames_list = create_rolling_ball_animation()
 input_frames = np.array(input_frames_list)
 
 
@@ -68,7 +68,7 @@ def update_graph(frame):
     ax.set_yticks([])
     ax.set_zticks([])
 
-    rotation_step = 2
+    rotation_step = 360/num_frames
     ax.view_init(30, frame * rotation_step)
 
     return scatters,
@@ -81,6 +81,6 @@ fig.patch.set_facecolor('black')
 
 animation = FuncAnimation(fig, update_graph, init_func=init, frames=num_frames, interval=5, blit=False)
 
-animation.save('l2c-l2c-41/Cube_Driver_Hardware/LED_cube_controller/Animations/GIFs/pulsating_wave_sphere.gif', writer=PillowWriter(fps=20), dpi=80)
+animation.save('l2c-l2c-41/Cube_Driver_Hardware/LED_cube_controller/Animations/GIFs/rolling_ball.gif', writer=PillowWriter(fps=20), dpi=80)
 
 plt.show()
