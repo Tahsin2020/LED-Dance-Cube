@@ -49,6 +49,15 @@ public class PatternActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pattern);
         new Thread(new Thread3((byte) 0x02)).start();
+
+        Button button1 = (Button) findViewById(R.id.button_pattern1);
+        button1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pattern1Activity();
+            }
+        });
+
         Button button2 = (Button) findViewById(R.id.button_pattern2);
         button2.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,6 +82,31 @@ public class PatternActivity extends AppCompatActivity {
             }
         });
 
+        Button button5 = (Button) findViewById(R.id.button_pattern5);
+        button5.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pattern5Activity();
+            }
+        });
+
+        Button button6 = (Button) findViewById(R.id.button_pattern6);
+        button6.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pattern6Activity();
+            }
+        });
+
+        Button button7 = (Button) findViewById(R.id.button_pattern7);
+        button7.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                pattern7Activity();
+            }
+        });
+
+
     }
 
     public void backToMainActivity(){
@@ -80,6 +114,9 @@ public class PatternActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void pattern1Activity(){ // When button_pattern3 clicked
+        new Thread(new Thread3((byte) 0x10)).start();
+    }
     public void pattern2Activity(){ // When button_pattern3 clicked
         new Thread(new Thread3((byte) 0x20)).start();
     }
@@ -89,6 +126,21 @@ public class PatternActivity extends AppCompatActivity {
     public void pattern4Activity(){ // When button_pattern4 clicked
         new Thread(new Thread3((byte) 0x40)).start();
     }
+
+    public void pattern5Activity(){ // When button_pattern3 clicked
+        new Thread(new Thread3((byte) 0x50)).start();
+    }
+    public void pattern6Activity(){ // When button_pattern3 clicked
+        new Thread(new Thread3((byte) 0x60)).start();
+    }
+    public void pattern7Activity(){ // When button_pattern4 clicked
+        new Thread(new Thread3((byte) 0x70)).start();
+    }
+
+    public void pattern8Activity(){ // When button_pattern3 clicked
+        new Thread(new Thread3((byte) 0x80)).start();
+    }
+
 
     class Thread3 implements Runnable {
         private byte dataToSend;
