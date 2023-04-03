@@ -68,15 +68,15 @@ public class HomePageActivity extends AppCompatActivity {
         button_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                  ToPatternActivity();
+//                ImageView img= (ImageView) findViewById(R.id.img_no_connection);
+//                img.setImageResource(R.drawable.signal_black);
 
-                ImageView img= (ImageView) findViewById(R.id.img_no_connection);
-                img.setImageResource(R.drawable.signal_black);
-                ToPatternActivity();
             }
         });
 
         Button button_3 = (Button) findViewById(R.id.button_home3);
-        button_2.setOnClickListener(new View.OnClickListener() {
+        button_3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
