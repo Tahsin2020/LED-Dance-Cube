@@ -53,8 +53,8 @@ public class HomePageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_unconnect);
-        Thread1 = new Thread(new Thread1());
-        Thread1.start();
+//        Thread1 = new Thread(new Thread1());
+//        Thread1.start();
 
         Button button = (Button) findViewById(R.id.button_home1);
         button.setOnClickListener(new View.OnClickListener() {
@@ -91,7 +91,7 @@ public class HomePageActivity extends AppCompatActivity {
         System.out.println("A");
         System.out.println("WE ARE IN ON START");
         System.out.println("A");
-        new Thread(new Thread3((byte) 0x01)).start();
+        //new Thread(new Thread3((byte) 0x01)).start();
     }
 
     public void backToMainActivity(){
@@ -154,20 +154,20 @@ public class HomePageActivity extends AppCompatActivity {
         }
     }
 
-    class Thread3 implements Runnable {
-        private byte dataToSend;
-        Thread3(byte b) {
-            dataToSend = b;
-        }
-        Thread3() {}
-        @Override
-        public void run() {
-            try {
-                HomePageActivity.data_output.write(dataToSend);
-                HomePageActivity.data_output.flush();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
-        }
-    }
+//    class Thread3 implements Runnable {
+//        private byte dataToSend;
+//        Thread3(byte b) {
+//            dataToSend = b;
+//        }
+//        Thread3() {}
+//        @Override
+//        public void run() {
+//            try {
+//                HomePageActivity.data_output.write(dataToSend);
+//                HomePageActivity.data_output.flush();
+//            } catch (IOException e) {
+//                throw new RuntimeException(e);
+//            }
+//        }
+//    }
 }
