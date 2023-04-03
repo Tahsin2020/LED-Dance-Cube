@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.ToggleButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -56,6 +57,16 @@ public class HomePageActivity extends AppCompatActivity {
         Thread1 = new Thread(new Thread1());
         Thread1.start();
 
+        /*Add in Oncreate() funtion after setContentView()*/
+        ToggleButton ToggleButton = (ToggleButton) findViewById(R.id.draw_Toggle); // initiate a toggle button
+        ToggleButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                new Thread(new Thread3((byte) 0x0F)).start();
+            }
+        });
+
+
         Button button = (Button) findViewById(R.id.button_home1);
         button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,9 +99,6 @@ public class HomePageActivity extends AppCompatActivity {
 
     protected void onStart() {
         super.onStart();
-        System.out.println("A");
-        System.out.println("WE ARE IN ON START");
-        System.out.println("A");
         if (data_output != null) {
             new Thread(new Thread3((byte) 0x01)).start();
         }
