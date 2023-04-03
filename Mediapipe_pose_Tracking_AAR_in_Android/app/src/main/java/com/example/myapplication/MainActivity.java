@@ -147,11 +147,6 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(getContentViewLayoutResId());
 
-        /*Add in Oncreate() funtion after setContentView()*/
-        ToggleButton simpleToggleButton = (ToggleButton) findViewById(R.id.draw_Toggle); // initiate a toggle button
-        Boolean ToggleButtonState = simpleToggleButton.isChecked(); // check current state of a toggle button (true or false).
-
-
         previewDisplayView = new SurfaceView(this);
         setupPreviewDisplayView();
 

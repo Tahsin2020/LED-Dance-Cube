@@ -46,6 +46,10 @@ public class HomePageActivity extends AppCompatActivity {
                 Intent intent = new Intent(this, PatternActivity.class);
                 startActivity(intent);
                 return true;
+            case R.id.brightness:
+                new Thread(new HomePageActivity.Thread3((byte) 0xa0)).start();
+                startActivity(new Intent(this, BrightnessActivity.class));
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -57,14 +61,24 @@ public class HomePageActivity extends AppCompatActivity {
         Thread1 = new Thread(new Thread1());
         Thread1.start();
 
-        /*Add in Oncreate() funtion after setContentView()*/
-        ToggleButton ToggleButton = (ToggleButton) findViewById(R.id.draw_Toggle); // initiate a toggle button
-        ToggleButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new Thread(new Thread3((byte) 0x0F)).start();
-            }
-        });
+        //ToggleButton materialSwitch = (ToggleButton) findViewById(R.id.material_switch); // initiate a toggle button
+       // Boolean ButtonState = materialSwitch.isChecked(); // check current state of a toggle button (true or false).
+
+//        materialSwitch.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (ButtonState) {
+//                    // The switch is checked.
+//                    //new Thread(new Thread3((byte) 0x0F)).start();
+//
+//                } else {
+//                    // The switch isn't checked.
+//                    //new Thread(new Thread3((byte) 0x01)).start();
+//                }
+//
+//            }
+//        });
+
 
 
         Button button = (Button) findViewById(R.id.button_home1);
@@ -165,7 +179,7 @@ public class HomePageActivity extends AppCompatActivity {
         }
     }
 
-    class Thread3 implements Runnable {
+    static class Thread3 implements Runnable {
         private byte dataToSend;
         Thread3(byte b) {
             dataToSend = b;
