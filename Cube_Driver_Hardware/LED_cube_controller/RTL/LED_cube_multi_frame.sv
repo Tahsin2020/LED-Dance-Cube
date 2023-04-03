@@ -16,7 +16,7 @@ module LED_cube_multi_frame(
 	input logic rst_n,
 	input logic animate_start,
 	input logic animate_stop,
-	input logic stream_read,
+	input logic readdatavalid,
 	
 	// config signals
 	input logic [3:0] mode,
@@ -30,7 +30,10 @@ module LED_cube_multi_frame(
 	// outputs
 	output logic [7:0] Layers,
 	output logic [7:0] Latches,
-	output logic [7:0] Data
+	output logic [7:0] Data,
+
+	output logic stall_mode_change,
+	output logic [5:0] stream_data_counter
 );
 	
 	logic frame_start, frame_stop, frame_done;
@@ -60,24 +63,6 @@ module LED_cube_multi_frame(
 		end
 	end
 	
-//	logic [63:0] [7:0] data = { 8'h81, 8'h42, 8'h24, 8'h18, 8'h18, 8'h24, 8'h42, 8'h81, 
-//											8'h00, 8'h42, 8'h24, 8'h18, 8'h18, 8'h24, 8'h42, 8'h00, 
-//											8'h00, 8'h00, 8'h24, 8'h18, 8'h18, 8'h24, 8'h00, 8'h00, 
-//											8'h00, 8'h00, 8'h00, 8'h18, 8'h18, 8'h00, 8'h00, 8'h00, 
-//											8'h00, 8'h00, 8'h00, 8'h18, 8'h18, 8'h00, 8'h00, 8'h00, 
-//											8'h00, 8'h00, 8'h24, 8'h18, 8'h18, 8'h24, 8'h00, 8'h00, 
-//											8'h00, 8'h42, 8'h24, 8'h18, 8'h18, 8'h24, 8'h42, 8'h00, 
-//											8'h81, 8'h42, 8'h24, 8'h18, 8'h18, 8'h24, 8'h42, 8'h81  };
-
-//	logic [9599:0] [7:0] data = {30{ 8'h81, 8'h42, 8'h24, 8'h18, 8'h18, 8'h24, 8'h42, 8'h81, 
-//												8'h00, 8'h42, 8'h24, 8'h18, 8'h18, 8'h24, 8'h42, 8'h00, 
-//												8'h00, 8'h00, 8'h24, 8'h18, 8'h18, 8'h24, 8'h00, 8'h00, 
-//												8'h00, 8'h00, 8'h00, 8'h18, 8'h18, 8'h00, 8'h00, 8'h00, 
-//												8'h00, 8'h00, 8'h00, 8'h18, 8'h18, 8'h00, 8'h00, 8'h00, 
-//												8'h00, 8'h00, 8'h24, 8'h18, 8'h18, 8'h24, 8'h00, 8'h00, 
-//												8'h00, 8'h42, 8'h24, 8'h18, 8'h18, 8'h24, 8'h42, 8'h00, 
-//												8'h81, 8'h42, 8'h24, 8'h18, 8'h18, 8'h24, 8'h42, 8'h81, {64{8'b0} } }} ;
-
 	logic [7:0] data1 [9599:0];
 	logic [7:0] data2 [9599:0];
 	logic [7:0] data3 [9599:0];
@@ -94,39 +79,6 @@ module LED_cube_multi_frame(
 	$readmemh("../Animations/hexes/rotating_wall.hex", data5);
 	$readmemh("../Animations/hexes/waves.hex", data6);
 	$readmemh("../Animations/hexes/helix.hex", data7);
-	end
-
-	logic [7:0] stream_data1 [63:0];
-	logic [7:0] stream_data2 [63:0];
-	logic [7:0] stream_data3 [63:0];
-	logic [7:0] stream_data4 [63:0];
-	logic [7:0] stream_data5 [63:0];
-	logic [7:0] stream_data6 [63:0];
-	logic [7:0] stream_data7 [63:0];
-	logic [7:0] stream_data8 [63:0];
-
-	logic [2:0] stream_frame_d, stream_frame_q;
-	logic [5:0] stream_row_d, stream_row_q;
-
-	always_ff @( posedge clk) begin : stream_seq_logic
-		if( !rst_n ) {stream_frame_q, stream_row_q} <= 0;
-		else begin
-			stream_frame_q <= stream_frame_d;
-			stream_row_q <= stream_row_d;
-		end
-	end	
-	
-	always_comb begin : stream_row_comb
-		stream_row_d = 0;
-		if(stream_read)
-			stream_row_d = stream_row_q + 1'b1;
-	end
-
-	always_comb begin :  stream_frame_comb
-		stream_frame_d = 0;
-		if(stream_row_d != stream_row_q && stream_row_d == 0) begin
-				stream_frame_d = stream_frame_q + 1'b1;
-		end
 	end
 
 	logic [13:0] addr;
@@ -148,13 +100,13 @@ module LED_cube_multi_frame(
 					default: data_to_latch = 0;
 				endcase
 			4'h2: case(animation_sel[2:0])
-					3'b000: data_to_latch = data1[addr];
-					3'b001: data_to_latch = data2[addr];
-					3'b010: data_to_latch = data3[addr];
-					3'b011: data_to_latch = data4[addr];
-					3'b100: data_to_latch = data5[addr];
-					3'b101: data_to_latch = data6[addr];
-					3'b110: data_to_latch = data7[addr];
+					3'b001: data_to_latch = data1[addr];
+					3'b010: data_to_latch = data2[addr];
+					3'b011: data_to_latch = data3[addr];
+					3'b100: data_to_latch = data4[addr];
+					3'b101: data_to_latch = data5[addr];
+					3'b110: data_to_latch = data6[addr];
+					3'b111: data_to_latch = data7[addr];
 					default: data_to_latch = 0;
 				endcase
 			4'h3: data_to_latch = stream_data_to_latch;
@@ -231,6 +183,8 @@ module LED_cube_multi_frame(
 		.Data(Data)
 	);
 
+	logic new_data;
+
 	LED_cube_stream stream_data (
 		.clk(clk),
 		.rst_n(rst_n),
@@ -239,6 +193,17 @@ module LED_cube_multi_frame(
 		.data_in(data_in),
 		.frame_addr(frame_addr),
 		.data_to_latch(stream_data_to_latch)
+	);
+
+	LED_cube_stream_controller stream_controller(
+		.clk(clk),
+		.rst_n(rst_n),
+		.mode(mode),
+		.data_in(data_in),
+		.readdatavalid(readdatavalid),
+		.new_data(new_data),
+		.stall_mode_change(stall_mode_change),
+		.data_counter(stream_data_counter)
 	);
 
 endmodule : LED_cube_multi_frame

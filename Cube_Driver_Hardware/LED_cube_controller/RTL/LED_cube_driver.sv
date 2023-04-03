@@ -3,12 +3,15 @@ module LED_cube_driver(
     input logic clk,
     input logic rst_n,
     input logic [7:0] uart_in,
-    input logic read,
+    input logic readdatavalid,
 
     //output signals
     output logic [7:0] Layers_out, 
     output logic [7:0] Latches_out, 
-    output logic [7:0] Data_out
+    output logic [7:0] Data_out,
+
+    output logic [3:0] mode,
+    output logic [5:0] stream_data_counter
 );
 
     enum bit[2:0] {OFF, ANIM_LOOP, ANIM_SEL, STREAM, PLANE_MSG, ALL_ON, ANIM_DB} state, next_state;
@@ -34,9 +37,6 @@ module LED_cube_driver(
         endcase
     end
 
-    logic stream_read;
-    assign stream_read = (mode == 4'h3) ? read : 1'b0;
-
     logic [7:0] multi_frame_layers, multi_frame_latches, multi_frame_data;
     logic [7:0] stream_layers, stream_latches, stream_data;
     logic [7:0] plane_msg_layers, plane_msg_latches, plane_msg_data;
@@ -44,15 +44,8 @@ module LED_cube_driver(
     logic [7:0] anim_db_layers, anim_db_latches, anim_db_data;
 
     always_ff @( posedge clk )  begin : Layers_Latches_Data_comb_logic
-        case(state)
-            ANIM_LOOP: {Layers_out, Latches_out, Data_out} <= {multi_frame_layers, multi_frame_latches, multi_frame_data};
-            ANIM_SEL:  {Layers_out, Latches_out, Data_out} <= {multi_frame_layers, multi_frame_latches, multi_frame_data};
-            STREAM:    {Layers_out, Latches_out, Data_out} <= {stream_layers, stream_latches, stream_data};
-            PLANE_MSG: {Layers_out, Latches_out, Data_out} <= {plane_msg_layers, plane_msg_latches, plane_msg_data};
-            ALL_ON:    {Layers_out, Latches_out, Data_out} <= {all_on_layers, all_on_latches, all_on_data};
-            ANIM_DB:   {Layers_out, Latches_out, Data_out} <= {anim_db_layers, anim_db_latches, anim_db_data};
-            default:   {Layers_out, Latches_out, Data_out} <= {multi_frame_layers, multi_frame_latches, multi_frame_data};
-        endcase
+        if( ~rst_n ) {Layers_out, Latches_out, Data_out} <= 0; 
+        else {Layers_out, Latches_out, Data_out} <= {multi_frame_layers, multi_frame_latches, multi_frame_data};
     end
 
     logic loop_mode;
@@ -85,13 +78,18 @@ module LED_cube_driver(
         .mode(mode),
         .brightness(brightness),
         .data_in(uart_in),
-        .stream_read(stream_read),
+        .readdatavalid(readdatavalid),
 
 
         .Layers(multi_frame_layers),
         .Latches(multi_frame_latches),
-        .Data(multi_frame_data)
+        .Data(multi_frame_data),
+
+        .stall_mode_change(stall_mode_change),
+        .stream_data_counter(stream_data_counter)
     );
+
+    logic stall_mode_change;
 
     Config_Space conf_space(
         .clk(clk),
@@ -99,7 +97,8 @@ module LED_cube_driver(
         .uart_in(uart_in),
         .brightness(brightness),
         .mode(mode),
-        .animation_sel(animation_sel)
+        .animation_sel(animation_sel),
+        .stall_mode_change(stall_mode_change)
     );
 
 endmodule : LED_cube_driver
