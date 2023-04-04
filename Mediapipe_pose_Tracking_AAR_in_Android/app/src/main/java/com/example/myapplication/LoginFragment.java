@@ -22,6 +22,10 @@ public class LoginFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
+
+        FirebaseFirestore firebaseFirestore;
+        DocumentReference ref;
+        firebaseFirestore=FirebaseFirestore.getInstance();
         // Inflate the layout for this fragment
 
         View v = inflater.inflate(R.layout.fragment_login,container,false);
@@ -32,7 +36,7 @@ public class LoginFragment extends Fragment {
             public void onClick(View v) {
                 // do something when the corky is clicked
 
-                Intent redirect=new Intent(getActivity(),HomePageActivity.class);
+                Intent redirect = new Intent(getActivity(),HomePageActivity.class);
                 startActivity(redirect);
             }
         });

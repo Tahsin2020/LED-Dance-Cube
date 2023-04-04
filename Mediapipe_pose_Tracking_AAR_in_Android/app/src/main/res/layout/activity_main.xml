@@ -13,10 +13,6 @@
         android:orientation="vertical"
         tools:ignore="MissingConstraints">
 
-        <ToggleButton
-            android:id="@+id/draw_Toggle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
 
 
 

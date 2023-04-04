@@ -20,22 +20,47 @@
 <!--        android:text="@string/live_streaming" />-->
 
     <Button
+        android:id="@+id/button_pattern1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="pattern-1" />
+
+
+    <Button
         android:id="@+id/button_pattern2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/pattern_1" />
+        android:text="pattern-2" />
 
     <Button
         android:id="@+id/button_pattern3"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/pattern_1" />
+        android:text="pattern-3" />
 
     <Button
         android:id="@+id/button_pattern4"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/pattern_1" />
+        android:text="pattern-4" />
+
+    <Button
+        android:id="@+id/button_pattern5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="pattern-5" />
+
+    <Button
+        android:id="@+id/button_pattern6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="pattern-6" />
+
+    <Button
+        android:id="@+id/button_pattern7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="pattern-7" />
 
 
 

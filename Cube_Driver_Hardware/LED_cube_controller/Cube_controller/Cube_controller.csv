@@ -1,0 +1,20 @@
+# system info Cube_controller on 2023.03.31.16:48:03
+system_info:
+name,value
+DEVICE,5CSEMA5F31C6
+DEVICE_FAMILY,Cyclone V
+GENERATION_ID,1680306480
+#
+#
+# Files generated for Cube_controller on 2023.03.31.16:48:03
+files:
+filepath,kind,attributes,module,is_top
+simulation/Cube_controller.v,VERILOG,,Cube_controller,true
+#
+# Map from instance-path to kind of module
+instances:
+instancePath,module
+Cube_controller.LED_cube_uart_0,Cube_controller_LED_cube_uart_0
+Cube_controller.uart_0,Cube_controller_uart_0
+Cube_controller.mm_interconnect_0,Cube_controller_mm_interconnect_0
+Cube_controller.rst_controller,altera_reset_controller

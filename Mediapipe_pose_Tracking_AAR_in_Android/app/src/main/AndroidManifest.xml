@@ -3,6 +3,8 @@
     package="com.example.myapplication">
     <!-- For using the Camera -->
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <uses-feature android:name="android.hardware.camera" />
     <uses-feature android:name="android.hardware.camera.autofocus" /> <!-- For mediapipe -->
@@ -16,36 +18,34 @@
         android:label="DanceBot"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme"
-        >
-    <!--android:theme="@style/Theme.MyApplication"-->
+        android:theme="@style/AppTheme">
+        <activity
+            android:name=".BrightnessActivity"
+            android:exported="false" />
+        <!-- android:theme="@style/Theme.MyApplication" -->
+        <activity
+            android:name=".StartActivity"
+            android:exported="true"
+            android:label="@string/Home">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
 
-    <activity
-        android:name=".StartActivity"
-        android:exported="true"
-        android:label="@string/Home">
-        <intent-filter>
-            <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".MainActivity"
+            android:exported="true"></activity>
+        <activity
+            android:name=".HomePageActivity"
+            android:exported="true"></activity>
+        <activity
+            android:name=".GalleryActivity"
+            android:exported="true"></activity>
+        <activity
+            android:name=".PatternActivity"
+            android:exported="true"></activity>
 
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent-filter>
-    </activity>
-    <activity
-        android:name=".MainActivity"
-        android:exported="true">
-
-    </activity>
-    <activity
-        android:name=".HomePageActivity"
-        android:exported="true">
-
-    </activity>
-
-    <activity
-        android:name=".PatternActivity"
-        android:exported="true">
-
-    </activity>
-</application>
+    </application>
 
 </manifest>

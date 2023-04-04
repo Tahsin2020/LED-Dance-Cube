@@ -16,6 +16,8 @@
 
 package com.example.myapplication;
 
+import static com.example.myapplication.HomePageActivity.data_output;
+
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -49,26 +51,35 @@ import com.google.mediapipe.components.FrameProcessor;
 import com.google.mediapipe.components.PermissionHelper;
 import com.google.mediapipe.formats.proto.LandmarkProto.NormalizedLandmark;
 import com.google.mediapipe.formats.proto.LandmarkProto.NormalizedLandmarkList;
+import com.google.mediapipe.formats.proto.LandmarkProto.Landmark;
+import com.google.mediapipe.formats.proto.LandmarkProto.LandmarkList;
 import com.google.mediapipe.framework.AndroidAssetUtil;
 import com.google.mediapipe.framework.PacketGetter;
 import com.google.mediapipe.glutil.EglManager;
 import com.google.protobuf.InvalidProtocolBufferException;
 
+import java.io.BufferedReader;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.PrintWriter;
+import java.net.Socket;
 import java.util.ArrayList;
 
-import com.google.mediapipe.formats.proto.LandmarkProto.Landmark;
-import com.google.mediapipe.formats.proto.LandmarkProto.LandmarkList;
-
-import com.google.mediapipe.formats.proto.LandmarkProto.NormalizedLandmark;
-import com.google.mediapipe.formats.proto.LandmarkProto.NormalizedLandmarkList;
-import com.google.mediapipe.framework.PacketGetter;
-import com.google.protobuf.InvalidProtocolBufferException;
-
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Main activity of MediaPipe example apps.
  */
 public class MainActivity extends AppCompatActivity {
+    //networking variables
+    private static final String NTAG = "Networking";
+    private static final long fps = 30;
+    private static long ms_per_frame = 1000/fps;
+    Thread Thread1 = null;
+
     private static final String TAG = "MainActivity";
     private static final String BINARY_GRAPH_NAME = "pose_tracking_gpu.binarypb";
     private static final String INPUT_VIDEO_STREAM_NAME = "input_video";
@@ -131,17 +142,10 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getContentViewLayoutResId());
-
-        /*Add in Oncreate() funtion after setContentView()*/
-        ToggleButton simpleToggleButton = (ToggleButton) findViewById(R.id.draw_Toggle); // initiate a toggle button
-        Boolean ToggleButtonState = simpleToggleButton.isChecked(); // check current state of a toggle button (true or false).
-
 
         previewDisplayView = new SurfaceView(this);
         setupPreviewDisplayView();
@@ -154,6 +158,21 @@ public class MainActivity extends AppCompatActivity {
             Log.e(TAG, "Cannot find application info: " + e);
         }
 
+        // Initialize asset manager so that MediaPipe native libraries can access the app assets, e.g.,
+        // binary graphs.
+        AndroidAssetUtil.initializeNativeAssetManager(this);
+
+        eglManager = new EglManager(null);
+        processor =
+                new FrameProcessor(
+                        this,
+                        eglManager.getNativeContext(),
+                        BINARY_GRAPH_NAME,
+                        INPUT_VIDEO_STREAM_NAME,
+                        OUTPUT_VIDEO_STREAM_NAME);
+        processor
+                .getVideoSurfaceOutput()
+                .setFlipY(FLIP_FRAMES_VERTICALLY);
 
             // Initialize asset manager so that MediaPipe native libraries can access the app assets, e.g.,
             // binary graphs.
@@ -181,8 +200,6 @@ public class MainActivity extends AppCompatActivity {
 
                             byte[] landmarksRaw = PacketGetter.getProtoBytes(packet);
                             LandmarkList poseLandmarks = LandmarkList.parseFrom(landmarksRaw);
-                            Log.v(TAG, "[TS:" + packet.getTimestamp() + "] " + getPoseLandmarksDebugString(poseLandmarks));
-
                         } catch (InvalidProtocolBufferException exception) {
                             Log.e(TAG, "Failed to get proto.", exception);
                         }
@@ -197,6 +214,30 @@ public class MainActivity extends AppCompatActivity {
 //                OUTPUT_LANDMARKS_STREAM_NAME,
 //                (packet) -> {
 //                    Log.v(TAG, "Received Pose landmarks packet.");
+        processor.addPacketCallback(
+                OUTPUT_LANDMARKS_STREAM_NAME,
+                (packet) -> {
+//                    Log.v(TAG, "Received Pose landmarks packet.");
+                    long startTime = System.currentTimeMillis();
+                    try {
+//                        NormalizedLandmarkList poseLandmarks = PacketGetter.getProto(packet, NormalizedLandmarkList.class);
+                        byte[] landmarksRaw = PacketGetter.getProtoBytes(packet);
+                        NormalizedLandmarkList poseLandmarks = NormalizedLandmarkList.parseFrom(landmarksRaw);
+//                        Log.v(TAG, "[TS:" + packet.getTimestamp() + "] " + getPoseLandmarksDebugString(poseLandmarks));
+                        Map<String, Map<String, Float>> model_points = formatLandmarks(poseLandmarks);
+                        if (Utils.checkLandmarksFormat(model_points)) {
+                            byte[] dataToSend = ProcessData.process(model_points);
+//                            Log.v(TAG, "dataToSend created, sending over wifi...");
+                            long endTime = System.currentTimeMillis();
+                            if (endTime - startTime < ms_per_frame) {
+                                Thread.sleep(ms_per_frame - (endTime - startTime));
+                            }
+                            new Thread(new Thread3(dataToSend)).start();
+                        }
+                        SurfaceHolder srh = previewDisplayView.getHolder();
+//
+//                  -- this line cannot Running --
+//                    Canvas canvas = null;
 //                    try {
 ////                        NormalizedLandmarkList poseLandmarks = PacketGetter.getProto(packet, NormalizedLandmarkList.class);
 //                        byte[] landmarksRaw = PacketGetter.getProtoBytes(packet);
@@ -225,6 +266,14 @@ public class MainActivity extends AppCompatActivity {
 //
 //                }
 //        );
+////                    processor.getVideoSurfaceOutput().setSurface(srh.getSurface());
+                    } catch (InvalidProtocolBufferException exception) {
+                        Log.e(TAG, "failed to get proto.", exception);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+        );
         /*processor.addPacketCallback(
                 "throttled_input_video_cpu",
                 (packet) ->{
@@ -237,6 +286,13 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    protected void onStart() {
+        super.onStart();
+        if (data_output != null) {
+            new Thread(new Thread4((byte) 0x03)).start();
+        }
+    }
+
     // Used to obtain the content view for this application. If you are extending this class, and
     // have a custom layout, override this method and return the custom layout.
     protected int getContentViewLayoutResId() {
@@ -246,8 +302,7 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onResume() {
         super.onResume();
-        converter =
-                new ExternalTextureConverter(
+        converter = new ExternalTextureConverter(
                         eglManager.getContext(), 2);
         converter.setFlipY(FLIP_FRAMES_VERTICALLY);
         converter.setConsumer(processor);
@@ -274,7 +329,6 @@ public class MainActivity extends AppCompatActivity {
 
     protected void onCameraStarted(SurfaceTexture surfaceTexture) {
         previewFrameTexture = surfaceTexture;
-
         // Make the display view visible to start showing the preview. This triggers the
         // SurfaceHolder.Callback added to (the holder of) previewDisplayView.
         previewDisplayView.setVisibility(View.VISIBLE);
@@ -308,8 +362,6 @@ public class MainActivity extends AppCompatActivity {
         Size displaySize = cameraHelper.computeDisplaySizeFromViewSize(viewSize);
         boolean isCameraRotated = cameraHelper.isCameraRotated();
 
-
-
         // Connect the converter to the camera-preview frames as its input (via
         // previewFrameTexture), and configure the output width and height as the computed
         // display size.
@@ -323,8 +375,6 @@ public class MainActivity extends AppCompatActivity {
         previewDisplayView.setVisibility(View.GONE);
         ViewGroup viewGroup = findViewById(R.id.preview_display_layout);
         viewGroup.addView(previewDisplayView);
-        ///Draw toggle
-
         previewDisplayView
                 .getHolder()
                 .addCallback(
@@ -333,13 +383,11 @@ public class MainActivity extends AppCompatActivity {
                             public void surfaceCreated(SurfaceHolder holder) {
                                 processor.getVideoSurfaceOutput().setSurface(holder.getSurface());
                                 Log.d("Surface","Surface Created");
-
                             }
 
                             @Override
                             public void surfaceChanged(SurfaceHolder holder, int format, int width, int height) {
                                 onPreviewDisplaySurfaceChanged(holder, format, width, height);
-
                                 Log.d("Surface","Surface Changed");
                             }
 
@@ -350,53 +398,23 @@ public class MainActivity extends AppCompatActivity {
                             }
 
                         });
-
     }
 
-//    private static String getPoseLandmarksDebugString(NormalizedLandmarkList poseLandmarks) {
-//        String poseLandmarkStr = "Pose landmarks: " + poseLandmarks.getLandmarkCount() + "\n";
-//        ArrayList<PoseLandMark> poseMarkers= new ArrayList<PoseLandMark>();
-//        int landmarkIndex = 0;
-//        for (NormalizedLandmark landmark : poseLandmarks.getLandmarkList()) {
-//            PoseLandMark marker = new PoseLandMark(landmark.getX(),landmark.getY(),landmark.getVisibility());
-////          poseLandmarkStr += "\tLandmark ["+ landmarkIndex+ "]: ("+ (landmark.getX()*720)+ ", "+ (landmark.getY()*1280)+ ", "+ landmark.getVisibility()+ ")\n";
-//            ++landmarkIndex;
-//            poseMarkers.add(marker);
-//        }
-//        // Get Angle of Positions
-//        double rightAngle = getAngle(poseMarkers.get(16),poseMarkers.get(14),poseMarkers.get(12));
-//        double leftAngle = getAngle(poseMarkers.get(15),poseMarkers.get(13),poseMarkers.get(11));
-//        double rightKnee = getAngle(poseMarkers.get(24),poseMarkers.get(26),poseMarkers.get(28));
-//        double leftKnee = getAngle(poseMarkers.get(23),poseMarkers.get(25),poseMarkers.get(27));
-//        double rightShoulder = getAngle(poseMarkers.get(14),poseMarkers.get(12),poseMarkers.get(24));
-//        double leftShoulder = getAngle(poseMarkers.get(13),poseMarkers.get(11),poseMarkers.get(23));
-//        Log.v(TAG,"======Degree Of Position]======\n"+
-//                "rightAngle :"+rightAngle+"\n"+
-//                "leftAngle :"+leftAngle+"\n"+
-//                "rightHip :"+rightKnee+"\n"+
-//                "leftHip :"+leftKnee+"\n"+
-//                "rightShoulder :"+rightShoulder+"\n"+
-//                "leftShoulder :"+leftShoulder+"\n");
-//        return poseLandmarkStr;
-//
-//    }
-
-    private static String getPoseLandmarksDebugString(LandmarkList poseLandmarks) {
-        String poseLandmarkStr = "Pose landmarks: " + poseLandmarks.getLandmarkCount() + "\n";
-        int landmarkIndex = 0;
-        for (Landmark landmark : poseLandmarks.getLandmarkList()) {
-            poseLandmarkStr += "\tLandmark ["
-                    + landmarkIndex
-                    + "]: ("
-                    + landmark.getX()
-                    + ", "
-                    + landmark.getY()
-                    + ", "
-                    + landmark.getZ()
-                    + ")\n";
-            ++landmarkIndex;
+    private static Map<String, Map<String, Float>> formatLandmarks(NormalizedLandmarkList poseLandmarks) {
+        ArrayList<PoseLandMark> poseMarkers= new ArrayList<>();
+        for (NormalizedLandmark landmark : poseLandmarks.getLandmarkList()) {
+            PoseLandMark marker = new PoseLandMark(landmark.getX(),landmark.getY(), landmark.getZ(), landmark.getVisibility());
+            poseMarkers.add(marker);
         }
-        return poseLandmarkStr;
+        Map<String, Map<String, Float>> model_points = new HashMap<>();
+        for (int i = 0; i < poseMarkers.size(); i++) {
+            Map<String, Float> point = new HashMap<>();
+            point.put("x", poseMarkers.get(i).getX());
+            point.put("y", poseMarkers.get(i).getY());
+            point.put("z", poseMarkers.get(i).getZ());
+            model_points.put(Integer.toString(i), point);
+        }
+        return model_points;
     }
 
     static double getAngle(PoseLandMark firstPoint, PoseLandMark midPoint, PoseLandMark lastPoint) {
@@ -409,5 +427,58 @@ public class MainActivity extends AppCompatActivity {
             result = (360.0 - result); // Always get the acute representation of the angle
         }
         return result;
+    }
+
+//    class Thread1 implements Runnable {
+//        @Override
+//        public void run() {
+//            Socket socket;
+//            try {
+//                socket = new Socket(SERVER_IP, SERVER_PORT);
+//                HomePageActivity.data_output = new DataOutputStream(socket.getOutputStream());
+//                Log.v(TAG, "Connected to server");
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//    }
+
+    class Thread3 implements Runnable {
+        private byte[] b = {1, 2, 3, 4};
+        private byte[] dataToSend;
+        Thread3(byte[] dataToSend) {
+            this.dataToSend = dataToSend;
+//            System.out.println("Bytes sent: " + Arrays.toString(dataToSend));
+        }
+        Thread3() {}
+        @Override
+        public void run() {
+            try {
+                data_output.write((byte) 0x20);
+                data_output.flush();
+                data_output.write(dataToSend);
+                data_output.flush();
+                data_output.write((byte) 0x30);
+                data_output.flush();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    class Thread4 implements Runnable {
+        private byte dataToSend;
+        Thread4(byte dataToSend) {
+            this.dataToSend = dataToSend;
+        }
+        @Override
+        public void run() {
+            try {
+                data_output.write(dataToSend);
+                data_output.flush();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
     }
 }

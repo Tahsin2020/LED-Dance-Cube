@@ -5,5 +5,7 @@
         android:title="@string/home_page" />
     <item android:id="@+id/patterns"
         android:title="@string/patterns" />
+    <item android:id="@+id/brightness"
+        android:title="brightness" />
 
 </menu>
