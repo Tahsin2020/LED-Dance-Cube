@@ -10,7 +10,9 @@ module LED_cube_uart (
 		input  logic       reset_sink_reset,            //    reset_sink.reset
 		output logic [7:0] LEDR,                         //   conduit_end.new_signal
         input  logic [9:0] SW,
-        output logic [35:0] GPIO_0,
+        output logic [7:0] Layers_out,
+        output logic [7:0] Latches_out,
+        output logic [7:0] Data_out,
         output logic [6:0] HEX0,
         output logic [6:0] HEX1
 );
@@ -20,10 +22,6 @@ module LED_cube_uart (
     assign clk = clock_sink_clk;
     assign rst_n = reset_sink_reset;
 
-    logic [7:0] Layers_out, Latches_out, Data_out;
-	assign {GPIO_0[32], GPIO_0[30], GPIO_0[28], GPIO_0[26], GPIO_0[35], GPIO_0[33], GPIO_0[31], GPIO_0[27]} = Layers_out;
-	assign {GPIO_0[25], GPIO_0[7], GPIO_0[9], GPIO_0[13], GPIO_0[15], GPIO_0[19], GPIO_0[21], GPIO_0[23]} = Latches_out;
-	assign {GPIO_0[2], GPIO_0[4], GPIO_0[6], GPIO_0[10], GPIO_0[12], GPIO_0[16], GPIO_0[18], GPIO_0[20]} = Data_out;
 
     logic [5:0] stream_data_counter;
 
