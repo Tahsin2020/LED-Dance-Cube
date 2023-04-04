@@ -10,6 +10,12 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.firebase.firestore.DocumentReference;
+import com.google.firebase.firestore.DocumentSnapshot;
+import com.google.firebase.firestore.EventListener;
+import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.FirebaseFirestoreException;
+
 import androidx.fragment.app.Fragment;
 
 public class LoginFragment extends Fragment {
@@ -23,10 +29,6 @@ public class LoginFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        FirebaseFirestore firebaseFirestore;
-        DocumentReference ref;
-        firebaseFirestore=FirebaseFirestore.getInstance();
-        // Inflate the layout for this fragment
 
         View v = inflater.inflate(R.layout.fragment_login,container,false);
         final Button button = v.findViewById(R.id.btn_login);
