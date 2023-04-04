@@ -60,7 +60,7 @@ public class BrightnessActivity extends AppCompatActivity {
                 case 6:  new Thread(new HomePageActivity.Thread3((byte) 0x07)).start();
                     break;
                 default: new Thread(new HomePageActivity.Thread3((byte) 0x01)).start();
-                
+
             }
         }
     };
