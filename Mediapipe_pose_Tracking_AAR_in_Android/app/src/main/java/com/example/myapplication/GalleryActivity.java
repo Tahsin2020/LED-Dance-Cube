@@ -34,8 +34,7 @@ public class GalleryActivity extends AppCompatActivity {
             R.drawable.rolling_ball,
             R.drawable.rotating_wall,
             R.drawable.wave,
-<<<<<<< Updated upstream
-=======
+
     };
 
     String[] image_names = {
@@ -46,7 +45,7 @@ public class GalleryActivity extends AppCompatActivity {
             "rolling_ball",
             "rotating_wall",
             "wave",
->>>>>>> Stashed changes
+
     };
 
     @Override

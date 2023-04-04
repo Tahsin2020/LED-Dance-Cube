@@ -10,17 +10,16 @@
     <item android:id="@+id/brightness"
         android:title="brightness" />
 
-    <item android:id="@+id/brightness"
-        android:title="@string/brightness" />
 <!--    <item android:id="@+id/checkable_menu"-->
 <!--        android:title="@string/switch_button_title"-->
 <!--        android:actionLayout="@layout/menu_switch"-->
 <!--        app:showAsAction="always"-->
 <!--        android:checkable="true"/>-->
-    <item android:id="@+id/sw_all_on"
-        android:title="Switch"
-        app:actionViewClass="android.widget.Switch"
-        app:showAsAction="always" />
+
+<!--    <item android:id="@+id/sw_all_on"-->
+<!--        android:title="Switch"-->
+<!--        app:actionViewClass="android.widget.Switch"-->
+<!--        app:showAsAction="always" />-->
 
 
 </menu>

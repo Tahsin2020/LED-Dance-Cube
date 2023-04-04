@@ -24,13 +24,7 @@ public class SwitchFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(@NonNull Menu menu, @NonNull MenuInflater inflater) {
         inflater.inflate(R.menu.menu_main, menu);
-        MenuItem menuItem = menu.findItem(R.id.sw_all_on);
-        SwitchCompat mySwitch = (SwitchCompat) menuItem.getActionView();
 
-        mySwitch.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            // Do something when `isChecked` is true or false
-            if(isChecked) Log.i(getTag(),"check");
-        });
 
     }
 

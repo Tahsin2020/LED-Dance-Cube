@@ -7,7 +7,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.Switch;
 import android.widget.ToggleButton;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -61,23 +63,22 @@ public class HomePageActivity extends AppCompatActivity {
 //        Thread1 = new Thread(new Thread1());
 //        Thread1.start();
 
-        //ToggleButton materialSwitch = (ToggleButton) findViewById(R.id.material_switch); // initiate a toggle button
+        ///ToggleButton materialSwitch = (ToggleButton) findViewById(R.id.material_switch); // initiate a toggle button
        // Boolean ButtonState = materialSwitch.isChecked(); // check current state of a toggle button (true or false).
 
-//        materialSwitch.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (ButtonState) {
-//                    // The switch is checked.
-//                    //new Thread(new Thread3((byte) 0x0F)).start();
-//
-//                } else {
-//                    // The switch isn't checked.
-//                    //new Thread(new Thread3((byte) 0x01)).start();
-//                }
-//
-//            }
-//        });
+        Switch onOffSwitch = (Switch)  findViewById(R.id.sw_all_on);
+        onOffSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                //Log.v("Switch State=", ""+isChecked);
+                if(isChecked) //Log.i(getCallingPackage(),"checked");
+                {new Thread(new Thread3((byte) 0x01)).start();
+                    onOffSwitch.setText("all lights on");}
+                else new Thread(new Thread3((byte) 0x0F)).start();  //Log.i(getCallingPackage(),"unchecked");
+            }
+
+        });
 
 
 
