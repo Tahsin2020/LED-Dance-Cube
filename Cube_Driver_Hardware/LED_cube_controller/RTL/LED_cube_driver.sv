@@ -10,8 +10,7 @@ module LED_cube_driver(
     output logic [7:0] Latches_out, 
     output logic [7:0] Data_out,
 
-    output logic [3:0] mode,
-    output logic [5:0] stream_data_counter
+    output logic [3:0] mode
 );
 
     enum bit[2:0] {OFF, ANIM_LOOP, ANIM_SEL, STREAM, PLANE_MSG, ALL_ON, ANIM_DB} state, next_state;
@@ -85,8 +84,7 @@ module LED_cube_driver(
         .Latches(multi_frame_latches),
         .Data(multi_frame_data),
 
-        .stall_mode_change(stall_mode_change),
-        .stream_data_counter(stream_data_counter)
+        .stall_mode_change(stall_mode_change)
     );
 
     logic stall_mode_change;

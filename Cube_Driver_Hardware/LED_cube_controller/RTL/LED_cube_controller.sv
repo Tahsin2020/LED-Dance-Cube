@@ -4,7 +4,9 @@ module LED_cube_controller (
 		output wire [9:0] LEDR,                         //   conduit_end.new_signal
         input logic [9:0] SW,
         output logic [35:0] GPIO_0,
-        inout logic [35:0] GPIO_1
+        inout logic [35:0] GPIO_1,
+        output logic [6:0] HEX0,
+        output logic [6:0] HEX1
 );
 
    Cube_controller controller(
@@ -14,7 +16,9 @@ module LED_cube_controller (
       .led_cube_uart_0_conduit_end_gpio(GPIO_0),                             //                                  .readdata
 		.reset_reset_n(KEY[0]),                                             //                             reset.reset_n
 		.uart_0_external_connection_rxd(GPIO_1[35]),                        //        uart_0_external_connection.rxd
-		.uart_0_external_connection_txd(GPIO_1[34])                         // 
+		.uart_0_external_connection_txd(GPIO_1[34]),                         // 
+      .led_cube_uart_0_conduit_end_hex0(HEX0),
+      .led_cube_uart_0_conduit_end_hex1(HEX1)
    );
 
    assign GPIO_1[33:0] = 34'b0;

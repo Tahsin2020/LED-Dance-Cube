@@ -8,6 +8,8 @@ module Cube_controller (
 		output wire [7:0]  led_cube_uart_0_conduit_end_ledr, // led_cube_uart_0_conduit_end.ledr
 		input  wire [9:0]  led_cube_uart_0_conduit_end_sw,   //                            .sw
 		output wire [35:0] led_cube_uart_0_conduit_end_gpio, //                            .gpio
+		output wire [6:0]  led_cube_uart_0_conduit_end_hex0, //                            .hex0
+		output wire [6:0]  led_cube_uart_0_conduit_end_hex1, //                            .hex1
 		input  wire        reset_reset_n,                    //                       reset.reset_n
 		input  wire        uart_0_external_connection_rxd,   //  uart_0_external_connection.rxd
 		output wire        uart_0_external_connection_txd    //                            .txd
@@ -35,6 +37,8 @@ module Cube_controller (
 		.LEDR                        (led_cube_uart_0_conduit_end_ledr),            //   conduit_end.ledr
 		.SW                          (led_cube_uart_0_conduit_end_sw),              //              .sw
 		.GPIO_0                      (led_cube_uart_0_conduit_end_gpio),            //              .gpio
+		.HEX0                        (led_cube_uart_0_conduit_end_hex0),            //              .hex0
+		.HEX1                        (led_cube_uart_0_conduit_end_hex1),            //              .hex1
 		.avalon_master_address       (led_cube_uart_0_avalon_master_address),       // avalon_master.address
 		.avalon_master_read          (led_cube_uart_0_avalon_master_read),          //              .read
 		.avalon_master_readdata      (led_cube_uart_0_avalon_master_readdata),      //              .readdata

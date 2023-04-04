@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <EnsembleReport name="Cube_controller" kind="system" version="18.1" fabric="QSYS">
  <!-- Format version 18.1 625 (Future versions may contain additional information.) -->
- <!-- 2023.04.02.18:38:31 -->
+ <!-- 2023.04.03.17:37:34 -->
  <!-- A collection of modules and connections -->
  <parameter name="clockCrossingAdapter">
   <type>com.altera.sopcmodel.ensemble.EClockAdapter</type>
@@ -53,7 +53,7 @@
  </parameter>
  <parameter name="generationId">
   <type>int</type>
-  <value>1680485905</value>
+  <value>1680568649</value>
   <derived>false</derived>
   <enabled>true</enabled>
   <visible>true</visible>
@@ -101,7 +101,7 @@
  </parameter>
  <parameter name="projectName">
   <type>java.lang.String</type>
-  <value></value>
+  <value>LED_cube_controller.qpf</value>
   <derived>false</derived>
   <enabled>true</enabled>
   <visible>false</visible>
@@ -315,6 +315,18 @@ parameters are a RESULT of the module parameters. -->
     <direction>Output</direction>
     <width>36</width>
     <role>gpio</role>
+   </port>
+   <port>
+    <name>HEX0</name>
+    <direction>Output</direction>
+    <width>7</width>
+    <role>hex0</role>
+   </port>
+   <port>
+    <name>HEX1</name>
+    <direction>Output</direction>
+    <width>7</width>
+    <role>hex1</role>
    </port>
   </interface>
   <interface name="avalon_master" kind="avalon_master" version="18.1">
@@ -3504,5 +3516,5 @@ parameters are a RESULT of the module parameters. -->
   <version>18.1</version>
  </plugin>
  <reportVersion>18.1 625</reportVersion>
- <uniqueIdentifier>B0A4609D743A0000018744C3FBBF</uniqueIdentifier>
+ <uniqueIdentifier>B0A4609D743A0000018749B28DF0</uniqueIdentifier>
 </EnsembleReport>

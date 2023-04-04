@@ -32,8 +32,7 @@ module LED_cube_multi_frame(
 	output logic [7:0] Latches,
 	output logic [7:0] Data,
 
-	output logic stall_mode_change,
-	output logic [5:0] stream_data_counter
+	output logic stall_mode_change
 );
 	
 	logic frame_start, frame_stop, frame_done;
@@ -202,8 +201,7 @@ module LED_cube_multi_frame(
 		.data_in(data_in),
 		.readdatavalid(readdatavalid),
 		.new_data(new_data),
-		.stall_mode_change(stall_mode_change),
-		.data_counter(stream_data_counter)
+		.stall_mode_change(stall_mode_change)
 	);
 
 endmodule : LED_cube_multi_frame

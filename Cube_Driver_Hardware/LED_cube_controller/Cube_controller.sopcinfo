@@ -5,11 +5,11 @@
  version="1.0"
  fabric="QSYS">
  <!-- Format version 18.1 625 (Future versions may contain additional information.) -->
- <!-- 2023.04.02.18:38:25 -->
+ <!-- 2023.04.03.17:37:29 -->
  <!-- A collection of modules and connections -->
  <parameter name="AUTO_GENERATION_ID">
   <type>java.lang.Integer</type>
-  <value>1680485905</value>
+  <value>1680568649</value>
   <derived>false</derived>
   <enabled>true</enabled>
   <visible>false</visible>
@@ -267,6 +267,18 @@ parameters are a RESULT of the module parameters. -->
     <direction>Output</direction>
     <width>36</width>
     <role>gpio</role>
+   </port>
+   <port>
+    <name>HEX0</name>
+    <direction>Output</direction>
+    <width>7</width>
+    <role>hex0</role>
+   </port>
+   <port>
+    <name>HEX1</name>
+    <direction>Output</direction>
+    <width>7</width>
+    <role>hex1</role>
    </port>
   </interface>
   <interface name="avalon_master" kind="avalon_master" version="18.1">
