@@ -47,7 +47,6 @@ public class HomePageActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
             case R.id.brightness:
-                new Thread(new HomePageActivity.Thread3((byte) 0xa0)).start();
                 startActivity(new Intent(this, BrightnessActivity.class));
                 return true;
             default:

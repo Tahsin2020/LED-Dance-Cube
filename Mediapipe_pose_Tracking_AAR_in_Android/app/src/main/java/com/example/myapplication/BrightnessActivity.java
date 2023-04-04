@@ -45,21 +45,23 @@ public class BrightnessActivity extends AppCompatActivity {
         public void onStopTrackingTouch(SeekBar seekBar) {
             // called after the user finishes moving the SeekBar
             switch(seekProgress){
-                case 0:  new Thread(new HomePageActivity.Thread3((byte) 0x01)).start();
+                case 0:  new Thread(new HomePageActivity.Thread3((byte) 0x00)).start();
                     break;
-                case 1:  new Thread(new HomePageActivity.Thread3((byte) 0x02)).start();
+                case 1:  new Thread(new HomePageActivity.Thread3((byte) 0x01)).start();
                     break;
-                case 2:  new Thread(new HomePageActivity.Thread3((byte) 0x03)).start();
+                case 2:  new Thread(new HomePageActivity.Thread3((byte) 0x02)).start();
                     break;
-                case 3:  new Thread(new HomePageActivity.Thread3((byte) 0x04)).start();
+                case 3:  new Thread(new HomePageActivity.Thread3((byte) 0x03)).start();
                     break;
-                case 4:  new Thread(new HomePageActivity.Thread3((byte) 0x05)).start();
+                case 4:  new Thread(new HomePageActivity.Thread3((byte) 0x04)).start();
                     break;
-                case 5:  new Thread(new HomePageActivity.Thread3((byte) 0x06)).start();
+                case 5:  new Thread(new HomePageActivity.Thread3((byte) 0x05)).start();
                     break;
-                case 6:  new Thread(new HomePageActivity.Thread3((byte) 0x07)).start();
+                case 6:  new Thread(new HomePageActivity.Thread3((byte) 0x06)).start();
                     break;
-                default: new Thread(new HomePageActivity.Thread3((byte) 0x01)).start();
+                case 7:  new Thread(new HomePageActivity.Thread3((byte) 0x07)).start();
+                    break;
+                default: new Thread(new HomePageActivity.Thread3((byte) 0x07)).start();
 
             }
         }
