@@ -11,6 +11,7 @@ module LayerActivator(
 	input logic rst_n, 
 	input logic start,
 	input logic [2:0] layer_i,
+	input logic [3:0] brightness,
 	output logic done,
 	output logic [7:0] layer_out
 );
@@ -18,7 +19,7 @@ module LayerActivator(
 	logic [11:0] layer_counter;
 	
 	logic counter_done;
-	assign counter_done = (layer_counter == `layer_hold_time) ? 1'b1 : 1'b0;
+	assign counter_done = layer_counter == (`layer_hold_time >> (4'hE - {brightness[2:0],1'b0})) ? 1'b1 : 1'b0;
 
 	enum bit[1:0] {WAIT, ACTIVATE} state, next_state;
 	

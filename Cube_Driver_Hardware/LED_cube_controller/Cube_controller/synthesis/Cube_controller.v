@@ -4,13 +4,17 @@
 
 `timescale 1 ps / 1 ps
 module Cube_controller (
-		input  wire        clk_clk,                          //                         clk.clk
-		output wire [7:0]  led_cube_uart_0_conduit_end_ledr, // led_cube_uart_0_conduit_end.ledr
-		input  wire [9:0]  led_cube_uart_0_conduit_end_sw,   //                            .sw
-		output wire [35:0] led_cube_uart_0_conduit_end_gpio, //                            .gpio
-		input  wire        reset_reset_n,                    //                       reset.reset_n
-		input  wire        uart_0_external_connection_rxd,   //  uart_0_external_connection.rxd
-		output wire        uart_0_external_connection_txd    //                            .txd
+		input  wire       clk_clk,                             //                         clk.clk
+		output wire [7:0] led_cube_uart_0_conduit_end_ledr,    // led_cube_uart_0_conduit_end.ledr
+		input  wire [9:0] led_cube_uart_0_conduit_end_sw,      //                            .sw
+		output wire [6:0] led_cube_uart_0_conduit_end_hex0,    //                            .hex0
+		output wire [6:0] led_cube_uart_0_conduit_end_hex1,    //                            .hex1
+		output wire [7:0] led_cube_uart_0_conduit_end_layers,  //                            .layers
+		output wire [7:0] led_cube_uart_0_conduit_end_latches, //                            .latches
+		output wire [7:0] led_cube_uart_0_conduit_end_data,    //                            .data
+		input  wire       reset_reset_n,                       //                       reset.reset_n
+		input  wire       uart_0_external_connection_rxd,      //  uart_0_external_connection.rxd
+		output wire       uart_0_external_connection_txd       //                            .txd
 	);
 
 	wire  [15:0] led_cube_uart_0_avalon_master_readdata;      // mm_interconnect_0:LED_cube_uart_0_avalon_master_readdata -> LED_cube_uart_0:avalon_master_readdata
@@ -34,7 +38,11 @@ module Cube_controller (
 		.reset_sink_reset            (~rst_controller_reset_out_reset),             //    reset_sink.reset_n
 		.LEDR                        (led_cube_uart_0_conduit_end_ledr),            //   conduit_end.ledr
 		.SW                          (led_cube_uart_0_conduit_end_sw),              //              .sw
-		.GPIO_0                      (led_cube_uart_0_conduit_end_gpio),            //              .gpio
+		.HEX0                        (led_cube_uart_0_conduit_end_hex0),            //              .hex0
+		.HEX1                        (led_cube_uart_0_conduit_end_hex1),            //              .hex1
+		.Layers_out                  (led_cube_uart_0_conduit_end_layers),          //              .layers
+		.Latches_out                 (led_cube_uart_0_conduit_end_latches),         //              .latches
+		.Data_out                    (led_cube_uart_0_conduit_end_data),            //              .data
 		.avalon_master_address       (led_cube_uart_0_avalon_master_address),       // avalon_master.address
 		.avalon_master_read          (led_cube_uart_0_avalon_master_read),          //              .read
 		.avalon_master_readdata      (led_cube_uart_0_avalon_master_readdata),      //              .readdata

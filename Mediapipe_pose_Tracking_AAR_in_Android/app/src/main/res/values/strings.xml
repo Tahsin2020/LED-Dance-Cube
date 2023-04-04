@@ -34,4 +34,7 @@
     <string name="Drawing" />
     <string name="draw_switch" />
     <string name="gallery">Gallery</string>
+    <string name="to_pick">To PICK</string>
+    <string name="switch_button_title">switch_button_title</string>
+    <string name="brightness">brightness</string>
 </resources>
