@@ -4,6 +4,7 @@ module LED_cube_single_frame(
 	input logic start,
 	input logic stop,
 	input logic [7:0] data_to_latch,
+	input logic [3:0] brightness,
 	output logic [5:0] addr,
 	output logic done,
 	output logic [7:0] Layers, 
@@ -98,6 +99,7 @@ module LED_cube_single_frame(
 		.rst_n(rst_n),
 		.start(start_layer_driver),
 		.layer_i(layer_i),
+		.brightness(brightness),
 		.done(layer_driver_done),
 		.layer_out(Layers)
 	);

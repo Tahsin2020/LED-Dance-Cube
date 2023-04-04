@@ -177,6 +177,7 @@ module LED_cube_multi_frame(
 		.done(frame_done),
 		.addr(frame_addr),
 		.data_to_latch(data_to_latch),
+		.brightness(brightness),
 		.Layers(Layers),
 		.Latches(Latches),
 		.Data(Data)

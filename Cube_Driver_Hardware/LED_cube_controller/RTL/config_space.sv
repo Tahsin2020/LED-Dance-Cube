@@ -24,7 +24,7 @@ module Config_Space(
     
     always_ff @(posedge clk) begin : animation_sel_register
         if( ~rst_n ) animation_sel <= 4'b1;
-        else if(mode == 4'd2) animation_sel <= conf_i;
+        else if(mode == 4'd2 & ~conf_i[3]) animation_sel <= conf_i;
     end
 
 endmodule : Config_Space
