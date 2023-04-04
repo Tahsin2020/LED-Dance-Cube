@@ -1,10 +1,14 @@
 package com.example.myapplication;
 
+import android.nfc.Tag;
 import android.os.Bundle;
 
 /*
  * Main Activity class that loads {@link MainFragment}.
  */
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Gallery;
 import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
@@ -30,12 +34,26 @@ public class GalleryActivity extends AppCompatActivity {
             R.drawable.rolling_ball,
             R.drawable.rotating_wall,
             R.drawable.wave,
+<<<<<<< Updated upstream
+=======
+    };
+
+    String[] image_names = {
+            "cone",
+            "diamond",
+            "helix",
+            "pulsating_wave_sphere",
+            "rolling_ball",
+            "rotating_wall",
+            "wave",
+>>>>>>> Stashed changes
     };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
+        Button btn_image = (Button) findViewById(R.id.button_gallery_1);
 
         // Our layout is activity_main
         // get the reference of Gallery. As we are showing
@@ -57,6 +75,9 @@ public class GalleryActivity extends AppCompatActivity {
             // Whichever image is clicked, that is set in the selectedImageView
             // position will indicate the location of image
             selectedImageView.setImageResource(images[position]);
+            //String imageName = (String)images[position].getTag();
+            //Log.i(getCallingPackage(),imageName + "check image name");
+            btn_image.setText(image_names[position]);
         });
     }
 }

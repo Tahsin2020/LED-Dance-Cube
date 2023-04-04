@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/black"
     android:orientation="vertical"
+    android:gravity="center"
     tools:context=".GalleryActivity">
 
     <!-- create a ImageView and Gallery -->
@@ -26,4 +27,11 @@
         android:padding="10dp"
         android:spacing="5dp"
         android:unselectedAlpha="50" />
+
+    <Button
+        android:id="@+id/button_gallery_1"
+        android:layout_width="186dp"
+        android:layout_height="wrap_content"
+        android:text="@string/to_pick" />
+
 </LinearLayout>
