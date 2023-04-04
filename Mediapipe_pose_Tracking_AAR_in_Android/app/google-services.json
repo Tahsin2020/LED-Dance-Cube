@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "1626524694",
+    "project_id": "ledcube-cf64d",
+    "storage_bucket": "ledcube-cf64d.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1626524694:android:704afa5a9d4cfa8cc93937",
+        "android_client_info": {
+          "package_name": "com.CPEN391.LEDCUBE"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1626524694-i1ue9rf9hh3687fp1vqjnskb9c4bie2l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA6CrN2_MEIa-VbfJPR-WkMzo2erfFdpqM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1626524694-i1ue9rf9hh3687fp1vqjnskb9c4bie2l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
