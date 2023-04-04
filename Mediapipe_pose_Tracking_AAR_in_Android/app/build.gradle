@@ -10,7 +10,7 @@ android {
     buildToolsVersion "30.0.3"
 
     defaultConfig {
-        applicationId "com.example.posetest"
+        //applicationId "com.example.posetest"
         minSdkVersion 28
         targetSdkVersion 31
         versionCode 1
@@ -86,7 +86,7 @@ dependencies {
 
     // Declare the dependency for the Cloud Firestore library
     // When using the BoM, you don't specify versions in Firebase library dependencies
-    implementation 'com.google.firebase:firebase-firestore'
+     implementation 'com.google.firebase:firebase-firestore'
 }
 
 allprojects {
@@ -95,3 +95,4 @@ allprojects {
     }
 }
 
+apply plugin: 'com.google.gms.google-services'
