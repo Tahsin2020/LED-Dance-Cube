@@ -61,8 +61,8 @@ public class HomePageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_unconnect);
-//        Thread1 = new Thread(new Thread1());
-//        Thread1.start();
+        Thread1 = new Thread(new Thread1());
+        Thread1.start();
 
         ///ToggleButton materialSwitch = (ToggleButton) findViewById(R.id.material_switch); // initiate a toggle button
        // Boolean ButtonState = materialSwitch.isChecked(); // check current state of a toggle button (true or false).
