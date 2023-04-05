@@ -7,9 +7,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
+import android.widget.Switch;
+import android.widget.ToggleButton;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.protobuf.NullValue;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -45,6 +50,9 @@ public class HomePageActivity extends AppCompatActivity {
                 Intent intent = new Intent(this, PatternActivity.class);
                 startActivity(intent);
                 return true;
+            case R.id.brightness:
+                startActivity(new Intent(this, BrightnessActivity.class));
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
@@ -53,8 +61,27 @@ public class HomePageActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_home_unconnect);
-//        Thread1 = new Thread(new Thread1());
-//        Thread1.start();
+        Thread1 = new Thread(new Thread1());
+        Thread1.start();
+
+        ///ToggleButton materialSwitch = (ToggleButton) findViewById(R.id.material_switch); // initiate a toggle button
+       // Boolean ButtonState = materialSwitch.isChecked(); // check current state of a toggle button (true or false).
+
+        Switch onOffSwitch = (Switch)  findViewById(R.id.sw_all_on);
+        onOffSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                //Log.v("Switch State=", ""+isChecked);
+                if(isChecked) //Log.i(getCallingPackage(),"checked");
+                {   new Thread(new Thread3((byte) 0x0F)).start();
+                    onOffSwitch.setText("all lights on");}
+                else new Thread(new Thread3((byte) 0x01)).start();  //Log.i(getCallingPackage(),"unchecked");
+            }
+
+        });
+
+
 
         Button button = (Button) findViewById(R.id.button_home1);
         button.setOnClickListener(new View.OnClickListener() {
@@ -68,15 +95,15 @@ public class HomePageActivity extends AppCompatActivity {
         button_2.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                  ToPatternActivity();
+//                ImageView img= (ImageView) findViewById(R.id.img_no_connection);
+//                img.setImageResource(R.drawable.signal_black);
 
-                ImageView img= (ImageView) findViewById(R.id.img_no_connection);
-                img.setImageResource(R.drawable.signal_black);
-                ToPatternActivity();
             }
         });
 
         Button button_3 = (Button) findViewById(R.id.button_home3);
-        button_2.setOnClickListener(new View.OnClickListener() {
+        button_3.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
 
@@ -88,9 +115,6 @@ public class HomePageActivity extends AppCompatActivity {
 
     protected void onStart() {
         super.onStart();
-        System.out.println("A");
-        System.out.println("WE ARE IN ON START");
-        System.out.println("A");
         if (data_output != null) {
             new Thread(new Thread3((byte) 0x01)).start();
         }
@@ -157,20 +181,23 @@ public class HomePageActivity extends AppCompatActivity {
         }
     }
 
-//    class Thread3 implements Runnable {
-//        private byte dataToSend;
-//        Thread3(byte b) {
-//            dataToSend = b;
-//        }
-//        Thread3() {}
-//        @Override
-//        public void run() {
-//            try {
-//                HomePageActivity.data_output.write(dataToSend);
-//                HomePageActivity.data_output.flush();
-//            } catch (IOException e) {
-//                throw new RuntimeException(e);
-//            }
-//        }
-//    }
+    static class Thread3 implements Runnable {
+        private byte dataToSend;
+        Thread3(byte b) {
+            dataToSend = b;
+        }
+        Thread3() {}
+        @Override
+        public void run() {
+            if(data_output != null) {
+                try {
+                    HomePageActivity.data_output.write(dataToSend);
+                    HomePageActivity.data_output.flush();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+
+        }
+    }
 }

@@ -16,6 +16,8 @@
 
 package com.example.myapplication;
 
+import static com.example.myapplication.HomePageActivity.data_output;
+
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageManager;
@@ -118,7 +120,6 @@ public class MainActivity extends AppCompatActivity {
     //private ActivityMainBinding binding;
 
 
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -133,7 +134,11 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(this, HomePageActivity.class));
                 return true;
             case R.id.patterns:
-                startActivity(new Intent(this, PatternActivity.class));
+                Intent intent = new Intent(this, PatternActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.brightness:
+                startActivity(new Intent(this, BrightnessActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
@@ -144,11 +149,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(getContentViewLayoutResId());
-
-        /*Add in Oncreate() funtion after setContentView()*/
-        ToggleButton simpleToggleButton = (ToggleButton) findViewById(R.id.draw_Toggle); // initiate a toggle button
-        Boolean ToggleButtonState = simpleToggleButton.isChecked(); // check current state of a toggle button (true or false).
-
 
         previewDisplayView = new SurfaceView(this);
         setupPreviewDisplayView();
@@ -287,6 +287,13 @@ public class MainActivity extends AppCompatActivity {
         PermissionHelper.checkAndRequestCameraPermissions(this);
 
 
+    }
+
+    protected void onStart() {
+        super.onStart();
+        if (data_output != null) {
+            new Thread(new Thread4((byte) 0x03)).start();
+        }
     }
 
     // Used to obtain the content view for this application. If you are extending this class, and
@@ -450,8 +457,28 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void run() {
             try {
-                HomePageActivity.data_output.write(dataToSend);
-                HomePageActivity.data_output.flush();
+                data_output.write((byte) 0x20);
+                data_output.flush();
+                data_output.write(dataToSend);
+                data_output.flush();
+                data_output.write((byte) 0x30);
+                data_output.flush();
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    class Thread4 implements Runnable {
+        private byte dataToSend;
+        Thread4(byte dataToSend) {
+            this.dataToSend = dataToSend;
+        }
+        @Override
+        public void run() {
+            try {
+                data_output.write(dataToSend);
+                data_output.flush();
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
