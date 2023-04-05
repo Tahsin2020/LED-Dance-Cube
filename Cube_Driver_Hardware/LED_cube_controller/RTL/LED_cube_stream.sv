@@ -62,6 +62,7 @@ module LED_cube_stream(
                     3'b100: stream_data5[addr_in] <= data_in;
                     3'b101: stream_data6[addr_in] <= data_in;
                     3'b110: stream_data7[addr_in] <= data_in;
+                    3'b111: stream_data8[addr_in] <= data_in;
                 endcase
             end
         end
@@ -77,6 +78,7 @@ module LED_cube_stream(
             3'b100: data_to_latch = stream_data5[frame_addr]; 
             3'b101: data_to_latch = stream_data6[frame_addr]; 
             3'b110: data_to_latch = stream_data7[frame_addr]; 
+            3'b111: data_to_latch = stream_data8[frame_addr]; 
         endcase
     end
 
