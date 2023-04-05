@@ -189,10 +189,10 @@ public class Utils {
         }
         byte[] data = new byte[64];
         int index = 0;
-        for (int y = 0; y < cube.length; y++) {
-            for (int x = 0; x < cube[0].length; x++) {
+        for (int y = cube.length-1; y >= 0; y--) {
+            for (int z = 0; z < cube[0].length; z++) {
                 int newByte = 0;
-                for (int z = 0; z < cube[0][0].length; z++) {
+                for (int x = 0; x < cube[0][0].length; x++) {
                     newByte = newByte << 1;
                     if (cube[y][x][z] == 1) {
                         newByte += 1;

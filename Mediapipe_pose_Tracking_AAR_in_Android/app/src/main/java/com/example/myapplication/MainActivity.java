@@ -429,44 +429,34 @@ public class MainActivity extends AppCompatActivity {
         return result;
     }
 
-//    class Thread1 implements Runnable {
-//        @Override
-//        public void run() {
-//            Socket socket;
-//            try {
-//                socket = new Socket(SERVER_IP, SERVER_PORT);
-//                HomePageActivity.data_output = new DataOutputStream(socket.getOutputStream());
-//                Log.v(TAG, "Connected to server");
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//    }
-
-    class Thread3 implements Runnable {
-        private byte[] b = {1, 2, 3, 4};
-        private byte[] dataToSend;
-        Thread3(byte[] dataToSend) {
-            this.dataToSend = dataToSend;
-//            System.out.println("Bytes sent: " + Arrays.toString(dataToSend));
+    static class Thread3 implements Runnable {
+        private byte[] dataToSend = new byte[66];
+        Thread3(byte[] patternData) {
+            this.dataToSend[0] = (byte) 0x20;
+            this.dataToSend[65] = (byte) 0x30;
+            for (int i = 1; i < dataToSend.length - 1; i++) {
+                dataToSend[i] = patternData[i-1];
+            }
         }
         Thread3() {}
         @Override
         public void run() {
             try {
-                data_output.write((byte) 0x20);
-                data_output.flush();
                 data_output.write(dataToSend);
                 data_output.flush();
-                data_output.write((byte) 0x30);
-                data_output.flush();
+//                StringBuilder sb = new StringBuilder();
+//                for (byte b : dataToSend) {
+//                    sb.append(String.format("%02x", b));
+//                }
+//                String hexString = sb.toString();
+//                System.out.println(hexString);
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
     }
 
-    class Thread4 implements Runnable {
+    static class Thread4 implements Runnable {
         private byte dataToSend;
         Thread4(byte dataToSend) {
             this.dataToSend = dataToSend;
