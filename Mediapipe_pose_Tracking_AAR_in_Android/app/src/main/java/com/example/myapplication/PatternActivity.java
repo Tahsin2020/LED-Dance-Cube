@@ -142,7 +142,7 @@ public class PatternActivity extends AppCompatActivity {
     }
 
 
-    class Thread3 implements Runnable {
+    static class Thread3 implements Runnable {
         private byte dataToSend;
         Thread3(byte b) {
             dataToSend = b;
@@ -150,11 +150,13 @@ public class PatternActivity extends AppCompatActivity {
         Thread3() {}
         @Override
         public void run() {
+            if(HomePageActivity.data_output!= null) {
             try {
                 HomePageActivity.data_output.write(dataToSend);
                 HomePageActivity.data_output.flush();
             } catch (IOException e) {
                 throw new RuntimeException(e);
+            }
             }
         }
     }

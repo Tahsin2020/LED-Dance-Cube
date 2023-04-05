@@ -77,6 +77,39 @@ public class GalleryActivity extends AppCompatActivity {
             //String imageName = (String)images[position].getTag();
             //Log.i(getCallingPackage(),imageName + "check image name");
             btn_image.setText(image_names[position]);
+            btn_image.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    switch(position){
+                        case 0:
+                            Log.i(getCallingPackage(),"check click");
+                            new Thread(new PatternActivity.Thread3((byte) 0x10)).start();
+                            break;
+                        case 1:
+                            new Thread(new PatternActivity.Thread3((byte) 0x20)).start();
+                            break;
+                        case 2:
+                            new Thread(new PatternActivity.Thread3((byte) 0x30)).start();
+                            break;
+                        case 3:
+                            new Thread(new PatternActivity.Thread3((byte) 0x40)).start();
+                            break;
+                        case 4:
+                            new Thread(new PatternActivity.Thread3((byte) 0x50)).start();
+                            break;
+                        case 5:
+                            new Thread(new PatternActivity.Thread3((byte) 0x60)).start();
+                            break;
+                        case 6:
+                            new Thread(new PatternActivity.Thread3((byte) 0x70)).start();
+                            break;
+                        default:
+                            break;
+
+                    }
+
+                }
+            });
         });
     }
 }

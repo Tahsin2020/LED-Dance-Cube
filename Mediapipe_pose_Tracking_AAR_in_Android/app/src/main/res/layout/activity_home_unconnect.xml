@@ -69,7 +69,9 @@
             android:id="@+id/sw_all_on"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:checked="true"/> <!-- set the current state of the Switch-->
+            android:checked="true"
+            android:text="set all led on"
+            android:textColor="@color/white"/> <!-- set the current state of the Switch-->
 
 
     </LinearLayout>

@@ -14,6 +14,8 @@ import android.widget.ToggleButton;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.protobuf.NullValue;
+
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -188,12 +190,15 @@ public class HomePageActivity extends AppCompatActivity {
         Thread3() {}
         @Override
         public void run() {
-            try {
-                HomePageActivity.data_output.write(dataToSend);
-                HomePageActivity.data_output.flush();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+            if(data_output != null) {
+                try {
+                    HomePageActivity.data_output.write(dataToSend);
+                    HomePageActivity.data_output.flush();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
+
         }
     }
 }
