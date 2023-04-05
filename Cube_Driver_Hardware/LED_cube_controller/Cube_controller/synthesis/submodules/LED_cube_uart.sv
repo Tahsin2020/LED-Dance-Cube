@@ -49,7 +49,7 @@ module LED_cube_uart (
 // 6 - TRDY => 0 - register is full . 1 - register is empty and ready for a new character
 // 7 - RRDY => 0 - register is empty and not ready to be read. 1 - register is ful and ready to be read
 
-    enum {WAIT, READ} state, next_state; 
+    enum bit [1:0] {WAIT, READ} state, next_state; 
 
     logic [7:0] uart_reg;
 
@@ -78,11 +78,15 @@ module LED_cube_uart (
     end
 
     always_comb begin : avalon_slave_addr_logic 
-        case({state, next_state})
-            {WAIT, WAIT}: avalon_master_address = 5'h08;
-            {WAIT, READ}: avalon_master_address = 0;
-            {READ, READ}: avalon_master_address = 0;
-            {READ, WAIT}: avalon_master_address = 0;
+        case(state)
+            WAIT: begin
+                if(~avalon_master_readdata[7]) avalon_master_address = 5'h08;
+                else avalon_master_address = 0;
+            end
+            READ: begin
+                if(read_counter == 2'b0) avalon_master_address = 0;
+                else avalon_master_address = 5'h08;
+            end
             default: avalon_master_address = 0;
         endcase
     end
@@ -123,7 +127,7 @@ module LED_cube_uart (
     end
 
     logic readdatavalid;
-    assign readdatavalid = (read_counter == 2'd3) ? 1'b1 : 1'b0;
+    assign readdatavalid = (read_counter == 2'd1) ? 1'b1 : 1'b0;
 
 
     logic [3:0] out1, out2;
