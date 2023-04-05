@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.content.Intent;
 import android.nfc.Tag;
 import android.os.Bundle;
 
@@ -7,6 +8,8 @@ import android.os.Bundle;
  * Main Activity class that loads {@link MainFragment}.
  */
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Gallery;
@@ -14,6 +17,32 @@ import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class GalleryActivity extends AppCompatActivity {
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle item selection
+        switch (item.getItemId()) {
+            case R.id.Home_page:
+                startActivity(new Intent(this, HomePageActivity.class));
+                return true;
+            case R.id.patterns:
+                Intent intent = new Intent(this, PatternActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.brightness:
+                new Thread(new HomePageActivity.Thread3((byte) 0xa0)).start();
+                startActivity(new Intent(this, BrightnessActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
 
     Gallery simpleGallery;
 

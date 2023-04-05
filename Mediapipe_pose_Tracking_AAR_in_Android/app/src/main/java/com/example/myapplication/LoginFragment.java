@@ -1,5 +1,6 @@
 package com.example.myapplication;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -60,6 +61,7 @@ public class LoginFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
+                confirm_connected();
 
               if(email.getText().toString().equals("")){
                   Toast.makeText(getContext(), "Please enter valid email", Toast.LENGTH_SHORT).show();
@@ -78,13 +80,13 @@ public class LoginFragment extends Fragment {
                                       String a1=email.getText().toString().trim();
                                       String b1=pwd.getText().toString().trim();
                                       if(a.equalsIgnoreCase(a1) & b.equalsIgnoreCase(b1)) {
-                                          Intent home = new Intent(getActivity(), HomePageActivity.class);
-                                          startActivity(home);
+
                                           Toast.makeText(getContext(), "Logged In", Toast.LENGTH_SHORT).show();
 
-                                          Intent redirect = new Intent(getActivity(),HomePageActivity.class);
-                                          startActivity(redirect);
+                                          ////////////////////////////
+                                          confirm_connected();
                                           break;
+
                                       }else
                                           Toast.makeText(getContext(), "Cannot login,incorrect Email and Password", Toast.LENGTH_SHORT).show();
 
@@ -94,6 +96,8 @@ public class LoginFragment extends Fragment {
                           }
                       });
 
+//                Intent redirect = new Intent(getActivity(),HomePageActivity.class);
+//                startActivity(redirect);
 
       }
 });
@@ -114,6 +118,24 @@ public class LoginFragment extends Fragment {
 //
 //    }
 
+     public void confirm_connected(){
+         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+         AlertDialog dialog = builder.create();
 
+        View view = View.inflate(getContext(), R.layout.activity_home, null);
+        dialog.setView(view);
+
+        Button button = (Button) view.findViewById(R.id.button_home2);
+        //final EditText editText = (EditText) view.findViewById(R.id.new_group_name);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent redirect = new Intent(getActivity(),HomePageActivity.class);
+                startActivity(redirect);
+            }
+        });
+
+        dialog.show();
+    }
 
 }
