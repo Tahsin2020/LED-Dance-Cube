@@ -1,5 +1,7 @@
 package com.example.myapplication;
 
+import static com.example.myapplication.HomePageActivity.data_output;
+
 import android.content.Intent;
 import android.nfc.Tag;
 import android.os.Bundle;
@@ -66,15 +68,22 @@ public class GalleryActivity extends AppCompatActivity {
     };
 
     String[] image_names = {
-            "cone",
-            "diamond",
-            "helix",
-            "pulsating_wave_sphere",
-            "rolling_ball",
-            "rotating_wall",
-            "wave",
+            "Vortex",
+            "Diamond",
+            "Helix",
+            "Sphere",
+            "Rolling Ball",
+            "Rotating Wall",
+            "Wave",
 
     };
+
+    protected void onStart() {
+        super.onStart();
+        if (data_output != null) {
+            new Thread(new HomePageActivity.Thread3((byte) 0x02)).start();
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -114,25 +123,25 @@ public class GalleryActivity extends AppCompatActivity {
                     switch(position){
                         case 0:
                             Log.i(getCallingPackage(),"check click");
-                            new Thread(new PatternActivity.Thread3((byte) 0x10)).start();
-                            break;
-                        case 1:
                             new Thread(new PatternActivity.Thread3((byte) 0x20)).start();
                             break;
+                        case 1:
+                            new Thread(new PatternActivity.Thread3((byte) 0x10)).start();
+                            break;
                         case 2:
-                            new Thread(new PatternActivity.Thread3((byte) 0x30)).start();
+                            new Thread(new PatternActivity.Thread3((byte) 0x70)).start();
                             break;
                         case 3:
-                            new Thread(new PatternActivity.Thread3((byte) 0x40)).start();
+                            new Thread(new PatternActivity.Thread3((byte) 0x30)).start();
                             break;
                         case 4:
-                            new Thread(new PatternActivity.Thread3((byte) 0x50)).start();
+                            new Thread(new PatternActivity.Thread3((byte) 0x40)).start();
                             break;
                         case 5:
-                            new Thread(new PatternActivity.Thread3((byte) 0x60)).start();
+                            new Thread(new PatternActivity.Thread3((byte) 0x50)).start();
                             break;
                         case 6:
-                            new Thread(new PatternActivity.Thread3((byte) 0x70)).start();
+                            new Thread(new PatternActivity.Thread3((byte) 0x60)).start();
                             break;
                         default:
                             break;
