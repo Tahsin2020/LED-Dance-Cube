@@ -51,7 +51,6 @@ public class HomePageActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
             case R.id.brightness:
-                new Thread(new HomePageActivity.Thread3((byte) 0xa0)).start();
                 startActivity(new Intent(this, BrightnessActivity.class));
                 return true;
             default:
@@ -75,9 +74,9 @@ public class HomePageActivity extends AppCompatActivity {
             public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
                 //Log.v("Switch State=", ""+isChecked);
                 if(isChecked) //Log.i(getCallingPackage(),"checked");
-                {new Thread(new Thread3((byte) 0x01)).start();
+                {   new Thread(new Thread3((byte) 0x0F)).start();
                     onOffSwitch.setText("all lights on");}
-                else new Thread(new Thread3((byte) 0x0F)).start();  //Log.i(getCallingPackage(),"unchecked");
+                else new Thread(new Thread3((byte) 0x01)).start();  //Log.i(getCallingPackage(),"unchecked");
             }
 
         });

@@ -36,7 +36,6 @@ public class GalleryActivity extends AppCompatActivity {
                 startActivity(intent);
                 return true;
             case R.id.brightness:
-                new Thread(new HomePageActivity.Thread3((byte) 0xa0)).start();
                 startActivity(new Intent(this, BrightnessActivity.class));
                 return true;
             default:
@@ -81,6 +80,9 @@ public class GalleryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gallery);
+
+        new Thread(new PatternActivity.Thread3((byte) 0x02)).start();
+
         Button btn_image = (Button) findViewById(R.id.button_gallery_1);
 
         // Our layout is activity_main
