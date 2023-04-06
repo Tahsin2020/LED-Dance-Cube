@@ -35,29 +35,8 @@ public class RegisterFragment extends Fragment {
     EditText reg_email;
     EditText reg_password;
     EditText reg_conf_pwd;
-    //TextView signin;
     FirebaseFirestore firebaseFirestore;
     DocumentReference ref;
-
-
-    public RegisterFragment() {
-//        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//
-//        // Create a new user with a first and last name
-//        Map<String, Object> user = new HashMap<>();
-//
-//        user.put("Email", "Ada");
-//        user.put("Password", "Lovelace");
-//        user.put("Username", 1815);
-//
-//        // Add a new document with a generated ID
-//        db.collection("Users")
-//                .add(user);
-//        // Required empty public constructor
-
-
-    }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -67,16 +46,11 @@ public class RegisterFragment extends Fragment {
 
         super.onCreate(savedInstanceState);
         View v = inflater.inflate(R.layout.fragment_register,container,false);
-//        setContentView(R.layout.fragment_register);
-
         reg_registration=v.findViewById(R.id.btn_register);
         reg_name=v.findViewById(R.id.et_name);
         reg_email=v.findViewById(R.id.et_email);
         reg_password=v.findViewById(R.id.et_password);
         reg_conf_pwd=v.findViewById(R.id.et_repassword);
-        //signin=v.findViewById(R.id.signin_view);
-
-        //FirebaseApp.initializeApp(context);
 
         firebaseFirestore=FirebaseFirestore.getInstance();
         ref = firebaseFirestore.collection("client").document();

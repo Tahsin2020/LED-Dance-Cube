@@ -17,7 +17,6 @@ import com.example.myapplication.LoginFragment;
 import com.example.myapplication.R;
 import com.example.myapplication.RegisterFragment;
 import com.google.firebase.FirebaseApp;
-import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,24 +37,6 @@ public class StartActivity extends AppCompatActivity {
         pagerAdapter.addFragmet(new LoginFragment());
         pagerAdapter.addFragmet(new RegisterFragment());
         viewPager.setAdapter(pagerAdapter);
-
-//        FirebaseApp.initializeApp(this);
-//
-//        FirebaseFirestore db = FirebaseFirestore.getInstance();
-//
-//        // Create a new user with a first and last name
-//        Map<String, Object> user = new HashMap<>();
-//
-//        user.put("Email", "Ada");
-//        user.put("Password", "1234");
-//        user.put("Username", "Ada");
-//
-//        // Add a new document with a generated ID
-//        db.collection("Users")
-//                .add(user);
-
-
-
     }
 
     public void LoginToHomeMainActivity(){

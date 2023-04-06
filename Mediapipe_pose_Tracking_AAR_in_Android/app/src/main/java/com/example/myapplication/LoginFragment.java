@@ -53,8 +53,6 @@ public class LoginFragment extends Fragment {
         login = v.findViewById(R.id.btn_login);
 
         db= FirebaseFirestore.getInstance();
-//        login.setOnClickListener(this);
-//        register.setOnClickListener(this);
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
