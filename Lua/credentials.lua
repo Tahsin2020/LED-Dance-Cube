@@ -1,0 +1,3 @@
+-- Credentials
+SSID = "ubcvisitor"
+PASSWORD = ""

@@ -1,11 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
+<menu xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@+id/Home_page"
         android:title="@string/home_page" />
     <item android:id="@+id/patterns"
         android:title="@string/patterns" />
+
     <item android:id="@+id/brightness"
         android:title="brightness" />
+
+<!--    <item android:id="@+id/checkable_menu"-->
+<!--        android:title="@string/switch_button_title"-->
+<!--        android:actionLayout="@layout/menu_switch"-->
+<!--        app:showAsAction="always"-->
+<!--        android:checkable="true"/>-->
+
+<!--    <item android:id="@+id/sw_all_on"-->
+<!--        android:title="Switch"-->
+<!--        app:actionViewClass="android.widget.Switch"-->
+<!--        app:showAsAction="always" />-->
+
 
 </menu>

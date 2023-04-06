@@ -120,7 +120,6 @@ public class MainActivity extends AppCompatActivity {
     //private ActivityMainBinding binding;
 
 
-    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
@@ -135,7 +134,11 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(this, HomePageActivity.class));
                 return true;
             case R.id.patterns:
-                startActivity(new Intent(this, PatternActivity.class));
+                Intent intent = new Intent(this, PatternActivity.class);
+                startActivity(intent);
+                return true;
+            case R.id.brightness:
+                startActivity(new Intent(this, BrightnessActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
