@@ -34,7 +34,7 @@ public class GalleryActivity extends AppCompatActivity {
                 startActivity(new Intent(this, HomePageActivity.class));
                 return true;
             case R.id.patterns:
-                Intent intent = new Intent(this, PatternActivity.class);
+                Intent intent = new Intent(this, GalleryActivity.class);
                 startActivity(intent);
                 return true;
             case R.id.brightness:

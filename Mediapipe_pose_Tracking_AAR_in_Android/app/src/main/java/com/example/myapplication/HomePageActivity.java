@@ -47,7 +47,7 @@ public class HomePageActivity extends AppCompatActivity {
                 startActivity(new Intent(this, HomePageActivity.class));
                 return true;
             case R.id.patterns:
-                Intent intent = new Intent(this, PatternActivity.class);
+                Intent intent = new Intent(this, GalleryActivity.class);
                 startActivity(intent);
                 return true;
             case R.id.brightness:
@@ -91,16 +91,16 @@ public class HomePageActivity extends AppCompatActivity {
             }
         });
 
-        Button button_2 = (Button) findViewById(R.id.button_home2);
-        button_2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                  ToPatternActivity();
-//                ImageView img= (ImageView) findViewById(R.id.img_no_connection);
-//                img.setImageResource(R.drawable.signal_black);
-
-            }
-        });
+//        Button button_2 = (Button) findViewById(R.id.button_home2);
+//        button_2.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                  ToPatternActivity();
+////                ImageView img= (ImageView) findViewById(R.id.img_no_connection);
+////                img.setImageResource(R.drawable.signal_black);
+//
+//            }
+//        });
 
         Button button_3 = (Button) findViewById(R.id.button_home3);
         button_3.setOnClickListener(new View.OnClickListener() {
