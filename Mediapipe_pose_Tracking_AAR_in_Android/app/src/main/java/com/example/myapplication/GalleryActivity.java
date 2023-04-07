@@ -92,7 +92,8 @@ public class GalleryActivity extends AppCompatActivity {
 
         new Thread(new PatternActivity.Thread3((byte) 0x02)).start();
 
-        Button btn_image = (Button) findViewById(R.id.button_gallery_1);
+        Button btn_image = (Button) findViewById(R.id.button_gallery_name);
+        Button btn_play = (Button) findViewById(R.id.button_gallery_play);
 
         // Our layout is activity_main
         // get the reference of Gallery. As we are showing
@@ -117,7 +118,7 @@ public class GalleryActivity extends AppCompatActivity {
             //String imageName = (String)images[position].getTag();
             //Log.i(getCallingPackage(),imageName + "check image name");
             btn_image.setText(image_names[position]);
-            btn_image.setOnClickListener(new View.OnClickListener() {
+            btn_play.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     switch(position){
