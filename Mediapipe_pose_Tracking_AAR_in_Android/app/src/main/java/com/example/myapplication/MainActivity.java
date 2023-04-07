@@ -445,14 +445,10 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void run() {
             try {
-                data_output.write(dataToSend);
-                data_output.flush();
-//                StringBuilder sb = new StringBuilder();
-//                for (byte b : dataToSend) {
-//                    sb.append(String.format("%02x", b));
-//                }
-//                String hexString = sb.toString();
-//                System.out.println(hexString);
+                if (data_output != null) {
+                    data_output.write(dataToSend);
+                    data_output.flush();
+                }
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
@@ -467,8 +463,10 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void run() {
             try {
-                data_output.write(dataToSend);
-                data_output.flush();
+                if (data_output != null) {
+                    data_output.write(dataToSend);
+                    data_output.flush();
+                }
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }

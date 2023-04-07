@@ -151,12 +151,12 @@ public class PatternActivity extends AppCompatActivity {
         @Override
         public void run() {
             if(HomePageActivity.data_output!= null) {
-            try {
-                HomePageActivity.data_output.write(dataToSend);
-                HomePageActivity.data_output.flush();
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+                try {
+                    HomePageActivity.data_output.write(dataToSend);
+                    HomePageActivity.data_output.flush();
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
     }

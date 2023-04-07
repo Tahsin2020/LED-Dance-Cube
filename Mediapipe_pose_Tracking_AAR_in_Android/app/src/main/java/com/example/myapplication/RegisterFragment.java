@@ -16,14 +16,14 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
-import com.google.firebase.firestore.FirebaseFirestore;
-
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.FirebaseApp;
-import com.google.firebase.firestore.DocumentReference;
-import com.google.firebase.firestore.DocumentSnapshot;
-import com.google.firebase.firestore.FirebaseFirestore;
+//import com.google.firebase.firestore.FirebaseFirestore;
+//
+//import com.google.android.gms.tasks.OnFailureListener;
+//import com.google.android.gms.tasks.OnSuccessListener;
+//import com.google.firebase.FirebaseApp;
+//import com.google.firebase.firestore.DocumentReference;
+//import com.google.firebase.firestore.DocumentSnapshot;
+//import com.google.firebase.firestore.FirebaseFirestore;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -35,14 +35,14 @@ public class RegisterFragment extends Fragment {
     EditText reg_email;
     EditText reg_password;
     EditText reg_conf_pwd;
-    FirebaseFirestore firebaseFirestore;
-    DocumentReference ref;
+//    FirebaseFirestore firebaseFirestore;
+//    DocumentReference ref;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        FirebaseApp.initializeApp(getContext());
+//        FirebaseApp.initializeApp(getContext());
 
         super.onCreate(savedInstanceState);
         View v = inflater.inflate(R.layout.fragment_register,container,false);
@@ -51,9 +51,9 @@ public class RegisterFragment extends Fragment {
         reg_email=v.findViewById(R.id.et_email);
         reg_password=v.findViewById(R.id.et_password);
         reg_conf_pwd=v.findViewById(R.id.et_repassword);
-
-        firebaseFirestore=FirebaseFirestore.getInstance();
-        ref = firebaseFirestore.collection("client").document();
+//
+//        firebaseFirestore=FirebaseFirestore.getInstance();
+//        ref = firebaseFirestore.collection("client").document();
         reg_registration.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -71,37 +71,37 @@ public class RegisterFragment extends Fragment {
 
                 }else {
 
-                    ref.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
-                        @Override
-                        public void onSuccess(DocumentSnapshot documentSnapshot) {
-
-                            if (documentSnapshot.exists())
-                            {
-                                Toast.makeText(getContext(), "Sorry,this user exists", Toast.LENGTH_SHORT).show();
-                            } else {
-                                Map<String, Object> reg_entry = new HashMap<>();
-                                reg_entry.put("Name", reg_name.getText().toString());
-                                reg_entry.put("Email", reg_email.getText().toString());
-                                reg_entry.put("Password", reg_password.getText().toString());
-
-                                //   String myId = ref.getId();
-                                firebaseFirestore.collection("client")
-                                        .add(reg_entry)
-                                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
-                                            @Override
-                                            public void onSuccess(DocumentReference documentReference) {
-                                                Toast.makeText(getContext(), "Successfully added", Toast.LENGTH_SHORT).show();
-                                            }
-                                        })
-                                        .addOnFailureListener(new OnFailureListener() {
-                                            @Override
-                                            public void onFailure(@NonNull Exception e) {
-                                                Log.d("Error", e.getMessage());
-                                            }
-                                        });
-                            }
-                        }
-                    });
+//                    ref.get().addOnSuccessListener(new OnSuccessListener<DocumentSnapshot>() {
+//                        @Override
+//                        public void onSuccess(DocumentSnapshot documentSnapshot) {
+//
+//                            if (documentSnapshot.exists())
+//                            {
+//                                Toast.makeText(getContext(), "Sorry,this user exists", Toast.LENGTH_SHORT).show();
+//                            } else {
+//                                Map<String, Object> reg_entry = new HashMap<>();
+//                                reg_entry.put("Name", reg_name.getText().toString());
+//                                reg_entry.put("Email", reg_email.getText().toString());
+//                                reg_entry.put("Password", reg_password.getText().toString());
+//
+//                                //   String myId = ref.getId();
+//                                firebaseFirestore.collection("client")
+//                                        .add(reg_entry)
+//                                        .addOnSuccessListener(new OnSuccessListener<DocumentReference>() {
+//                                            @Override
+//                                            public void onSuccess(DocumentReference documentReference) {
+//                                                Toast.makeText(getContext(), "Successfully added", Toast.LENGTH_SHORT).show();
+//                                            }
+//                                        })
+//                                        .addOnFailureListener(new OnFailureListener() {
+//                                            @Override
+//                                            public void onFailure(@NonNull Exception e) {
+//                                                Log.d("Error", e.getMessage());
+//                                            }
+//                                        });
+//                            }
+//                        }
+//                    });
                 }
             }
         });

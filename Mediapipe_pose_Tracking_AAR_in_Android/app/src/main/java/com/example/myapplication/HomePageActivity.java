@@ -25,7 +25,9 @@ import java.net.Socket;
 
 public class HomePageActivity extends AppCompatActivity {
     private static final String TAG = "HomePageActivity";
-    private static final String SERVER_IP = "128.189.246.32";
+//    private static final String SERVER_IP = "128.189.246.32";
+//    private static final int SERVER_PORT = 12345;
+    private static final String SERVER_IP = "192.168.209.228";//hotspot
     private static final int SERVER_PORT = 12345;
 //    private static final String SERVER_IP = "192.168.4.1";
 //    private static final int SERVER_PORT = 80;
@@ -169,6 +171,7 @@ public class HomePageActivity extends AppCompatActivity {
                                 img.setImageResource(R.drawable.signal_black);
                             }
                         });
+                        break;
                     } else {
                         Thread1 = new Thread(new Thread1());
                         Thread1.start();
