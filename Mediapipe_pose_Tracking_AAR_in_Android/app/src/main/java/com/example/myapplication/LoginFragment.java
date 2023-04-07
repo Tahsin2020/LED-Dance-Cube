@@ -57,7 +57,8 @@ public class LoginFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
-                confirm_connected();
+                Intent redirect = new Intent(getActivity(),HomePageActivity.class);
+                startActivity(redirect);
 
               if(email.getText().toString().equals("")){
                   Toast.makeText(getContext(), "Please enter valid email", Toast.LENGTH_SHORT).show();

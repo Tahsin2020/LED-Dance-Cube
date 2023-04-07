@@ -52,17 +52,17 @@
             android:layout_height="wrap_content"
             android:text="@string/live_streaming" />
 
-        <Button
-            android:id="@+id/button_home2"
-            android:layout_width="136dp"
-            android:layout_height="wrap_content"
-            android:text="@string/patterns" />
+<!--        <Button-->
+<!--            android:id="@+id/button_home2"-->
+<!--            android:layout_width="136dp"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:text="@string/patterns" />-->
 
         <Button
             android:id="@+id/button_home3"
             android:layout_width="136dp"
             android:layout_height="wrap_content"
-            android:text="@string/gallery" />
+            android:text="Pattern Gallery" />
 
 
         <Switch

@@ -3,12 +3,12 @@
     xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item android:id="@+id/Home_page"
-        android:title="@string/home_page" />
+        android:title="Home Page" />
     <item android:id="@+id/patterns"
-        android:title="@string/patterns" />
+        android:title="Pattern Gallery" />
 
     <item android:id="@+id/brightness"
-        android:title="brightness" />
+        android:title="Brightness" />
 
 <!--    <item android:id="@+id/checkable_menu"-->
 <!--        android:title="@string/switch_button_title"-->

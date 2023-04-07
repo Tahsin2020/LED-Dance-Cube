@@ -28,10 +28,24 @@
         android:spacing="5dp"
         android:unselectedAlpha="50" />
 
-    <Button
-        android:id="@+id/button_gallery_1"
-        android:layout_width="186dp"
-        android:layout_height="wrap_content"
-        android:text="@string/to_pick" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <Button
+            android:id="@+id/button_gallery_name"
+            android:layout_width="186dp"
+            android:layout_height="wrap_content"
+            android:text="@string/to_pick" />
+
+        <Button
+            android:id="@+id/button_gallery_play"
+            android:layout_width="30dp"
+            android:layout_height="32dp"
+            android:background="@drawable/play_button" />
+
+    </LinearLayout>
 
 </LinearLayout>
