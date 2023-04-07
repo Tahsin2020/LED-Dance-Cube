@@ -7,6 +7,7 @@
     android:background="@color/black">
 
     <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/login_cube_gif"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:src="@drawable/cube"
@@ -21,19 +22,18 @@
         android:fontFamily="@font/indigo_daisy"
         android:layout_marginStart="25dp"
         android:layout_marginBottom="10dp"
-        android:layout_above="@id/tv_subtitle"
         android:textColor="@color/white"/>
 
-    <TextView
-        android:id="@+id/tv_subtitle"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/join_us"
-        android:textSize="17sp"
-        android:fontFamily="@font/roboto_regular"
-        android:layout_marginStart="25dp"
-        android:layout_marginBottom="50dp"
-        android:layout_above="@id/et_email"/>
+<!--    <TextView-->
+<!--        android:id="@+id/tv_subtitle"-->
+<!--        android:layout_width="wrap_content"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:text="@string/join_us"-->
+<!--        android:textSize="17sp"-->
+<!--        android:fontFamily="@font/roboto_regular"-->
+<!--        android:layout_marginStart="25dp"-->
+<!--        android:layout_marginBottom="50dp"-->
+<!--        android:layout_above="@id/et_email"/>-->
 
     <EditText
         android:id="@+id/et_email"

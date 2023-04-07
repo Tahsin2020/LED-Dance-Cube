@@ -6,10 +6,16 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -39,6 +45,8 @@ public class LoginFragment extends Fragment {
 
     FirebaseFirestore db;
 
+    Animation zoom_in,zoom_out;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
@@ -51,6 +59,7 @@ public class LoginFragment extends Fragment {
         email=v.findViewById(R.id.et_email);
         pwd=v.findViewById(R.id.et_password);
         login = v.findViewById(R.id.btn_login);
+        ImageView imageView = v.findViewById(R.id.login_cube_gif);
 
         db= FirebaseFirestore.getInstance();
 //        login.setOnClickListener(this);
@@ -59,8 +68,19 @@ public class LoginFragment extends Fragment {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
-                Intent redirect = new Intent(getActivity(),HomePageActivity.class);
-                startActivity(redirect);
+
+//                zoom_in = AnimationUtils.loadAnimation(getContext(),R.anim.zoomin);
+//                imageView.setVisibility(View.VISIBLE);
+//                imageView.startAnimation(zoom_in);
+                //animation(imageView);
+
+                animation(imageView);
+
+
+//                Intent redirect = new Intent(getActivity(),HomePageActivity.class);
+//                startActivity(redirect);
+
+
 
               if(email.getText().toString().equals("")){
                   Toast.makeText(getContext(), "Please enter valid email", Toast.LENGTH_SHORT).show();
@@ -104,6 +124,9 @@ public class LoginFragment extends Fragment {
 
 
 
+
+
+
         return v;
        //return inflater.inflate(R.layout.fragment_login, container, false);
     }
@@ -137,5 +160,41 @@ public class LoginFragment extends Fragment {
 
         dialog.show();
     }
+
+    public void animation(ImageView imageView) {
+
+        ObjectAnimator elevation = ObjectAnimator.ofFloat(imageView, "elevation", 0f, 10f);
+        ObjectAnimator rotation = ObjectAnimator.ofFloat(imageView, "rotation", 0f, 360f);
+        ObjectAnimator scaleX = ObjectAnimator.ofFloat(imageView, "scaleX", 1f, 2f);
+        ObjectAnimator scaleY = ObjectAnimator.ofFloat(imageView, "scaleY", 1f, 2f);
+
+        AnimatorSet animatorSet = new AnimatorSet();
+        animatorSet.playTogether(rotation, scaleX, scaleY);
+        animatorSet.setDuration(1000);
+
+        animatorSet.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                Intent redirect = new Intent(getActivity(),HomePageActivity.class);
+                startActivity(redirect);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+            }
+        });
+
+        animatorSet.start();
+    }
+
+
 
 }
