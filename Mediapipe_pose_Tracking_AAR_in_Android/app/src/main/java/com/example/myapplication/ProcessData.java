@@ -22,8 +22,8 @@ public class ProcessData {
     static int[] rounded_prev2_ys = new int[num_points];
     static int[] rounded_prev2_zs = new int[num_points];
 
-    static final float ZSCALE = 0.2F;
-    static final float YSCALE = 1.4F;
+    static final float ZSCALE = 0.25F;
+    static final float YSCALE = 1.65F;
     static final float THRESH = 0.1F;
     static final double THETA = Math.PI/20;
     public static byte[] process(Map<String, Map<String, Float>> model_points){
