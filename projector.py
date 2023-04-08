@@ -3,10 +3,10 @@ import numpy as np
 import socket
 import time
 from matplotlib.animation import FuncAnimation
-
 #Method to convert bytes
-def bytes_to_coords(bytes_string):
-    print(bytes_string)
+def bytes_to_coords(data):
+    # print(bytes_string)
+    bytes_string = data[1:65]
     binary_strings = [format(byte, '08b') for byte in bytes_string]
     bits = [int(bit) for bit in ''.join(binary_strings)]
     l = [[[0] * 8 for _ in range(8)] for _ in range(8)]
@@ -23,18 +23,13 @@ def bytes_to_coords(bytes_string):
             for z in range(len(l[0][0])):
                 if l[y][x][z] == 1:
                     xs.append(x)
-                    ys.append(y)
+                    ys.append((y-7)*-1)
                     zs.append(z)
-                
-
     return (xs, ys, zs)
 
 # Define the host and port to listen on
-# HOST = '128.189.240.39'
-HOST = '128.189.246.47'
+HOST = '128.189.246.32'
 PORT = 12345
-
-
 
 # Define the function to accept connections from clients and read data
 def accept_connections():
@@ -50,6 +45,8 @@ def accept_connections():
 
         try:
             conn, addr = s.accept()
+            message = 'Welcome to the server!'
+            conn.send(message.encode())
         except KeyboardInterrupt:
             print('Server shutting down...')
             exit(0)
@@ -59,7 +56,7 @@ def accept_connections():
         print(f'Connected by {addr}')
         while True:
             try:
-                data = conn.recv(64)
+                data = conn.recv(66)
             except socket.error as e:
                 print(f"Error receiving data: {e}")
                 break
@@ -67,9 +64,10 @@ def accept_connections():
                 print("NO DATA RECEIVED")
                 break
             try:
-                print("RECEIVED DATA")
+                print("data received: ")
+                print(data.hex())
+                print("Length of data: {}".format(len(data.hex())/2))
                 xs, ys, zs = bytes_to_coords(data)
-                print("CONVERTED DATA")
                 yield (xs, ys, zs)
             except (ValueError, UnicodeDecodeError) as e:
                 print(f"Error decoding data: {e}")
@@ -85,9 +83,6 @@ def update(frame):
         
     # Clear the plot and create a new scatter plot with the incoming data
     ax.clear()
-    print("xs: {}".format(xs))
-    print("ys: {}".format(ys))
-    print("zs: {}".format(zs))
     ax.scatter(xs, zs, ys, marker='o')
     # Set labels and title
     ax.set_xlabel('X Label')
@@ -97,14 +92,12 @@ def update(frame):
     ax.set_xlim([0,7])
     ax.set_ylim([0,7])
     ax.set_zlim([0,7])
-    # Pause for a short time to allow the plot to update
-    plt.pause(0.001)
 
 fig = plt.figure()
 ax = fig.add_subplot(projection='3d')
 connection = accept_connections()
 
 # Set up the animation
-ani = FuncAnimation(fig, update, interval=10)
+ani = FuncAnimation(fig, update, interval=1)
 # Show the plot
 plt.show()
