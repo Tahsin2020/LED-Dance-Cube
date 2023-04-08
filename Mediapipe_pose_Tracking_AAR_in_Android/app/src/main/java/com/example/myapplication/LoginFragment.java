@@ -1,8 +1,11 @@
 package com.example.myapplication;
 
+import static com.example.myapplication.StartActivity.app;
+
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +33,11 @@ import com.google.android.gms.tasks.Task;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import io.realm.Realm;
+import io.realm.mongodb.App;
+import io.realm.mongodb.Credentials;
+import io.realm.mongodb.User;
+
 public class LoginFragment extends Fragment {
 
 
@@ -39,8 +47,8 @@ public class LoginFragment extends Fragment {
 
     Button login;
     Button register;
-    EditText pwd;
-    TextView email;
+    EditText pwdView;
+    TextView emailView;
     //ProgressBar progress;
 
 //    FirebaseFirestore db;
@@ -56,65 +64,42 @@ public class LoginFragment extends Fragment {
 
         super.onCreate(savedInstanceState);
 
-        email=v.findViewById(R.id.et_email);
-        pwd=v.findViewById(R.id.et_password);
+        emailView =v.findViewById(R.id.et_email);
+        pwdView =v.findViewById(R.id.et_password);
         login = v.findViewById(R.id.btn_login);
         ImageView imageView = v.findViewById(R.id.login_cube_gif);
-
-//        db= FirebaseFirestore.getInstance();
 
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v){
-
-//                zoom_in = AnimationUtils.loadAnimation(getContext(),R.anim.zoomin);
-//                imageView.setVisibility(View.VISIBLE);
-//                imageView.startAnimation(zoom_in);
-                //animation(imageView);
-
                 animation(imageView);
 
+                String email = emailView.getText().toString();
+                String password = pwdView.getText().toString();
+                Credentials credentials = Credentials.emailPassword(email, password);
+                app.loginAsync(credentials, new App.Callback<User>() {
+                    @Override
+                    public void onResult(App.Result<User> result) {
+                        if(result.isSuccess())
+                        {
+                            Log.v("User","Logged In Successfully");
+                            Toast.makeText(getContext(), "Logged In successfully", Toast.LENGTH_SHORT).show();
+                            Intent redirect = new Intent(getActivity(),HomePageActivity.class);
+                            startActivity(redirect);
+                        }
+                        else
+                        {
+                            Log.v("User","Failed to Login");
+                            if(email.equals("")){
+                                Toast.makeText(getContext(), "Please enter valid email", Toast.LENGTH_SHORT).show();
+                            }else if( password.equals("")){
+                                Toast.makeText(getContext(), "Please enter valid password", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }
+                });
 
-//                Intent redirect = new Intent(getActivity(),HomePageActivity.class);
-//                startActivity(redirect);
 
-
-
-              if(email.getText().toString().equals("")){
-                  Toast.makeText(getContext(), "Please enter valid email", Toast.LENGTH_SHORT).show();
-              }else if( pwd.getText().toString().equals("")){
-                  Toast.makeText(getContext(), "Please enter valid password", Toast.LENGTH_SHORT).show();
-              }
-//              db.collection("client")
-//                      .get()
-//                      .addOnCompleteListener(new OnCompleteListener<QuerySnapshot>() {
-//                          @Override
-//                          public void onComplete(@NonNull Task<QuerySnapshot> task) {
-//                              if(task.isSuccessful()){
-//                                  for(QueryDocumentSnapshot doc : task.getResult()){
-//                                      String a=doc.getString("Email");
-//                                      String b=doc.getString("Password");
-//                                      String a1=email.getText().toString().trim();
-//                                      String b1=pwd.getText().toString().trim();
-//                                      if(a.equalsIgnoreCase(a1) & b.equalsIgnoreCase(b1)) {
-//
-//                                          Toast.makeText(getContext(), "Logged In", Toast.LENGTH_SHORT).show();
-//
-//                                          ////////////////////////////
-//                                          confirm_connected();
-//                                          break;
-//
-//                                      }else
-//                                          Toast.makeText(getContext(), "Cannot login,incorrect Email and Password", Toast.LENGTH_SHORT).show();
-//
-//                                  }
-//
-//                              }
-//                          }
-//                      });
-
-//                Intent redirect = new Intent(getActivity(),HomePageActivity.class);
-//                startActivity(redirect);
 
       }
 });
@@ -125,18 +110,7 @@ public class LoginFragment extends Fragment {
 
 
         return v;
-       //return inflater.inflate(R.layout.fragment_login, container, false);
     }
-
-
-//    if(username.getText().toString().equals("admin") &&
-//            password.getText().toString().equals("admin")){
-//        Toast.makeText(getApplicationContext(), "Redirecting...",
-//                Toast.LENGTH_SHORT).show();
-//        Intent i = new Intent(login.this, your_new_activity_name.class);
-//        startActivity(i);
-//
-//    }
 
      public void confirm_connected(){
          AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());

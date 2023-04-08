@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-kapt'
 //    id 'com.google.gms.google-services'
 }
+apply plugin: 'realm-android'
 
 android {
     compileSdkVersion 31
@@ -42,6 +43,10 @@ android {
     buildFeatures {
         viewBinding true
     }
+}
+
+realm {
+    syncEnabled = true
 }
 
 dependencies {
@@ -88,13 +93,6 @@ dependencies {
     // Import the BoM for the Firebase platform
     implementation platform('com.google.firebase:firebase-bom:31.3.0')
 
-    // Declare the dependency for the Cloud Firestore library
-    // When using the BoM, you don't specify versions in Firebase library dependencies
-//    implementation ('com.google.firebase:firebase-firestore') {
-//        exclude module: 'protobuf-javalite'
-//       exclude module:'protolite-well-known-types'
-//    }
-//    implementation ('com.google.firebase:firebase-firestore')
 }
 
 allprojects {

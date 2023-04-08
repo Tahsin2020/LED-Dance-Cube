@@ -153,7 +153,6 @@ public class MainActivity extends AppCompatActivity {
         previewDisplayView = new SurfaceView(this);
         setupPreviewDisplayView();
 
-
         try {
             applicationInfo =
                     getPackageManager().getApplicationInfo(getPackageName(), PackageManager.GET_META_DATA);

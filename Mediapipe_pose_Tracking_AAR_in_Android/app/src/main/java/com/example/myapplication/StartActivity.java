@@ -22,14 +22,22 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+import io.realm.Realm;
+import io.realm.mongodb.App;
+import io.realm.mongodb.AppConfiguration;
+
 public class StartActivity extends AppCompatActivity {
 
-
+    String mongoAppId = "application-0-mrvwt";
+    public static App app;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_start);
+
+        Realm.init(this);
+        app = new App(new AppConfiguration.Builder(mongoAppId).build());
 
         ViewPager viewPager = findViewById(R.id.viewPager);
 
@@ -37,6 +45,7 @@ public class StartActivity extends AppCompatActivity {
         pagerAdapter.addFragmet(new LoginFragment());
         pagerAdapter.addFragmet(new RegisterFragment());
         viewPager.setAdapter(pagerAdapter);
+
     }
 
     public void LoginToHomeMainActivity(){
