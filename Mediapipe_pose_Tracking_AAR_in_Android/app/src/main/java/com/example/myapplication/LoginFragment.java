@@ -73,42 +73,34 @@ public class LoginFragment extends Fragment {
             @Override
             public void onClick(View v){
                 animation(imageView);
-
                 String email = emailView.getText().toString();
                 String password = pwdView.getText().toString();
-                Credentials credentials = Credentials.emailPassword(email, password);
-                app.loginAsync(credentials, new App.Callback<User>() {
-                    @Override
-                    public void onResult(App.Result<User> result) {
-                        if(result.isSuccess())
-                        {
-                            Log.v("User","Logged In Successfully");
-                            Toast.makeText(getContext(), "Logged In successfully", Toast.LENGTH_SHORT).show();
-                            Intent redirect = new Intent(getActivity(),HomePageActivity.class);
-                            startActivity(redirect);
-                        }
-                        else
-                        {
-                            Log.v("User","Failed to Login");
-                            if(email.equals("")){
-                                Toast.makeText(getContext(), "Please enter valid email", Toast.LENGTH_SHORT).show();
-                            }else if( password.equals("")){
-                                Toast.makeText(getContext(), "Please enter valid password", Toast.LENGTH_SHORT).show();
+                if (email.equals("")) {
+                    Toast.makeText(getContext(), "Enter an email", Toast.LENGTH_SHORT).show();
+                } else if (password.equals("")) {
+                    Toast.makeText(getContext(), "Enter an password", Toast.LENGTH_SHORT).show();
+                } else {
+                    Credentials credentials = Credentials.emailPassword(email, password);
+                    app.loginAsync(credentials, new App.Callback<User>() {
+                        @Override
+                        public void onResult(App.Result<User> result) {
+                            if(result.isSuccess())
+                            {
+                                Log.v("User","Logged In Successfully");
+                                Toast.makeText(getContext(), "Logged In successfully", Toast.LENGTH_SHORT).show();
+                                Intent redirect = new Intent(getActivity(),HomePageActivity.class);
+                                startActivity(redirect);
+                            }
+                            else
+                            {
+                                Log.v("User","Failed to Login");
+                                Toast.makeText(getContext(), "Email or password incorrect", Toast.LENGTH_SHORT).show();
                             }
                         }
-                    }
-                });
-
-
-
-      }
-});
-
-
-
-
-
-
+                    });
+                }
+            }
+        });
         return v;
     }
 
@@ -150,8 +142,8 @@ public class LoginFragment extends Fragment {
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                Intent redirect = new Intent(getActivity(),HomePageActivity.class);
-                startActivity(redirect);
+//                Intent redirect = new Intent(getActivity(),HomePageActivity.class);
+//                startActivity(redirect);
             }
 
             @Override
