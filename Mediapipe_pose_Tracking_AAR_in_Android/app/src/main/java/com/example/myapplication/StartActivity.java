@@ -18,6 +18,8 @@ import com.example.myapplication.R;
 import com.example.myapplication.RegisterFragment;
 import com.google.firebase.FirebaseApp;
 
+import org.bson.Document;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,11 +27,16 @@ import java.util.Map;
 import io.realm.Realm;
 import io.realm.mongodb.App;
 import io.realm.mongodb.AppConfiguration;
+import io.realm.mongodb.User;
+import io.realm.mongodb.mongo.MongoClient;
+import io.realm.mongodb.mongo.MongoCollection;
+import io.realm.mongodb.mongo.MongoDatabase;
 
 public class StartActivity extends AppCompatActivity {
 
     String mongoAppId = "application-0-mrvwt";
     public static App app;
+    public static User user;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

@@ -18,6 +18,11 @@ import android.widget.Gallery;
 import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
 
+import org.bson.Document;
+
+import io.realm.mongodb.RealmResultTask;
+import io.realm.mongodb.mongo.result.UpdateResult;
+
 public class GalleryActivity extends AppCompatActivity {
 
     public boolean onCreateOptionsMenu(Menu menu) {
