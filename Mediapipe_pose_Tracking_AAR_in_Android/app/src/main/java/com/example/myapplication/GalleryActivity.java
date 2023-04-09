@@ -1,6 +1,7 @@
 package com.example.myapplication;
 
 import static com.example.myapplication.HomePageActivity.data_output;
+import static com.example.myapplication.StartActivity.user;
 
 import android.content.Intent;
 import android.nfc.Tag;
@@ -17,6 +18,14 @@ import android.widget.Button;
 import android.widget.Gallery;
 import android.widget.ImageView;
 import androidx.appcompat.app.AppCompatActivity;
+
+import org.bson.Document;
+
+import io.realm.mongodb.RealmResultTask;
+import io.realm.mongodb.mongo.MongoClient;
+import io.realm.mongodb.mongo.MongoCollection;
+import io.realm.mongodb.mongo.MongoDatabase;
+import io.realm.mongodb.mongo.result.UpdateResult;
 
 public class GalleryActivity extends AppCompatActivity {
 
@@ -95,6 +104,12 @@ public class GalleryActivity extends AppCompatActivity {
         Button btn_image = (Button) findViewById(R.id.button_gallery_name);
         Button btn_play = (Button) findViewById(R.id.button_gallery_play);
 
+        MongoClient mongoClient = user.getMongoClient("mongodb-atlas");
+        MongoDatabase mongoDatabase = mongoClient.getDatabase("DanceCube");
+        MongoCollection mongoCollection = mongoDatabase.getCollection("Statistic");
+        Document filterDoc = new Document("owner_id", user.getId());
+        Document updateDoc;
+
         // Our layout is activity_main
         // get the reference of Gallery. As we are showing
         // languages it is named as languagesGallery
@@ -121,34 +136,60 @@ public class GalleryActivity extends AppCompatActivity {
             btn_play.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    switch(position){
-                        case 0:
-                            Log.i(getCallingPackage(),"check click");
-                            new Thread(new PatternActivity.Thread3((byte) 0x20)).start();
-                            break;
-                        case 1:
-                            new Thread(new PatternActivity.Thread3((byte) 0x10)).start();
-                            break;
-                        case 2:
-                            new Thread(new PatternActivity.Thread3((byte) 0x70)).start();
-                            break;
-                        case 3:
-                            new Thread(new PatternActivity.Thread3((byte) 0x30)).start();
-                            break;
-                        case 4:
-                            new Thread(new PatternActivity.Thread3((byte) 0x40)).start();
-                            break;
-                        case 5:
-                            new Thread(new PatternActivity.Thread3((byte) 0x50)).start();
-                            break;
-                        case 6:
-                            new Thread(new PatternActivity.Thread3((byte) 0x60)).start();
-                            break;
-                        default:
-                            break;
-
+                    String patternName = "Vortex";
+                    try {
+                        switch(position){
+                            case 0:
+                                Log.i(getCallingPackage(),"check click");
+                                new Thread(new PatternActivity.Thread3((byte) 0x20)).start();
+                                patternName = "Vortex";
+                                break;
+                            case 1:
+                                new Thread(new PatternActivity.Thread3((byte) 0x10)).start();
+                                patternName = "Diamond";
+                                System.out.println("clicked " + patternName);
+                                break;
+                            case 2:
+                                new Thread(new PatternActivity.Thread3((byte) 0x70)).start();
+                                patternName = "Helix";
+                                System.out.println("clicked " + patternName);
+                                break;
+                            case 3:
+                                new Thread(new PatternActivity.Thread3((byte) 0x30)).start();
+                                patternName = "Sphere";
+                                System.out.println("clicked " + patternName);
+                                break;
+                            case 4:
+                                new Thread(new PatternActivity.Thread3((byte) 0x40)).start();
+                                patternName = "Rolling Ball";
+                                System.out.println("clicked " + patternName);
+                                break;
+                            case 5:
+                                new Thread(new PatternActivity.Thread3((byte) 0x50)).start();
+                                patternName = "Rotating Wall";
+                                System.out.println("clicked " + patternName);
+                                break;
+                            case 6:
+                                new Thread(new PatternActivity.Thread3((byte) 0x60)).start();
+                                patternName = "Wave";
+                                System.out.println("clicked " + patternName);
+                                break;
+                            default:
+                                break;
+                        }
+                    } finally {
+                        System.out.println("In finally block");
+                        Document updateDoc = new Document("$inc", new Document(patternName, 1));
+                        RealmResultTask<UpdateResult> updateTask = mongoCollection.updateOne(filterDoc, updateDoc);
+                        String p = patternName;
+                        updateTask.getAsync(task -> {
+                            if (task.isSuccess()) {
+                                Log.v("Data", "Updated " + p + " sucessfully");
+                            } else {
+                                Log.v("Data", "Updated " + p + " failed");
+                            }
+                        });
                     }
-
                 }
             });
         });

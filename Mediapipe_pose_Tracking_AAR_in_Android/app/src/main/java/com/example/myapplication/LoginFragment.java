@@ -1,6 +1,8 @@
 package com.example.myapplication;
 
-import static com.example.myapplication.StartActivity.app;
+import static com.example.myapplication.StartActivity.*;
+//import static com.example.myapplication.StartActivity.mongoCollection;
+//import static com.example.myapplication.StartActivity.user;
 
 import android.app.AlertDialog;
 import android.content.Intent;
@@ -33,10 +35,21 @@ import com.google.android.gms.tasks.Task;
 import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 
+import org.bson.Document;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+
 import io.realm.Realm;
 import io.realm.mongodb.App;
 import io.realm.mongodb.Credentials;
+import io.realm.mongodb.RealmResultTask;
 import io.realm.mongodb.User;
+import io.realm.mongodb.mongo.MongoClient;
+import io.realm.mongodb.mongo.MongoCollection;
+import io.realm.mongodb.mongo.MongoDatabase;
+import io.realm.mongodb.mongo.iterable.MongoCursor;
+import io.realm.mongodb.mongo.result.UpdateResult;
 
 public class LoginFragment extends Fragment {
 
@@ -44,18 +57,12 @@ public class LoginFragment extends Fragment {
     public LoginFragment() {
         // Required empty public constructor
     }
-
+    private MongoDatabase mongoDatabase;
+    private MongoClient mongoClient;
+    private MongoCollection<Document> mongoCollection;
     Button login;
-    Button register;
     EditText pwdView;
     TextView emailView;
-    //ProgressBar progress;
-
-//    FirebaseFirestore db;
-
-    Animation zoom_in,zoom_out;
-
-
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -83,11 +90,43 @@ public class LoginFragment extends Fragment {
                     Credentials credentials = Credentials.emailPassword(email, password);
                     app.loginAsync(credentials, new App.Callback<User>() {
                         @Override
-                        public void onResult(App.Result<User> result) {
-                            if(result.isSuccess())
+                        public void onResult(App.Result<User> r) {
+                            if(r.isSuccess())
                             {
                                 Log.v("User","Logged In Successfully");
                                 Toast.makeText(getContext(), "Logged In successfully", Toast.LENGTH_SHORT).show();
+                                user = app.currentUser();
+                                mongoClient = user.getMongoClient("mongodb-atlas");
+                                mongoDatabase = mongoClient.getDatabase("DanceCube");
+                                mongoCollection = mongoDatabase.getCollection("Statistic");
+                                Document filterDoc = new Document("owner_id", user.getId());
+
+                                RealmResultTask<MongoCursor<Document>> findTask = mongoCollection.find(filterDoc).iterator();
+                                findTask.getAsync(task->{
+                                    if(task.isSuccess()) {
+                                        MongoCursor<Document> results = task.get();
+                                        if(!results.hasNext()) {
+                                            Log.v("Result","Couldnt Find");
+                                        }
+                                        while(results.hasNext()) {
+                                            Document currentDoc = results.next();
+                                            HashMap<String, Integer> stats = new HashMap<>();
+                                            stats.put("Streaming", (Integer) currentDoc.get("Streaming"));
+                                            stats.put("Vortex", (Integer) currentDoc.get("Vortex"));
+                                            stats.put("Diamond", (Integer) currentDoc.get("Diamond"));
+                                            stats.put("Helix", (Integer) currentDoc.get("Helix"));
+                                            stats.put("Sphere", (Integer) currentDoc.get("Sphere"));
+                                            stats.put("Rolling Ball", (Integer) currentDoc.get("Rolling Ball"));
+                                            stats.put("Rotating Wall", (Integer) currentDoc.get("Rotating Wall"));
+                                            stats.put("Wave", (Integer) currentDoc.get("Wave"));
+                                            System.out.println("Values read from mongoDB: " + stats.toString());
+                                        }
+                                    }
+                                    else
+                                    {
+                                        Log.v("Task Error",task.getError().toString());
+                                    }
+                                });
                                 Intent redirect = new Intent(getActivity(),HomePageActivity.class);
                                 startActivity(redirect);
                             }
