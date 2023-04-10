@@ -53,13 +53,14 @@ import io.realm.mongodb.mongo.result.UpdateResult;
 
 public class LoginFragment extends Fragment {
 
-
+    public HashMap<String, Integer> stats = new HashMap<>();
     public LoginFragment() {
         // Required empty public constructor
     }
     private MongoDatabase mongoDatabase;
     private MongoClient mongoClient;
     private MongoCollection<Document> mongoCollection;
+
     Button login;
     EditText pwdView;
     TextView emailView;
@@ -110,7 +111,7 @@ public class LoginFragment extends Fragment {
                                         }
                                         while(results.hasNext()) {
                                             Document currentDoc = results.next();
-                                            HashMap<String, Integer> stats = new HashMap<>();
+
                                             stats.put("Streaming", (Integer) currentDoc.get("Streaming"));
                                             stats.put("Vortex", (Integer) currentDoc.get("Vortex"));
                                             stats.put("Diamond", (Integer) currentDoc.get("Diamond"));
