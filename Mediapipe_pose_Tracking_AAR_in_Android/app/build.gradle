@@ -4,7 +4,7 @@ plugins {
     id 'kotlin-kapt'
 //    id 'com.google.gms.google-services'
 }
-apply plugin: 'realm-android'
+//apply plugin: 'realm-android'
 
 android {
     compileSdkVersion 31
@@ -45,11 +45,13 @@ android {
     }
 }
 
-realm {
-    syncEnabled = true
-}
+//realm {
+//    syncEnabled = true
+//}
 
 dependencies {
+    implementation 'io.realm:realm-android:0.87.5'
+    implementation 'io.realm:android-adapters:4.0.0'
     implementation 'pl.droidsonroids.gif:android-gif-drawable:1.2.25'
     implementation 'com.google.firebase:firebase-common-ktx:20.3.2'
     kapt "com.android.databinding:compiler:$kotlin_version"
