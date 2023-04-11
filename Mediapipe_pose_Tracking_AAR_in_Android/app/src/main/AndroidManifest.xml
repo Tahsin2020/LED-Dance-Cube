@@ -20,9 +20,11 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".BrightnessActivity"
+            android:name=".StatisticsActivity"
             android:exported="false" />
-        <!-- android:theme="@style/Theme.MyApplication" -->
+        <activity
+            android:name=".BrightnessActivity"
+            android:exported="false" /> <!-- android:theme="@style/Theme.MyApplication" -->
         <activity
             android:name=".StartActivity"
             android:exported="true"
@@ -35,17 +37,16 @@
         </activity>
         <activity
             android:name=".MainActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".HomePageActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".GalleryActivity"
-            android:exported="true"></activity>
+            android:exported="true" />
         <activity
             android:name=".PatternActivity"
-            android:exported="true"></activity>
-
+            android:exported="true" />
     </application>
 
 </manifest>
