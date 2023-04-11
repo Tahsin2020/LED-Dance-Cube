@@ -33,6 +33,9 @@ public class BrightnessActivity extends AppCompatActivity {
                 new Thread(new HomePageActivity.Thread3((byte) 0xa0)).start();
                 startActivity(new Intent(this, BrightnessActivity.class));
                 return true;
+            case R.id.statistics:
+                startActivity(new Intent(this, StatisticsActivity.class));
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

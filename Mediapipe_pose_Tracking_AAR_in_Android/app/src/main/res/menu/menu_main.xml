@@ -6,6 +6,8 @@
         android:title="Home Page" />
     <item android:id="@+id/patterns"
         android:title="Pattern Gallery" />
+    <item android:id="@+id/statistics"
+        android:title="Statistics" />
 
     <item android:id="@+id/brightness"
         android:title="Brightness" />

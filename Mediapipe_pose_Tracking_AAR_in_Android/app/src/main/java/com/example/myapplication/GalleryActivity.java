@@ -49,6 +49,9 @@ public class GalleryActivity extends AppCompatActivity {
             case R.id.brightness:
                 startActivity(new Intent(this, BrightnessActivity.class));
                 return true;
+            case R.id.statistics:
+                startActivity(new Intent(this, StatisticsActivity.class));
+                return true;
             default:
                 return super.onOptionsItemSelected(item);
         }

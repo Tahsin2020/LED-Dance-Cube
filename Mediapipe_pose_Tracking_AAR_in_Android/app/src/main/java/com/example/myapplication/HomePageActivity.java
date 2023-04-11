@@ -18,7 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.protobuf.NullValue;
 
-import org.bson.Document;
+//import org.bson.Document;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -67,6 +67,9 @@ public class HomePageActivity extends AppCompatActivity {
                 return true;
             case R.id.brightness:
                 startActivity(new Intent(this, BrightnessActivity.class));
+                return true;
+            case R.id.statistics:
+                startActivity(new Intent(this, StatisticsActivity.class));
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
