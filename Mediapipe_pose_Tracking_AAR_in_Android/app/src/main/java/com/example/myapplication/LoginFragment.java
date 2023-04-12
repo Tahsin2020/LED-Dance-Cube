@@ -97,37 +97,6 @@ public class LoginFragment extends Fragment {
                                 Log.v("User","Logged In Successfully");
                                 Toast.makeText(getContext(), "Logged In successfully", Toast.LENGTH_SHORT).show();
                                 user = app.currentUser();
-                                mongoClient = user.getMongoClient("mongodb-atlas");
-                                mongoDatabase = mongoClient.getDatabase("DanceCube");
-                                mongoCollection = mongoDatabase.getCollection("Statistic");
-                                Document filterDoc = new Document("owner_id", user.getId());
-
-                                RealmResultTask<MongoCursor<Document>> findTask = mongoCollection.find(filterDoc).iterator();
-                                findTask.getAsync(task->{
-                                    if(task.isSuccess()) {
-                                        MongoCursor<Document> results = task.get();
-                                        if(!results.hasNext()) {
-                                            Log.v("Result","Couldnt Find");
-                                        }
-                                        while(results.hasNext()) {
-                                            Document currentDoc = results.next();
-
-                                            stats.put("Streaming", (Integer) currentDoc.get("Streaming"));
-                                            stats.put("Vortex", (Integer) currentDoc.get("Vortex"));
-                                            stats.put("Diamond", (Integer) currentDoc.get("Diamond"));
-                                            stats.put("Helix", (Integer) currentDoc.get("Helix"));
-                                            stats.put("Sphere", (Integer) currentDoc.get("Sphere"));
-                                            stats.put("Rolling Ball", (Integer) currentDoc.get("Rolling Ball"));
-                                            stats.put("Rotating Wall", (Integer) currentDoc.get("Rotating Wall"));
-                                            stats.put("Wave", (Integer) currentDoc.get("Wave"));
-//                                            System.out.println("Values read from mongoDB: " + stats.toString());
-                                        }
-                                    }
-                                    else
-                                    {
-                                        Log.v("Task Error",task.getError().toString());
-                                    }
-                                });
                                 Intent redirect = new Intent(getActivity(),HomePageActivity.class);
                                 startActivity(redirect);
                             }
