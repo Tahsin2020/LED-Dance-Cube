@@ -81,37 +81,6 @@ public class HomePageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home_unconnect);
         Thread1 = new Thread(new Thread1());
         Thread1.start();
-        MongoClient mongoClient = user.getMongoClient("mongodb-atlas");
-        MongoDatabase  mongoDatabase = mongoClient.getDatabase("DanceCube");
-        MongoCollection mongoCollection = mongoDatabase.getCollection("Statistic");
-        Document filterDoc = new Document("owner_id", user.getId());
-        RealmResultTask<MongoCursor<Document>> findTask = mongoCollection.find(filterDoc).iterator();
-        findTask.getAsync(task->{
-            if(task.isSuccess()) {
-                MongoCursor<Document> results = task.get();
-                if(!results.hasNext()) {
-                    Log.v("Result","Could not find");
-                }
-                while(results.hasNext()) {
-                    Document currentDoc = results.next();
-                    stats.put("Streaming", (Integer) currentDoc.get("Streaming"));
-                    stats.put("Vortex", (Integer) currentDoc.get("Vortex"));
-                    stats.put("Diamond", (Integer) currentDoc.get("Diamond"));
-                    stats.put("Helix", (Integer) currentDoc.get("Helix"));
-                    stats.put("Sphere", (Integer) currentDoc.get("Sphere"));
-                    stats.put("Rolling Ball", (Integer) currentDoc.get("Rolling Ball"));
-                    stats.put("Rotating Wall", (Integer) currentDoc.get("Rotating Wall"));
-                    stats.put("Wave", (Integer) currentDoc.get("Wave"));
-                }
-            }
-            else
-            {
-                Log.v("Task Error",task.getError().toString());
-            }
-        });
-
-        ///ToggleButton materialSwitch = (ToggleButton) findViewById(R.id.material_switch); // initiate a toggle button
-       // Boolean ButtonState = materialSwitch.isChecked(); // check current state of a toggle button (true or false).
 
         Switch onOffSwitch = (Switch)  findViewById(R.id.sw_all_on);
         onOffSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
@@ -149,17 +118,6 @@ public class HomePageActivity extends AppCompatActivity {
                 backToMainActivity();
             }
         });
-
-//        Button button_2 = (Button) findViewById(R.id.button_home2);
-//        button_2.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                  ToPatternActivity();
-////                ImageView img= (ImageView) findViewById(R.id.img_no_connection);
-////                img.setImageResource(R.drawable.signal_black);
-//
-//            }
-//        });
 
         Button button_3 = (Button) findViewById(R.id.button_home3);
         button_3.setOnClickListener(new View.OnClickListener() {
