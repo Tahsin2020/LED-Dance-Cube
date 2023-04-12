@@ -120,7 +120,7 @@ public class LoginFragment extends Fragment {
                                             stats.put("Rolling Ball", (Integer) currentDoc.get("Rolling Ball"));
                                             stats.put("Rotating Wall", (Integer) currentDoc.get("Rotating Wall"));
                                             stats.put("Wave", (Integer) currentDoc.get("Wave"));
-                                            System.out.println("Values read from mongoDB: " + stats.toString());
+//                                            System.out.println("Values read from mongoDB: " + stats.toString());
                                         }
                                     }
                                     else

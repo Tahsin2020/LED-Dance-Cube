@@ -154,9 +154,7 @@ public class PatternActivity extends AppCompatActivity {
                 try {
                     HomePageActivity.data_output.write(dataToSend);
                     HomePageActivity.data_output.flush();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                } catch (IOException ignored) {}
             }
         }
     }

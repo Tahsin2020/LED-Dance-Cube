@@ -18,7 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.protobuf.NullValue;
 
-//import org.bson.Document;
+import org.bson.Document;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -39,7 +39,7 @@ public class HomePageActivity extends AppCompatActivity {
     private static final String TAG = "HomePageActivity";
 //    private static final String SERVER_IP = "128.189.246.32";
 //    private static final int SERVER_PORT = 12345;
-    private static final String SERVER_IP = "192.168.209.228";//hotspot
+    private static final String SERVER_IP = "192.168.200.228";//hotspot
     private static final int SERVER_PORT = 12345;
 //    private static final String SERVER_IP = "192.168.4.1";
 //    private static final int SERVER_PORT = 80;
@@ -102,7 +102,6 @@ public class HomePageActivity extends AppCompatActivity {
                     stats.put("Rolling Ball", (Integer) currentDoc.get("Rolling Ball"));
                     stats.put("Rotating Wall", (Integer) currentDoc.get("Rotating Wall"));
                     stats.put("Wave", (Integer) currentDoc.get("Wave"));
-                    System.out.println("Values read from mongoDB: " + stats.toString());
                 }
             }
             else
@@ -254,9 +253,7 @@ public class HomePageActivity extends AppCompatActivity {
                 try {
                     HomePageActivity.data_output.write(dataToSend);
                     HomePageActivity.data_output.flush();
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                } catch (IOException ignored) {}
             }
 
         }

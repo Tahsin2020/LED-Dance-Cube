@@ -451,8 +451,7 @@ public class MainActivity extends AppCompatActivity {
                     data_output.write(dataToSend);
                     data_output.flush();
                 }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+            } catch (IOException ignored) {
             }
         }
     }
@@ -469,8 +468,7 @@ public class MainActivity extends AppCompatActivity {
                     data_output.write(dataToSend);
                     data_output.flush();
                 }
-            } catch (IOException e) {
-                throw new RuntimeException(e);
+            } catch (IOException ignored) {
             }
         }
     }
