@@ -136,7 +136,7 @@ public class GalleryActivity extends AppCompatActivity {
             //String imageName = (String)images[position].getTag();
             //Log.i(getCallingPackage(),imageName + "check image name");
             btn_image.setText(image_names[position]);
-            btn_play.setOnClickListener(new View.OnClickListener() {
+            btn_image.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
                     String patternName = "Vortex";

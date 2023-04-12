@@ -18,7 +18,7 @@ import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.protobuf.NullValue;
 
-//import org.bson.Document;
+import org.bson.Document;
 
 import java.io.BufferedReader;
 import java.io.DataOutputStream;
@@ -81,35 +81,35 @@ public class HomePageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_home_unconnect);
         Thread1 = new Thread(new Thread1());
         Thread1.start();
-        MongoClient mongoClient = user.getMongoClient("mongodb-atlas");
-        MongoDatabase  mongoDatabase = mongoClient.getDatabase("DanceCube");
-        MongoCollection mongoCollection = mongoDatabase.getCollection("Statistic");
-        Document filterDoc = new Document("owner_id", user.getId());
-        RealmResultTask<MongoCursor<Document>> findTask = mongoCollection.find(filterDoc).iterator();
-        findTask.getAsync(task->{
-            if(task.isSuccess()) {
-                MongoCursor<Document> results = task.get();
-                if(!results.hasNext()) {
-                    Log.v("Result","Could not find");
-                }
-                while(results.hasNext()) {
-                    Document currentDoc = results.next();
-                    stats.put("Streaming", (Integer) currentDoc.get("Streaming"));
-                    stats.put("Vortex", (Integer) currentDoc.get("Vortex"));
-                    stats.put("Diamond", (Integer) currentDoc.get("Diamond"));
-                    stats.put("Helix", (Integer) currentDoc.get("Helix"));
-                    stats.put("Sphere", (Integer) currentDoc.get("Sphere"));
-                    stats.put("Rolling Ball", (Integer) currentDoc.get("Rolling Ball"));
-                    stats.put("Rotating Wall", (Integer) currentDoc.get("Rotating Wall"));
-                    stats.put("Wave", (Integer) currentDoc.get("Wave"));
-                    System.out.println("Values read from mongoDB: " + stats.toString());
-                }
-            }
-            else
-            {
-                Log.v("Task Error",task.getError().toString());
-            }
-        });
+//        MongoClient mongoClient = user.getMongoClient("mongodb-atlas");
+//        MongoDatabase  mongoDatabase = mongoClient.getDatabase("DanceCube");
+//        MongoCollection mongoCollection = mongoDatabase.getCollection("Statistic");
+//        Document filterDoc = new Document("owner_id", user.getId());
+//        RealmResultTask<MongoCursor<Document>> findTask = mongoCollection.find(filterDoc).iterator();
+//        findTask.getAsync(task->{
+//            if(task.isSuccess()) {
+//                MongoCursor<Document> results = task.get();
+//                if(!results.hasNext()) {
+//                    Log.v("Result","Could not find");
+//                }
+//                while(results.hasNext()) {
+//                    Document currentDoc = results.next();
+//                    stats.put("Streaming", (Integer) currentDoc.get("Streaming"));
+//                    stats.put("Vortex", (Integer) currentDoc.get("Vortex"));
+//                    stats.put("Diamond", (Integer) currentDoc.get("Diamond"));
+//                    stats.put("Helix", (Integer) currentDoc.get("Helix"));
+//                    stats.put("Sphere", (Integer) currentDoc.get("Sphere"));
+//                    stats.put("Rolling Ball", (Integer) currentDoc.get("Rolling Ball"));
+//                    stats.put("Rotating Wall", (Integer) currentDoc.get("Rotating Wall"));
+//                    stats.put("Wave", (Integer) currentDoc.get("Wave"));
+//                    System.out.println("Values read from mongoDB: " + stats.toString());
+//                }
+//            }
+//            else
+//            {
+//                Log.v("Task Error",task.getError().toString());
+//            }
+//        });
 
         ///ToggleButton materialSwitch = (ToggleButton) findViewById(R.id.material_switch); // initiate a toggle button
        // Boolean ButtonState = materialSwitch.isChecked(); // check current state of a toggle button (true or false).
