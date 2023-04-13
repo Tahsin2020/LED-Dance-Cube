@@ -1,6 +1,6 @@
-# Hardware Component
+# Cloud Component
 
-## FPGA based LED Cube driver
+## NodeMCU Firmware ESP8266
 
 For full design - go to <b>[LED_Cube_Controller](https://github.com/UBC-CPEN391/l2c-l2c-41/tree/main/Cube_Driver_Hardware/LED_cube_controller) directory</b>. All of the rest are partial designs, meant for testing, debuggin, or alternative usage cases.
 
