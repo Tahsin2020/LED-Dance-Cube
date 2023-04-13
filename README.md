@@ -26,9 +26,9 @@ This project includes a 3D 8x8x8 LED cube, connnected and controlled via WIFI by
 ### Components:
 
 - UI - Android Application used to control the Cube
-- ESP8266 used fo WIFI connection from the APP to the FPGA Cube driver
-- Hardware (FPGA based) LED Cube Driver
-- LED Cube Hardware (Custom PCB)
+- ESP8266 used for the WIFI connection from the Android app to the FPGA Cube driver
+- Hardware (FPGA based) LED cube driver
+- LED cube hardware (Custom PCB)
 
 ### Features : What can the app do?
 
