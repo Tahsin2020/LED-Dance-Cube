@@ -6,7 +6,7 @@ Team members:
 - April Ju
 - Adin Mauer
 
-Date Submitted: 20232-04-12
+Date Submitted: 2023-04-12
 
 ### Dance Cube
 
