@@ -1,4 +1,4 @@
-## =UBC CPEN 391 - Team 41 ##
+## UBC CPEN 391 - Team 41 ##
 
 Team members:
 - Josh Wong
