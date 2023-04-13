@@ -1,3 +1,3 @@
 -- Credentials
-SSID = "ubcvisitor"
+SSID = ""
 PASSWORD = ""
