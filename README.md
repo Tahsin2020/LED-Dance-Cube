@@ -1,4 +1,4 @@
-## This Project is for UBC CPEN 391 ##
+## =UBC CPEN 391 - Team 41 ##
 
 Team members:
 - Josh Wong
