@@ -1,47 +1,47 @@
-wifi.setmode(wifi.STATIONAP)
-wifi.ap.config({ssid="DanceCube", auth=wifi.OPEN})
+-- Take the user's SSID and password
+dofile("credentials.lua")
+-- connect to WiFi access point (DO NOT save config to flash)
+station_cfg={}
+station_cfg.ssid = SSID
+station_cfg.pwd = PASSWORD
+wifi.setmode(wifi.STATION)
+wifi.sta.config(station_cfg)
+wifi.sta.connect()
 
----  Talking to a haywire AI.
-
--- uart.write(0, "Tahsin UART tester \n")
-
--- server listens on 80, if data received, print data to console and send "hello world" back to caller
--- 30s time out for a inactive client
-sv = net.createServer(net.TCP, 30)
-
-recieved_data = "hi"
-
-function receiver(sck, data)
-  -- print("hi")
-  -- recieved_data = (data)
-  uart.write(0,data)
---  str:gsub(".", function(c)
---    value = string.byte(c)
---    -- do something with c
---    end)
---  sck:close()
+-- Function to loop check if connected to wifi
+local check = function()
+     ip, nm, gw = wifi.sta.getip()
+     if ip then
+        -- Do nothing if connected
+     else
+        station_cfg={}
+        station_cfg.ssid = SSID
+        station_cfg.pwd = PASSWORD
+        wifi.setmode(wifi.STATION)
+        wifi.sta.config(station_cfg)
+        wifi.sta.connect()
+        i=0
+     end
 end
 
+-- Check the connection status every 5 seconds
+mytimer = tmr.create()
+mytimer:register(10000, tmr.ALARM_AUTO, check)
+mytimer:interval(5000) 
+mytimer:start()
+
+
+sv = net.createServer(net.TCP, 30)
+
+-- Write the UART wired connection
+function receiver(sck, data)
+  uart.write(0,data)
+end
+
+-- Set up a listener at port 12345
 if sv then
-  sv:listen(80, function(conn)
+  sv:listen(12345, function(conn)
     conn:on("receive", receiver)
     conn:send("hello world")
   end)
 end
-
--- remaining, used, total = file.fsinfo()
--- print("\nFile system info:\nTotal: "..total.." Bytes\nUsed: "..used.." Bytes\nRemaining: "..remaining.." Bytes\n")
-
-cfg =
-{
-    ip="192.168.4.1",
-    netmask="255.255.255.0",
-    gateway="192.168.4.1"
-}
-wifi.ap.setip(cfg)
-
--- ip, nm, gw=wifi.ap.getip()
-
--- if ip then
--- print("\nIP Info:\nIP Address: "..ip.." \nNetmask: "..nm.." \nGateway Addr: "..gw.."\n")
--- end
